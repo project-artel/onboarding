@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useCopy } from '../i18n/useCopy'
 import { locales } from '../i18n/locale'
+import { BrandMark } from './BrandMark'
 
 export function SiteLayout() {
   const { locale, t, href, swapTo } = useCopy()
@@ -29,8 +30,8 @@ export function SiteLayout() {
       </a>
       <header className="site-header">
         <div className="container site-header__inner">
-          <Link className="wordmark" to={href('/')}>
-            ARTEL
+          <Link aria-label="ARTEL" className="brand-link" to={href('/')}>
+            <BrandMark className="brand-mark" />
           </Link>
           <nav className="site-nav" aria-label={t.nav.home}>
             <NavLink to={href('/sdk')}>{t.nav.sdk}</NavLink>
@@ -57,7 +58,8 @@ export function SiteLayout() {
 
       <footer className="site-footer">
         <div className="container site-footer__inner">
-          <span>ARTEL</span>
+          <BrandMark className="brand-mark brand-mark--footer" />
+          <span className="visually-hidden">ARTEL</span>
           <a href="mailto:contact@artel.dev">{t.footer.contact}</a>
           <a href="https://github.com/project-artel" rel="noreferrer noopener" target="_blank">
             {t.footer.repository}
