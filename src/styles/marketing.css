@@ -368,18 +368,70 @@ p {
   list-style: none;
 }
 
-/* Guide and code */
+/* Install steps */
 
-.guide {
-  margin: 0 0 var(--space-8);
+.install {
+  margin: 0;
   padding: 0;
   list-style: none;
   display: grid;
-  gap: var(--space-8);
+  gap: var(--space-6);
+  counter-reset: install;
 }
 
-.guide h2 {
-  font-size: 19px;
+.install__step {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.install__index {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--color-action-primary);
+  color: #04222a;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.install__body {
+  min-width: 0;
+  flex: 1;
+}
+
+.install__body h2 {
+  font-size: 18px;
+  margin-bottom: var(--space-2);
+}
+
+.advanced {
+  margin-top: var(--space-10);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.advanced summary {
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  font-size: 15px;
+}
+
+.advanced summary:hover {
+  color: var(--color-text-primary);
+}
+
+.advanced h3 {
+  margin-top: var(--space-5);
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
 }
 
 .code {
