@@ -1,28 +1,30 @@
 :root {
-  --color-bg-canvas: #090c10;
-  --color-bg-surface: #10151b;
-  --color-bg-raised: #171d25;
-  --color-bg-hover: #1d2530;
-  --color-border-subtle: #27313d;
-  --color-border-strong: #3b4857;
-  --color-text-primary: #f4f7fa;
-  --color-text-secondary: #a7b0bc;
-  --color-text-muted: #707b88;
+  --color-bg-canvas: #fff;
+  --color-bg-surface: #faf9f7;
+  --color-bg-raised: #f3f2ef;
+  --color-bg-hover: #ebe9e5;
+  --color-border-subtle: #dedbd5;
+  --color-border-strong: #8e8a83;
+  --color-text-primary: #20232b;
+  --color-text-secondary: #565d68;
+  --color-text-muted: #68717c;
   --color-brand-mark: #20232b;
   --color-brand-accent: #f04b3a;
   --color-brand-accent-strong: #ff6757;
-  --color-brand-plate: #f4f7fa;
+  --color-brand-accent-text: #c73a2f;
+  --color-brand-plate: #fff;
+  --color-on-brand: #090c10;
   --color-action-primary: #24c7e8;
   --color-action-primary-strong: #0ba8c7;
   --color-agent-reasoning: #8f7cf6;
   --color-status-offline: #707b88;
   --color-status-critical: #ff634f;
-  --color-status-critical-muted: #291713;
+  --color-status-critical-muted: #fff0ed;
   --color-status-critical-strong: #e04a37;
   --color-status-success: #48c78e;
-  --color-status-success-muted: #0f2119;
+  --color-status-success-muted: #eaf8f1;
   --color-status-warning: #f2b84b;
-  --color-status-warning-muted: #241c0d;
+  --color-status-warning-muted: #fff7e6;
   --color-overlay-scrim: rgb(4 7 10 / 72%);
   /* Deeper than the dialog scrim because it sits over an arbitrary game frame,
      and a bright one drags status text under its contrast floor at 72%. */
@@ -46,4 +48,23 @@
   --radius-lg: 8px;
   --motion-fast: 100ms;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+:root[data-theme='dark'] {
+  --color-bg-canvas: #090c10;
+  --color-bg-surface: #10151b;
+  --color-bg-raised: #171d25;
+  --color-bg-hover: #1d2530;
+  --color-border-subtle: #27313d;
+  --color-border-strong: #3b4857;
+  --color-text-primary: #f4f7fa;
+  --color-text-secondary: #a7b0bc;
+  --color-text-muted: #707b88;
+  --color-brand-mark: #f4f7fa;
+  --color-brand-accent-text: #ff6757;
+  --color-brand-plate: #20232b;
+  --color-on-brand: #090c10;
+  --color-status-critical-muted: #291713;
+  --color-status-success-muted: #0f2119;
+  --color-status-warning-muted: #241c0d;
 }

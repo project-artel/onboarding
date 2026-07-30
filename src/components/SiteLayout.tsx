@@ -1,12 +1,14 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useCopy } from '../i18n/useCopy'
 import { locales } from '../i18n/locale'
 import { BrandMark } from './BrandMark'
+import { applyTheme, currentTheme } from '../theme'
 
 export function SiteLayout() {
   const { locale, t, href, swapTo } = useCopy()
   const { pathname } = useLocation()
+  const [theme, setTheme] = useState(currentTheme)
 
   // 정적 `index.html`은 한국어를 실어 내보낸다. 로케일이 정해지면 스크린리더와
   // 검색엔진이 보는 값도 같이 맞춘다.
@@ -49,6 +51,18 @@ export function SiteLayout() {
               </Link>
             ))}
           </div>
+          <button
+            aria-label={theme === 'dark' ? t.theme.toLight : t.theme.toDark}
+            className="theme-switch"
+            onClick={() => {
+              const next = theme === 'dark' ? 'light' : 'dark'
+              applyTheme(next)
+              setTheme(next)
+            }}
+            type="button"
+          >
+            <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
+          </button>
         </div>
       </header>
 
