@@ -5,15 +5,15 @@ Fill this document during project initialization. Agents must verify commands ag
 ## Overview
 
 - Product: onboarding
-- Primary users: TODO
-- Core domain: TODO
-- Runtime environment: TODO
+- Primary users: 게임 QA 담당자와 개발자. ARTEL을 처음 도입하며 프로젝트 생성, SDK 연결, 첫 QA 실행까지 진행한다.
+- Core domain: ARTEL 도입 온보딩 흐름 (가입·프로젝트 등록·Unity SDK 연결·기획서 업로드·첫 테스트 실행)
+- Runtime environment: React, TypeScript, Vite로 빌드하는 브라우저 애플리케이션
 
 ## Architecture
 
-- Entry points: TODO
-- Main modules: TODO
-- Dependency direction: TODO
+- Entry points: `index.html`, `src/main.tsx`
+- Main modules: 애플리케이션 루트 `src/App.tsx`; 공용 시맨틱 스타일 `src/styles/`
+- Dependency direction: 화면 컴포넌트가 공용 스타일과 디자인 시스템 토큰에 의존한다. 역방향 의존은 두지 않는다.
 - External systems: GitHub repository `project-artel/onboarding`; Jira project `ARTEL` via the `mcp-atlassian` MCP server; Notion workspace via the `ntn` CLI
 - Persistent data: TODO
 
@@ -21,14 +21,14 @@ Fill this document during project initialization. Agents must verify commands ag
 
 | Purpose | Command |
 |---|---|
-| Install dependencies | TODO |
-| Run locally | TODO |
-| Format | TODO |
-| Lint | TODO |
-| Type-check | TODO |
-| Unit tests | TODO |
-| Integration tests | TODO |
-| Build | TODO |
+| Install dependencies | `npm install` |
+| Run locally | `npm run dev` |
+| Format | Not configured |
+| Lint | `npm run lint` |
+| Type-check | `npm run typecheck` |
+| Unit tests | Not configured |
+| Integration tests | Not configured |
+| Build | `npm run build` |
 | Set up Jira credentials | `cp .jira.env.example .jira.env` |
 | Install Notion CLI | `curl -fsSL https://ntn.dev \| bash` |
 | Verify Notion CLI auth | `ntn whoami` |
