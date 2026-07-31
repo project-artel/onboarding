@@ -1,6 +1,9 @@
 @import './tokens.css';
 @import './marketing.css';
 
+/* 색·타이포·배경·`color-scheme`은 tokens.css와 marketing.css가 소유한다.
+   여기는 리셋과 그 둘이 다루지 않는 브라우저 기본값만 남긴다. */
+
 *,
 *::before,
 *::after {
@@ -8,17 +11,12 @@
 }
 
 html {
-  color-scheme: dark;
-  font-family: var(--font-sans);
-  background: var(--color-bg-canvas);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
 
 body {
-  min-width: 320px;
   min-height: 100vh;
-  margin: 0;
 }
 
 button,
@@ -33,7 +31,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-action-primary);
+  outline: 2px solid var(--flare);
   outline-offset: 2px;
 }
 

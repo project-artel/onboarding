@@ -7,6 +7,7 @@ export type Availability = 'shipped' | 'planned'
 type Copy = {
   meta: { title: string; description: string }
   nav: { sdk: string; how: string; skipToContent: string; home: string }
+  theme: { toLight: string; toDark: string }
   availability: Record<Availability, string>
   hero: {
     status: string
@@ -69,6 +70,7 @@ const ko: Copy = {
     skipToContent: '본문으로 건너뛰기',
     home: '홈',
   },
+  theme: { toLight: '라이트 모드로 전환', toDark: '다크 모드로 전환' },
   availability: { shipped: '동작 중', planned: '개발 예정' },
   hero: {
     status: '개발 중인 제품입니다. 현재 SDK 연결과 액션 주입 구간이 동작합니다',
@@ -302,6 +304,7 @@ const en: Copy = {
     skipToContent: 'Skip to content',
     home: 'Home',
   },
+  theme: { toLight: 'Switch to light mode', toDark: 'Switch to dark mode' },
   availability: { shipped: 'Working', planned: 'Planned' },
   hero: {
     status: 'Early product — SDK connection and action injection work today',
