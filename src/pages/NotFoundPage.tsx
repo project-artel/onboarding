@@ -8,14 +8,14 @@ export function NotFoundPage() {
   const t = messages[locale].notFound
 
   return (
-    <section className="section">
-      <div className="container prose">
-        <h1>{t.title}</h1>
-        <p className="lead">{t.body}</p>
-        <Link className="button button--primary" to={locale === 'en' ? '/en' : '/'}>
+    <main>
+      <div className="shell not-found">
+        <h1 className="hero__title page-hero__title">{t.title}</h1>
+        <p className="hero__lead">{t.body}</p>
+        <Link className="btn btn--primary not-found__cta" to={locale === 'en' ? '/en' : '/'}>
           {t.back}
         </Link>
       </div>
-    </section>
+    </main>
   )
 }

@@ -1,70 +1,52 @@
 :root {
-  --color-bg-canvas: #fff;
-  --color-bg-surface: #faf9f7;
-  --color-bg-raised: #f3f2ef;
-  --color-bg-hover: #ebe9e5;
-  --color-border-subtle: #dedbd5;
-  --color-border-strong: #8e8a83;
-  --color-text-primary: #20232b;
-  --color-text-secondary: #565d68;
-  --color-text-muted: #68717c;
-  --color-brand-mark: #20232b;
-  --color-brand-accent: #f04b3a;
-  --color-brand-accent-strong: #ff6757;
-  --color-brand-accent-text: #c73a2f;
-  --color-brand-plate: #fff;
-  --color-on-brand: #090c10;
-  --color-action-primary: #24c7e8;
-  --color-action-primary-strong: #0ba8c7;
-  --color-agent-reasoning: #8f7cf6;
-  --color-status-offline: #707b88;
-  --color-status-critical: #ff634f;
-  --color-status-critical-muted: #fff0ed;
-  --color-status-critical-strong: #e04a37;
-  --color-status-success: #48c78e;
-  --color-status-success-muted: #eaf8f1;
-  --color-status-warning: #f2b84b;
-  --color-status-warning-muted: #fff7e6;
-  --color-overlay-scrim: rgb(4 7 10 / 72%);
-  /* Deeper than the dialog scrim because it sits over an arbitrary game frame,
-     and a bright one drags status text under its contrast floor at 72%. */
-  --color-overlay-stream: rgb(9 12 16 / 88%);
+  color-scheme: light;
 
-  --font-sans: Inter, "Pretendard Variable", Pretendard, sans-serif;
-  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+  /* ── Surface ─────────────────────────────────────────── */
+  --paper: #F7F4EE;          /* 페이지 배경 (크림 페이퍼) */
+  --paper-2: #F1EDE5;        /* 교차 섹션 / 코드블록 / 푸터 */
 
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
+  /* ── Ink ─────────────────────────────────────────────── */
+  --ink: #20232B;            /* 본문·헤드라인 */
+  --ink-2: #5a5f6b;          /* 보조 텍스트 */
+  --ink-3: #8a877e;          /* 비활성·메타 (개발 예정 도트) */
 
-  --radius-sm: 3px;
-  --radius-md: 5px;
-  --radius-lg: 8px;
-  --motion-fast: 100ms;
-  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  /* ── Line ────────────────────────────────────────────── */
+  --rule: #d8d4cb;           /* 1px 규칙선·보더 */
+  --grid: #c9c5bb;           /* 32px 점 그리드 도트 */
+
+  /* ── Accent ──────────────────────────────────────────── */
+  --flare: #F04B3A;          /* 브랜드 버밀리온 */
+  --on-flare: #ffffff;       /* flare 위 텍스트 */
+
+  /* ── Type ────────────────────────────────────────────── */
+  --font-display: 'Space Grotesk', 'Pretendard Variable', Pretendard, sans-serif;
+  --font-body: 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* ── Layout ──────────────────────────────────────────── */
+  --shell: 1140px;           /* 콘텐츠 최대 폭 */
+  --gutter: 32px;            /* 좌우 패딩 */
+  --rail: 220px;             /* 섹션 좌측 라벨 레일 폭 */
+  --section-y: 64px;         /* 일반 섹션 상하 패딩 */
+  --hero-y: 88px;            /* 히어로 상하 패딩 */
+
+  /* ── Radius ──────────────────────────────────────────── */
+  --r-sm: 3px;               /* 배지·코드 복사 버튼 */
+  --r-md: 4px;               /* 버튼 */
+  --r-lg: 6px;               /* 카드 그리드 컨테이너 */
+  --r-pill: 999px;
 }
 
-:root[data-theme='dark'] {
-  --color-bg-canvas: #090c10;
-  --color-bg-surface: #10151b;
-  --color-bg-raised: #171d25;
-  --color-bg-hover: #1d2530;
-  --color-border-subtle: #27313d;
-  --color-border-strong: #3b4857;
-  --color-text-primary: #f4f7fa;
-  --color-text-secondary: #a7b0bc;
-  --color-text-muted: #707b88;
-  --color-brand-mark: #f4f7fa;
-  --color-brand-accent-text: #ff6757;
-  --color-brand-plate: #20232b;
-  --color-on-brand: #090c10;
-  --color-status-critical-muted: #291713;
-  --color-status-success-muted: #0f2119;
-  --color-status-warning-muted: #241c0d;
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #14161c;
+  --paper-2: #1a1d24;
+  --ink: #F2EFE9;
+  --ink-2: #9aa1ad;
+  --ink-3: #6b7280;
+  --rule: #2c313c;
+  --grid: #242832;
+  --flare: #FF5C48;          /* 다크에서 대비 확보용으로 살짝 밝힘 */
+  --on-flare: #14161c;
 }
