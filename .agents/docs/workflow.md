@@ -33,7 +33,8 @@ is installed.
 8. Follow `testing.md`; use an installed testing skill when available.
 9. Review the complete diff for scope, correctness, and accidental churn.
 10. Commit coherent units using the commit convention.
-11. Open a PR with evidence and explicit remaining risk.
+11. Open a draft PR with evidence and explicit remaining risk. Follow
+    `pull-request.md` for draft ownership and user-notification rules.
 12. Address review without hiding unresolved concerns.
 
 ## Jira-Driven Development Flow
@@ -91,7 +92,7 @@ end-to-end development. Jira access is described in `project.md`.
    `pair-review-critic` subagent against the implementation. Resolve or
    explicitly accept every finding before opening the PR.
 
-8. **Open the PR.** Follow `pull-request.md`, targeting `develop`. Fill in
+8. **Open the draft PR.** Follow `pull-request.md`, targeting `develop`. Fill in
    `Code Walkthrough` with one entry per changed unit, and end the body with a
    `Jira: <ISSUE KEY>` trailer so the issue links back.
 
