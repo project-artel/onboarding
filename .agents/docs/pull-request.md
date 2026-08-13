@@ -50,7 +50,12 @@ as renames or formatting into a single entry.
 ## Review Rules
 
 - Keep PR focused on one coherent outcome.
-- Mark draft while known required work remains.
+- Always create the PR as a draft, even when implementation and validation are
+  complete. With GitHub CLI, pass `--draft` to `gh pr create`.
+- Agents must never mark a PR ready for review. A human must review the draft
+  and manually mark it ready.
+- After creating the draft PR, tell the user that human review and manual
+  ready-for-review transition are required.
 - Respond to each actionable review comment.
 - Resolve threads only after change or explicit agreement.
 - Add new commits during review when history clarity matters.
