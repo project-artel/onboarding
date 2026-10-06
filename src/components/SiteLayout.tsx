@@ -56,6 +56,7 @@ export function SiteLayout() {
           </Link>
           <nav className="site-nav" aria-label={t.nav.home}>
             <NavLink to={href('/sdk')}>{t.nav.sdk}</NavLink>
+            <NavLink to={href('/self-hosting')}>{t.nav.selfHosting}</NavLink>
             <NavLink to={href('/how-it-works')}>{t.nav.how}</NavLink>
           </nav>
           <div className="locale" role="group" aria-label={t.footer.language}>

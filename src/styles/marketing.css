@@ -409,3 +409,19 @@ main > .section:last-child { border-bottom: none; }
 @media (max-width: 480px) {
   .site-header .brand__word { display: none; }
 }
+
+/* Self-hosting page: stack paragraphs and code blocks with even spacing. */
+.selfhost__blocks { display: grid; gap: 16px; margin-top: 16px; }
+.selfhost__blocks .step__body { margin: 0; color: var(--ink-2); font-size: 16px; line-height: 1.75; text-wrap: pretty; }
+.selfhost__blocks .marks--tight { margin-bottom: 0; }
+.selfhost__links { display: flex; flex-wrap: wrap; gap: 16px; }
+
+/* Self-hosting hub: method chooser cards and the back link on method pages. */
+.method-cards { margin: 0; padding: 0; list-style: none; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+.method-card { display: grid; gap: 8px; height: 100%; padding: 20px; border: 1px solid var(--rule); border-radius: var(--r-lg); background: var(--paper); color: var(--ink); text-decoration: none; }
+.method-card:hover { border-color: var(--flare); }
+.method-card__name { font-family: var(--font-display); font-size: 18px; font-weight: 600; }
+.method-card__audience { color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+.method-card__cta { font-family: var(--font-mono); font-size: 13px; color: var(--flare); }
+.selfhost__back { display: inline-block; margin-bottom: 16px; font-family: var(--font-mono); font-size: 13px; color: var(--ink-2); text-decoration: none; }
+.selfhost__back:hover { color: var(--flare); }
