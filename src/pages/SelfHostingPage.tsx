@@ -1,60 +1,13 @@
-import { CodeBlock } from '../components/CodeBlock'
+import { Link } from 'react-router-dom'
 import { RailSection } from '../components/RailSection'
-import { StateBadge } from '../components/StateBadge'
+import { SelfHostingBlocks } from '../components/SelfHostingBlocks'
+import { selfHostingMethodPath } from '../i18n/selfHostingRoutes'
 import { useCopy } from '../i18n/useCopy'
-import type { SelfHostingBlock, SelfHostingCodeKey } from '../i18n/messages'
-import {
-  backupCommand,
-  composeBuildCommand,
-  composeCommands,
-  composeUpgradeCommand,
-  dockerRunCommands,
-  embeddingModel,
-  githubEnvironmentLines,
-  installCommand,
-  installWithFlagsCommand,
-  openRouterEnvironmentLine,
-  requiredChatModels,
-  signupOpenLine,
-} from './selfHostingCommands'
 
 const repositoryUrl = 'https://github.com/project-artel/artel'
 
-const codeByKey: Record<SelfHostingCodeKey, string> = {
-  install: installCommand,
-  installWithFlags: installWithFlagsCommand,
-  signupOpen: signupOpenLine,
-  openRouterEnvironment: openRouterEnvironmentLine,
-  models: [...requiredChatModels, embeddingModel].join('\n'),
-  compose: composeCommands,
-  composeUpgrade: composeUpgradeCommand,
-  composeBuild: composeBuildCommand,
-  backup: backupCommand,
-  dockerRun: dockerRunCommands,
-  githubEnvironment: githubEnvironmentLines,
-}
-
-function Block({ block }: { block: SelfHostingBlock }) {
-  switch (block.kind) {
-    case 'paragraph':
-      return <p className="step__body">{block.text}</p>
-    case 'list':
-      return (
-        <ul className="marks marks--tight">
-          {block.items.map((item) => (
-            <li key={item}>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      )
-    case 'code':
-      return <CodeBlock code={codeByKey[block.code]} />
-  }
-}
-
 export function SelfHostingPage() {
-  const { t } = useCopy()
+  const { t, href } = useCopy()
   const page = t.selfHosting
 
   return (
@@ -67,26 +20,42 @@ export function SelfHostingPage() {
             <p className="page-hero__kicker">SELF-HOST</p>
             <h1 className="hero__title page-hero__title">{page.title}</h1>
             <p className="hero__lead">{page.lead}</p>
-            <p className="hero__lead">
-              <StateBadge state="planned" /> {page.statusNote}
-            </p>
           </div>
         </div>
       </section>
 
-      {page.sections.map((section, index) => (
+      <RailSection alt num="01" title={page.overview.title}>
+        <ul className="marks marks--tight">
+          {page.overview.items.map((item) => (
+            <li key={item}>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </RailSection>
+
+      <RailSection num="02" title={page.chooser.title}>
+        <ul className="method-cards">
+          {page.chooser.cards.map((card) => (
+            <li key={card.id}>
+              <Link className="method-card" to={href(selfHostingMethodPath(card.id))}>
+                <span className="method-card__name">{card.name}</span>
+                <span className="method-card__audience">{card.audience}</span>
+                <span className="method-card__cta">{card.cta} →</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </RailSection>
+
+      {page.afterInstall.map((section, index) => (
         <RailSection
           alt={index % 2 === 0}
           key={section.title}
-          num={String(index + 1).padStart(2, '0')}
+          num={String(index + 3).padStart(2, '0')}
           title={section.title}
         >
-          {section.state ? <StateBadge state={section.state} /> : null}
-          <div className="selfhost__blocks">
-            {section.blocks.map((block, blockIndex) => (
-              <Block block={block} key={blockIndex} />
-            ))}
-          </div>
+          <SelfHostingBlocks blocks={section.blocks} />
         </RailSection>
       ))}
 

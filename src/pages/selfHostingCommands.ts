@@ -1,4 +1,4 @@
-// Commands and slugs on the self-hosting page. They are identical in every locale, so they live
+// Commands and slug lists on the self-hosting pages. They are identical in every locale, so they live
 // here once instead of inside each translation. Source of truth: deploy/README.md,
 // deploy/install.sh and deploy/.env.example in https://github.com/project-artel/artel.
 
@@ -7,24 +7,47 @@ export const installCommand =
 
 export const installWithFlagsCommand = `${installCommand} -s -- --dir /opt/artel --tag v0.1.0 --port 8088`
 
-export const openRouterEnvironmentLine = 'OPENROUTER_API_KEY=sk-or-...'
+export const installAfterCommand = 'cd $HOME/artel\ndocker compose ps'
 
-export const githubEnvironmentLines = 'GITHUB_CLIENT_ID=...\nGITHUB_CLIENT_SECRET=...'
+export const cloneRepositoryCommands =
+  'git clone --recurse-submodules https://github.com/project-artel/artel.git\ncd artel/deploy'
 
-export const signupOpenLine = 'ARTEL_SIGNUP_OPEN=true'
+export const composeEnvFileCommands = 'cp .env.example .env'
 
-export const composeCommands = [
-  'cp .env.example .env',
-  'docker compose up -d',
-  'docker compose logs -f orchestration',
-].join('\n')
+export const generateSecretCommand = 'openssl rand -hex 32'
 
-export const composeUpgradeCommand = 'docker compose pull && docker compose up -d'
+export const shellOverrideCheckCommand = "env | grep -E 'ARTEL|OPENROUTER|GITHUB|DB_'"
+
+export const composeUpCommands = 'docker compose up -d\ndocker compose ps'
+
+export const composeLogsCommand = 'docker compose logs -f orchestration'
+
+export const composeUpgradeCommands = 'docker compose pull\ndocker compose up -d'
 
 export const composeBuildCommand = 'docker compose build'
 
 export const backupCommand =
   `docker compose exec -T postgres sh -c 'pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB"' > artel-$(date +%F).sql`
+
+export const restoreCommand =
+  `docker compose exec -T postgres sh -c 'psql -U "$POSTGRES_USER" "$POSTGRES_DB"' < artel-2026-10-06.sql`
+
+export const rawVolumeBackupCommands = [
+  'docker compose stop postgres',
+  'docker run --rm -v artel_postgres-data:/data -v "$PWD":/backup alpine tar czf /backup/postgres-data.tgz -C /data .',
+  'docker compose start postgres',
+].join('\n')
+
+export const composeDownCommand = 'docker compose down'
+
+export const dockerCleanupCommand =
+  'docker rm -f proxy artel-home admin-page agent-server orchestration minio redis postgres'
+
+export const openRouterEnvironmentLine = 'OPENROUTER_API_KEY=sk-or-...'
+
+export const githubEnvironmentLines = 'GITHUB_CLIENT_ID=...\nGITHUB_CLIENT_SECRET=...'
+
+export const signupOpenLine = 'ARTEL_SIGNUP_OPEN=true'
 
 export const requiredChatModels = [
   'openai/gpt-5.6-luna',
