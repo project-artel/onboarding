@@ -52,14 +52,69 @@
       name="description"
       content="Unity 게임에 SDK를 붙이면 에이전트가 직접 조작하며 시나리오를 검증하고 실패 순간의 증거를 남긴다."
     />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="ARTEL" />
+    <meta name="application-name" content="ARTEL" />
+    <meta
+      name="keywords"
+      content="ARTEL, 게임 QA, QA 자동화, Unity SDK, AI 에이전트, game QA, QA automation, Unity, AI agent, self-hosting"
+    />
+    <link rel="canonical" href="https://artel.kr/" />
+    <link rel="alternate" hreflang="ko" href="https://artel.kr/" />
+    <link rel="alternate" hreflang="en" href="https://artel.kr/en" />
+    <link rel="alternate" hreflang="x-default" href="https://artel.kr/" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="ARTEL" />
+    <meta property="og:url" content="https://artel.kr/" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:title" content="ARTEL — 게임 QA를 에이전트가 대신 플레이한다" />
     <meta
       property="og:description"
       content="Unity 게임에 SDK를 붙이면 에이전트가 직접 조작하며 시나리오를 검증하고 실패 순간의 증거를 남긴다."
     />
-    <!-- hreflang은 절대 URL을 요구한다. 도메인이 정해지면 ARTEL-204에서 넣는다. -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="ARTEL — 게임 QA를 에이전트가 대신 플레이한다" />
+    <meta
+      name="twitter:description"
+      content="Unity 게임에 SDK를 붙이면 에이전트가 직접 조작하며 시나리오를 검증하고 실패 순간의 증거를 남긴다."
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://artel.kr/#organization",
+            "name": "ARTEL",
+            "url": "https://artel.kr/",
+            "logo": "https://artel.kr/favicon.svg",
+            "email": "contact@artel.dev",
+            "sameAs": ["https://github.com/project-artel"]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://artel.kr/#website",
+            "url": "https://artel.kr/",
+            "name": "ARTEL",
+            "inLanguage": ["ko", "en"],
+            "publisher": { "@id": "https://artel.kr/#organization" }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "ARTEL",
+            "applicationCategory": "DeveloperApplication",
+            "operatingSystem": "Web, Unity",
+            "description": "An AI agent plays a Unity game through the SDK, runs QA scenarios, and keeps evidence at the moment a failure happens.",
+            "url": "https://artel.kr/",
+            "publisher": { "@id": "https://artel.kr/#organization" },
+            "codeRepository": "https://github.com/project-artel/artel"
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
