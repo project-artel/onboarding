@@ -10,7 +10,7 @@ export const installWithFlagsCommand = `${installCommand} -s -- --dir /opt/artel
 export const installAfterCommand = 'cd $HOME/artel\ndocker compose ps'
 
 export const cloneRepositoryCommands =
-  'git clone --recurse-submodules https://github.com/project-artel/artel.git\ncd artel/deploy'
+  'git clone https://github.com/project-artel/artel.git\ncd artel/deploy'
 
 export const composeEnvFileCommands = 'cp .env.example .env'
 
@@ -24,7 +24,7 @@ export const composeLogsCommand = 'docker compose logs -f orchestration'
 
 export const composeUpgradeCommands = 'docker compose pull\ndocker compose up -d'
 
-export const composeBuildCommand = 'docker compose build'
+export const composeBuildCommand = 'git submodule update --init\ndocker compose build'
 
 export const backupCommand =
   `docker compose exec -T postgres sh -c 'pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB"' > artel-$(date +%F).sql`

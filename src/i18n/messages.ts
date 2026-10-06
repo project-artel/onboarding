@@ -612,10 +612,6 @@ ArtelSdk.Connect(config);`,
                 kind: 'code',
                 code: 'composeBuild',
               },
-              {
-                kind: 'paragraph',
-                text: 'submodule 이 checkout 되어 있어야 합니다.',
-              },
             ],
           },
           {
@@ -1229,10 +1225,6 @@ ArtelSdk.Connect(config);`,
               {
                 kind: 'code',
                 code: 'composeBuild',
-              },
-              {
-                kind: 'paragraph',
-                text: 'The submodules must be checked out.',
               },
             ],
           },
