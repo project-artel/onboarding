@@ -37,6 +37,30 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/self-hosting" />
   </url>
   <url>
+    <loc>https://artel.kr/self-hosting/install-script</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/self-hosting/install-script" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/self-hosting/install-script" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/self-hosting/install-script" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/self-hosting/install-script</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/self-hosting/install-script" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/self-hosting/install-script" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/self-hosting/install-script" />
+  </url>
+  <url>
+    <loc>https://artel.kr/self-hosting/docker-compose</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/self-hosting/docker-compose" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/self-hosting/docker-compose" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/self-hosting/docker-compose" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/self-hosting/docker-compose</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/self-hosting/docker-compose" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/self-hosting/docker-compose" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/self-hosting/docker-compose" />
+  </url>
+  <url>
     <loc>https://artel.kr/how-it-works</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/how-it-works" />
     <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/how-it-works" />

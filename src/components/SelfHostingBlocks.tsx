@@ -1,25 +1,20 @@
 import type { SelfHostingBlock, SelfHostingCodeKey } from '../i18n/messages'
 import * as commands from '../pages/selfHostingCommands'
+import { composeFile } from '../pages/composeFile.generated'
 import { CodeBlock } from './CodeBlock'
 
 const codeByKey: Record<SelfHostingCodeKey, string> = {
   install: commands.installCommand,
   installWithFlags: commands.installWithFlagsCommand,
   installAfter: commands.installAfterCommand,
-  cloneRepository: commands.cloneRepositoryCommands,
-  composeEnvFile: commands.composeEnvFileCommands,
+  composeFile: composeFile,
   generateSecret: commands.generateSecretCommand,
-  shellOverrideCheck: commands.shellOverrideCheckCommand,
   composeUp: commands.composeUpCommands,
   composeLogs: commands.composeLogsCommand,
   composeUpgrade: commands.composeUpgradeCommands,
-  composeBuild: commands.composeBuildCommand,
   backup: commands.backupCommand,
   restore: commands.restoreCommand,
-  rawVolumeBackup: commands.rawVolumeBackupCommands,
   composeDown: commands.composeDownCommand,
-  dockerRun: commands.dockerRunCommands,
-  dockerCleanup: commands.dockerCleanupCommand,
   signupOpen: commands.signupOpenLine,
   openRouterEnvironment: commands.openRouterEnvironmentLine,
   models: [...commands.requiredChatModels, commands.embeddingModel].join('\n'),
