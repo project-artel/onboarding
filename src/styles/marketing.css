@@ -409,3 +409,9 @@ main > .section:last-child { border-bottom: none; }
 @media (max-width: 480px) {
   .site-header .brand__word { display: none; }
 }
+
+/* Self-hosting page: stack paragraphs and code blocks with even spacing. */
+.selfhost__blocks { display: grid; gap: 16px; margin-top: 16px; }
+.selfhost__blocks .step__body { margin: 0; color: var(--ink-2); font-size: 16px; line-height: 1.75; text-wrap: pretty; }
+.selfhost__blocks .marks--tight { margin-bottom: 0; }
+.selfhost__links { display: flex; flex-wrap: wrap; gap: 16px; }

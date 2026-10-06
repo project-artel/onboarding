@@ -4,6 +4,7 @@ import { HowItWorksPage } from './pages/HowItWorksPage'
 import { LandingPage } from './pages/LandingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { SdkPage } from './pages/SdkPage'
+import { SelfHostingPage } from './pages/SelfHostingPage'
 
 // 로케일별 경로를 같은 트리로 두 번 등록한다. 옵셔널 세그먼트 하나로 줄일 수는
 // 있지만, 그러면 `/enterprise` 같은 미래 경로가 영어 프리픽스로 오인된다.
@@ -12,6 +13,7 @@ function localeRoutes() {
     <>
       <Route index element={<LandingPage />} />
       <Route path="sdk" element={<SdkPage />} />
+      <Route path="self-hosting" element={<SelfHostingPage />} />
       <Route path="how-it-works" element={<HowItWorksPage />} />
     </>
   )

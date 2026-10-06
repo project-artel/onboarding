@@ -4,9 +4,35 @@ import type { Locale } from './locale'
 // 고치는 사람이 미구현 기능을 현재형으로 바꿔 쓰는 일을 막는다.
 export type Availability = 'shipped' | 'planned'
 
+// Keys of the commands and slug lists kept once in `pages/selfHostingCommands.ts`.
+export type SelfHostingCodeKey =
+  | 'install'
+  | 'installWithFlags'
+  | 'signupOpen'
+  | 'openRouterEnvironment'
+  | 'models'
+  | 'compose'
+  | 'composeUpgrade'
+  | 'composeBuild'
+  | 'backup'
+  | 'dockerRun'
+  | 'githubEnvironment'
+
+export type SelfHostingBlock =
+  | { kind: 'paragraph'; text: string }
+  | { kind: 'list'; items: string[] }
+  | { kind: 'code'; code: SelfHostingCodeKey }
+
+export type SelfHostingSection = {
+  title: string
+  // Omitted for sections that describe a fact instead of a feature, such as known limits.
+  state?: Availability
+  blocks: SelfHostingBlock[]
+}
+
 type Copy = {
   meta: { title: string; description: string }
-  nav: { sdk: string; how: string; skipToContent: string; home: string }
+  nav: { sdk: string; selfHosting: string; how: string; skipToContent: string; home: string }
   theme: { toLight: string; toDark: string }
   availability: Record<Availability, string>
   hero: {
@@ -55,6 +81,14 @@ type Copy = {
     contextTitle: string
     contextBody: string
   }
+  selfHosting: {
+    title: string
+    lead: string
+    statusNote: string
+    sections: SelfHostingSection[]
+    deployReadmeLabel: string
+    licenseLabel: string
+  }
   notFound: { title: string; body: string; back: string }
 }
 
@@ -66,6 +100,7 @@ const ko: Copy = {
   },
   nav: {
     sdk: 'SDK 설치',
+    selfHosting: '직접 설치',
     how: '작동 원리',
     skipToContent: '본문으로 건너뛰기',
     home: '홈',
@@ -166,7 +201,7 @@ const ko: Copy = {
       },
       {
         q: '데이터는 어디에 저장되나요?',
-        a: '실행 로그와 증거는 ARTEL 서버에 저장됩니다. 자체 호스팅은 아직 제공하지 않습니다.',
+        a: '실행 로그와 증거는 ARTEL 서버에 저장됩니다. 직접 설치(자체 호스팅)는 명령 한 줄로 실행하는 방식으로 준비 중이며, 이미지가 공개되기 전까지는 개발 예정입니다. 설치 방법은 직접 설치 페이지에 있습니다.',
       },
       {
         q: '지금 어디까지 동작하나요?',
@@ -182,7 +217,7 @@ const ko: Copy = {
       {
         title: '패키지 추가',
         body: 'Unity Package Manager에서 Add package from git URL을 선택하고 아래 주소를 붙여 넣습니다.',
-        code: 'https://github.com/project-artel/artel-sdk.git',
+        code: 'https://github.com/project-artel/artel-sdk.git?path=/Packages/kr.artel.sdk',
       },
       {
         title: '프로젝트 연결',
@@ -285,6 +320,162 @@ ArtelSdk.Connect(config);`,
     contextBody:
       '업로드한 기획서에서 게임 규칙과 목표를 추출해 게임 컨텍스트로 저장합니다. 에이전트는 이 컨텍스트를 근거로 시나리오를 만들고, 실행 중에도 판단 근거로 참조합니다. 이 구간은 개발 예정입니다.',
   },
+  selfHosting: {
+    title: '명령 한 줄로 직접 설치합니다',
+    lead: 'Docker가 있는 한 대의 컴퓨터에서 ARTEL 전체를 실행합니다. 이메일과 비밀번호로 로그인하고, 모든 모델 호출에 OpenRouter 키 하나를 씁니다.',
+    statusNote:
+      '이 페이지의 기능은 아직 모두 개발 예정입니다. 컨테이너 이미지가 공개되지 않았고, 이메일 로그인과 admin 기능은 아직 main에 merge되지 않았습니다. 아래 명령은 그 둘이 끝난 뒤에 동작합니다.',
+    deployReadmeLabel: 'deploy/README.md 전체 보기',
+    licenseLabel: 'AGPL-3.0 라이선스 전문 (LICENSE)',
+    sections: [
+      {
+        title: '무엇을 얻고 무엇이 필요한가요',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'PostgreSQL(pgvector), Valkey(Redis 호환 저장소), MinIO, orchestration 서버, agent 서버, artel-home, admin 페이지, 리버스 프록시가 한 번에 올라옵니다. 모두 하나의 주소로 제공되어 별도의 CORS 설정이 필요 없습니다.',
+          },
+          {
+            kind: 'list',
+            items: [
+              'Docker와 Docker Compose 플러그인(docker compose)',
+              '약 8 GB의 RAM',
+              'OpenRouter 계정과 API 키',
+            ],
+          },
+        ],
+      },
+      {
+        title: '한 줄로 설치합니다',
+        state: 'planned',
+        blocks: [
+          { kind: 'code', code: 'install' },
+          {
+            kind: 'paragraph',
+            text: '옵션은 sh -s -- 뒤에 붙입니다. --dir은 설치 디렉터리(기본값 $HOME/artel), --tag는 이미지 태그(기본값 latest), --port는 호스트 포트(기본값 8088)입니다.',
+          },
+          { kind: 'code', code: 'installWithFlags' },
+          {
+            kind: 'paragraph',
+            text: '스크립트는 docker와 docker compose를 확인하고, 무작위 비밀값이 든 .env를 만든 뒤 docker compose up -d를 실행합니다. 이미 있는 .env는 덮어쓰지 않으므로 다시 실행해도 안전합니다. 주의: Docker Compose는 셸에서 export한 변수를 .env보다 먼저 읽으므로, 셸이 OPENROUTER_API_KEY 같은 변수를 export하고 있으면 .env 값이 조용히 무시됩니다. docker compose up -d 전에 env | grep -E \'ARTEL|OPENROUTER|GITHUB|DB_\' 로 확인하세요. 끝나면 http://localhost:8088/ 을 엽니다.',
+          },
+        ],
+      },
+      {
+        title: '첫 계정이 admin이 됩니다',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: '가장 먼저 가입한 계정이 admin이 됩니다. 그 뒤로는 가입이 닫혀 있고, 아래 값을 .env에 넣어야 누구나 가입할 수 있습니다.',
+          },
+          { kind: 'code', code: 'signupOpen' },
+        ],
+      },
+      {
+        title: 'OpenRouter 키를 넣습니다',
+        state: 'planned',
+        blocks: [
+          { kind: 'paragraph', text: '방법은 두 가지입니다.' },
+          {
+            kind: 'list',
+            items: [
+              'admin 페이지(/admin/)의 Settings 탭에서 키를 입력합니다. 이 값이 환경 변수보다 우선합니다. 저장한 키는 ARTEL_SECRETS_KEY로 암호화되며 화면에는 뒷자리만 보입니다.',
+              '.env에 OPENROUTER_API_KEY를 적고 docker compose up -d를 다시 실행합니다.',
+            ],
+          },
+          { kind: 'code', code: 'openRouterEnvironment' },
+        ],
+      },
+      {
+        title: '키가 접근할 수 있어야 하는 모델',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: '채팅 모델 12개와 임베딩 모델 1개입니다. 마지막 줄이 임베딩 모델입니다.',
+          },
+          { kind: 'code', code: 'models' },
+          {
+            kind: 'paragraph',
+            text: '최소 조건은 openai/gpt-5.6-luna와 임베딩 모델 openai/text-embedding-3-large입니다. Settings 탭의 Check models 버튼이 키로 어떤 모델에 접근할 수 있는지 확인해 줍니다. Bedrock은 필요하지 않습니다.',
+          },
+        ],
+      },
+      {
+        title: '사용자를 관리합니다',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'list',
+            items: [
+              'admin이 admin 페이지에서 사용자를 만듭니다.',
+              '임시 비밀번호는 무작위 문자열이며 만든 직후 한 번만 보입니다.',
+              '사용자는 처음 로그인할 때 비밀번호를 바꿔야 하고, 바꾸기 전에는 다른 기능을 쓸 수 없습니다.',
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Docker Compose 명령',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: '모두 deploy 디렉터리(install.sh로 설치했다면 설치 디렉터리)에서 실행합니다. 서비스 이름은 orchestration, agent-server, proxy, postgres, minio 등입니다. 오브젝트 스토리지(MinIO)는 같은 주소의 /<bucket>/ 경로로 제공되므로 추가 설정이 필요 없습니다. 버킷 이름(ARTEL_S3_BUCKET, 기본값 artel)은 proxy 경로인 api, oauth2, login, ws, admin, assets, projects, account와 같으면 안 되며 install.sh가 이를 확인합니다.',
+          },
+          { kind: 'code', code: 'compose' },
+          { kind: 'paragraph', text: '업그레이드는 이미지를 받고 다시 올립니다. 데이터베이스 migration은 orchestration 서버가 시작할 때 실행됩니다.' },
+          { kind: 'code', code: 'composeUpgrade' },
+          { kind: 'paragraph', text: '저장소를 clone했다면 이미지를 직접 빌드할 수 있습니다. submodule을 받아 둔 상태여야 합니다.' },
+          { kind: 'code', code: 'composeBuild' },
+          { kind: 'paragraph', text: '데이터베이스 백업은 스택이 떠 있는 상태에서 SQL 덤프로 받습니다. ARTEL_SECRETS_KEY와 .env도 함께 보관하세요. 이 키가 없으면 저장한 OpenRouter 키를 읽을 수 없습니다.' },
+          { kind: 'code', code: 'backup' },
+        ],
+      },
+      {
+        title: 'docker run으로 직접 실행합니다',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'compose 없이 같은 스택을 띄우는 명령입니다. deploy/README.md의 내용을 그대로 옮겼고, 비밀값은 직접 만든 값으로 바꾸세요. 마지막 proxy 명령은 deploy 디렉터리에서 실행해야 ./Caddyfile을 찾습니다. 오브젝트 스토리지는 같은 주소로 제공되어 추가 설정이 필요 없습니다.',
+          },
+          { kind: 'code', code: 'dockerRun' },
+        ],
+      },
+      {
+        title: 'GitHub 로그인은 선택입니다',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: '.env에 GITHUB_CLIENT_ID와 GITHUB_CLIENT_SECRET을 모두 넣으면 로그인 화면에 GitHub 버튼이 나타납니다. 둘 중 하나라도 비어 있으면 버튼이 숨겨집니다. GitHub OAuth app의 callback URL은 <ARTEL_PUBLIC_URL>/login/oauth2/code/github 입니다. ARTEL_GITHUB_SIGNUP_OPEN이 false(기본값)이면, GitHub 계정은 admin이 같은 이메일로 사용자를 이미 만들어 둔 경우에만 로그인할 수 있습니다.',
+          },
+          { kind: 'code', code: 'githubEnvironment' },
+        ],
+      },
+      {
+        title: '알려진 제한',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: '실시간 게임 화면은 상대 경로 WebSocket 주소를 해석하는 브라우저가 필요합니다. Chrome 125 이상, 최신 Firefox와 Safari에서 동작합니다.',
+          },
+        ],
+      },
+      {
+        title: '라이선스',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'ARTEL은 AGPL-3.0으로 공개됩니다. 변경하지 않은 GNU 전문이 저장소의 LICENSE 파일에 있습니다.',
+          },
+        ],
+      },
+    ],
+  },
   notFound: {
     title: '페이지를 찾을 수 없습니다',
     body: '주소를 다시 확인해 주세요.',
@@ -300,6 +491,7 @@ const en: Copy = {
   },
   nav: {
     sdk: 'Install SDK',
+    selfHosting: 'Self-hosting',
     how: 'How it works',
     skipToContent: 'Skip to content',
     home: 'Home',
@@ -400,7 +592,7 @@ const en: Copy = {
       },
       {
         q: 'Where does the data live?',
-        a: 'Run logs and evidence are stored on ARTEL servers. Self-hosting is not offered yet.',
+        a: 'Run logs and evidence are stored on ARTEL servers. Self-hosting with one command is in preparation and stays planned until the container images are published. The steps are on the self-hosting page.',
       },
       {
         q: 'What works today?',
@@ -416,7 +608,7 @@ const en: Copy = {
       {
         title: 'Add the package',
         body: 'In Unity Package Manager choose Add package from git URL and paste the address below.',
-        code: 'https://github.com/project-artel/artel-sdk.git',
+        code: 'https://github.com/project-artel/artel-sdk.git?path=/Packages/kr.artel.sdk',
       },
       {
         title: 'Connect the project',
@@ -518,6 +710,162 @@ ArtelSdk.Connect(config);`,
     contextTitle: 'How the design doc is used',
     contextBody:
       'Rules and goals are extracted from the uploaded document and stored as game context. The agent builds scenarios from it and consults it while running. This part is still planned.',
+  },
+  selfHosting: {
+    title: 'Self-host with one command',
+    lead: 'Run all of ARTEL on one machine that has Docker. Sign in with an email and a password, and use a single OpenRouter key for every model call.',
+    statusNote:
+      'Everything on this page is still planned. The container images are not published, and the email login and admin features are not merged into main yet. The commands below work once both are done.',
+    deployReadmeLabel: 'Read the full deploy/README.md',
+    licenseLabel: 'AGPL-3.0 license text (LICENSE)',
+    sections: [
+      {
+        title: 'What you get and what you need',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'One command starts PostgreSQL (pgvector), Valkey (the Redis-compatible store), MinIO, the orchestration server, the agent server, artel-home, the admin page and a reverse proxy. All of them are served on one address, so no CORS setup is needed.',
+          },
+          {
+            kind: 'list',
+            items: [
+              'Docker with the Compose plugin (docker compose)',
+              'About 8 GB of RAM',
+              'An OpenRouter account and API key',
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Install with one line',
+        state: 'planned',
+        blocks: [
+          { kind: 'code', code: 'install' },
+          {
+            kind: 'paragraph',
+            text: 'Flags go after sh -s --. --dir is the install directory (default $HOME/artel), --tag is the image tag (default latest), and --port is the host port (default 8088).',
+          },
+          { kind: 'code', code: 'installWithFlags' },
+          {
+            kind: 'paragraph',
+            text: 'The script checks docker and docker compose, writes a .env with random secrets, and runs docker compose up -d. An existing .env is never overwritten, so running it again is safe. Warning: Docker Compose reads variables exported in your shell before it reads .env, so if your shell exports OPENROUTER_API_KEY or any other variable listed in .env, the exported value silently wins. Run env | grep -E \'ARTEL|OPENROUTER|GITHUB|DB_\' before docker compose up -d to check. When it finishes, open http://localhost:8088/.',
+          },
+        ],
+      },
+      {
+        title: 'The first account becomes the admin',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'The first account to sign up becomes the admin. After that, signup is closed. To let anyone sign up, put this in .env:',
+          },
+          { kind: 'code', code: 'signupOpen' },
+        ],
+      },
+      {
+        title: 'Set the OpenRouter key',
+        state: 'planned',
+        blocks: [
+          { kind: 'paragraph', text: 'There are two ways.' },
+          {
+            kind: 'list',
+            items: [
+              'Enter the key in the Settings tab of the admin page at /admin/. This value wins over the environment variable. The stored key is encrypted with ARTEL_SECRETS_KEY, and only its last characters are ever shown.',
+              'Set OPENROUTER_API_KEY in .env and run docker compose up -d again.',
+            ],
+          },
+          { kind: 'code', code: 'openRouterEnvironment' },
+        ],
+      },
+      {
+        title: 'Models the key must reach',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'Twelve chat models and one embedding model. The last line is the embedding model.',
+          },
+          { kind: 'code', code: 'models' },
+          {
+            kind: 'paragraph',
+            text: 'The minimum is openai/gpt-5.6-luna plus the embedding model openai/text-embedding-3-large. The Settings tab has a Check models button that asks OpenRouter which of these the key reaches. Bedrock is not needed.',
+          },
+        ],
+      },
+      {
+        title: 'Manage users',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'list',
+            items: [
+              'The admin creates a user in the admin page.',
+              'The temporary password is a random string, shown once right after the user is created.',
+              'The user must change it at first sign in, and cannot use anything else until they do.',
+            ],
+          },
+        ],
+      },
+      {
+        title: 'Docker Compose commands',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'Run these from the deploy directory (the install directory if you used install.sh). Service names include orchestration, agent-server, proxy, postgres and minio. Object storage (MinIO) is served on the same address under /<bucket>/, so it needs no extra setup. The bucket name (ARTEL_S3_BUCKET, default artel) must not equal a proxy route: api, oauth2, login, ws, admin, assets, projects or account. install.sh checks this.',
+          },
+          { kind: 'code', code: 'compose' },
+          { kind: 'paragraph', text: 'To upgrade, pull the images and start again. Database migrations run when the orchestration server starts.' },
+          { kind: 'code', code: 'composeUpgrade' },
+          { kind: 'paragraph', text: 'From a clone of the repository you can build the images yourself. The submodules must be checked out.' },
+          { kind: 'code', code: 'composeBuild' },
+          { kind: 'paragraph', text: 'Back up the database as an SQL dump while the stack is running. Keep ARTEL_SECRETS_KEY and .env too: without that key a stored OpenRouter key cannot be read.' },
+          { kind: 'code', code: 'backup' },
+        ],
+      },
+      {
+        title: 'Run with plain docker run',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'The same stack without Compose. This is copied from deploy/README.md as written; replace the secrets with your own. Run the last proxy command from the deploy directory so ./Caddyfile exists. Object storage is served on the same address and needs no extra setup.',
+          },
+          { kind: 'code', code: 'dockerRun' },
+        ],
+      },
+      {
+        title: 'GitHub login is optional',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'Set both GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET in .env and the GitHub button appears on the sign-in page. If either is blank, the button is hidden. The callback URL of the GitHub OAuth app is <ARTEL_PUBLIC_URL>/login/oauth2/code/github. With ARTEL_GITHUB_SIGNUP_OPEN=false (the default), a GitHub account signs in only when an admin already created a user with the same email.',
+          },
+          { kind: 'code', code: 'githubEnvironment' },
+        ],
+      },
+      {
+        title: 'Known limits',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'The live game view needs a browser that resolves relative WebSocket URLs: Chrome 125 or newer, and current Firefox and Safari.',
+          },
+        ],
+      },
+      {
+        title: 'License',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'ARTEL is released under AGPL-3.0. The unmodified GNU text is in the LICENSE file of the repository.',
+          },
+        ],
+      },
+    ],
   },
   notFound: {
     title: 'No such page',
