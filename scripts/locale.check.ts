@@ -32,7 +32,6 @@ assert.deepEqual(selfHostingPaths, [
   '/self-hosting',
   '/self-hosting/install-script',
   '/self-hosting/docker-compose',
-  '/self-hosting/docker',
 ])
 for (const path of selfHostingPaths) {
   assert.equal(localeFromPath(localizedHref(path, 'en')), 'en')

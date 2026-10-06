@@ -10,20 +10,16 @@ export type SelfHostingCodeKey =
   | 'install'
   | 'installWithFlags'
   | 'installAfter'
-  | 'cloneRepository'
-  | 'composeEnvFile'
+  | 'composeFile'
+  | 'envFile'
   | 'generateSecret'
   | 'shellOverrideCheck'
   | 'composeUp'
   | 'composeLogs'
   | 'composeUpgrade'
-  | 'composeBuild'
   | 'backup'
   | 'restore'
-  | 'rawVolumeBackup'
   | 'composeDown'
-  | 'dockerRun'
-  | 'dockerCleanup'
   | 'signupOpen'
   | 'openRouterEnvironment'
   | 'models'
@@ -360,12 +356,6 @@ ArtelSdk.Connect(config);`,
           audience: '설정 파일을 직접 고치며 운영합니다.',
           cta: '열기',
         },
-        {
-          id: 'docker',
-          name: 'docker run',
-          audience: '컨테이너를 하나씩 직접 띄웁니다.',
-          cta: '열기',
-        },
       ],
     },
     afterInstall: [
@@ -515,47 +505,45 @@ ArtelSdk.Connect(config);`,
         chooseWhen: '설정 파일을 직접 고치며 운영할 때 고릅니다.',
         steps: [
           {
-            title: '파일 받기',
+            title: '필요한 것',
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'install.sh 를 쓰지 않으면 저장소를 clone 합니다.',
-              },
-              {
-                kind: 'code',
-                code: 'cloneRepository',
+                text: 'Docker Compose 2.23.1 이상.',
               },
             ],
           },
           {
-            title: '.env 만들기',
+            title: 'docker-compose.yml',
             blocks: [
               {
                 kind: 'paragraph',
-                text: '__GENERATE_...__ 값을 모두 바꿉니다. 비밀값은 아래 명령으로 만듭니다.',
+                text: '빈 디렉터리에 이 파일 하나를 docker-compose.yml 로 저장합니다.',
               },
               {
                 kind: 'code',
-                code: 'composeEnvFile',
+                code: 'composeFile',
+              },
+            ],
+          },
+          {
+            title: '.env',
+            blocks: [
+              {
+                kind: 'paragraph',
+                text: '같은 디렉터리의 .env 에 아래 다섯 값을 채웁니다. 값마다 이 명령을 한 번씩 실행해 나온 무작위 문자열을 넣습니다.',
               },
               {
                 kind: 'code',
                 code: 'generateSecret',
               },
-            ],
-          },
-          {
-            title: '.env 설정',
-            blocks: [
               {
-                kind: 'list',
-                items: [
-                  'ARTEL_PUBLIC_URL, ARTEL_SITE_ADDRESS, ARTEL_SECURE_COOKIE: 실제 호스트 이름으로 제공할 때 바꿉니다. ARTEL_SITE_ADDRESS 에 호스트 이름을 넣으면 Caddy 가 TLS 인증서를 받으며, 이때 ARTEL_PUBLIC_URL 은 https:// 로, ARTEL_SECURE_COOKIE 는 true 로 둡니다.',
-                  'ARTEL_HTTP_PORT: 호스트 포트 (기본값 8088)',
-                  'ARTEL_S3_BUCKET: 기본값 artel. api, oauth2, login, ws, assets, projects, account 는 쓸 수 없습니다.',
-                  'ARTEL_ADMIN_URL, ARTEL_ADMIN_PORT, ARTEL_ADMIN_SITE_ADDRESS: admin 페이지의 주소, 포트, Caddy 주소 (기본값 http://localhost:8090, 8090, :8090). 호스트 이름은 콘솔과 같은 이름 아래에 둡니다.',
-                  'ARTEL_ORCHESTRATION_IMAGE, ARTEL_AGENT_IMAGE, ARTEL_CONSOLE_IMAGE, ARTEL_ADMIN_IMAGE: 이미지 지정. 기본값은 ghcr.io/project-artel/ 의 orchestration:develop, agent:develop, console:develop, admin:main 입니다.',
-                ],
+                kind: 'code',
+                code: 'envFile',
+              },
+              {
+                kind: 'paragraph',
+                text: '실제 호스트 이름으로 제공하면 ARTEL_PUBLIC_URL 과 ARTEL_ADMIN_URL 을 바꿉니다. 두 주소는 같은 호스트 이름을 씁니다. .env 를 백업하세요. ARTEL_SECRETS_KEY 를 잃으면 저장한 OpenRouter 키를 읽을 수 없습니다.',
               },
               {
                 kind: 'paragraph',
@@ -607,19 +595,6 @@ ArtelSdk.Connect(config);`,
             ],
           },
           {
-            title: 'clone 에서 빌드',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'composeBuild',
-              },
-              {
-                kind: 'paragraph',
-                text: 'orchestration 과 agent-server 두 백엔드만 clone 에서 빌드합니다. 콘솔과 admin 페이지 이미지는 조직의 CI 가 만들며 clone 에서 빌드하지 않습니다.',
-              },
-            ],
-          },
-          {
             title: '백업과 복원',
             blocks: [
               {
@@ -636,11 +611,7 @@ ArtelSdk.Connect(config);`,
               },
               {
                 kind: 'paragraph',
-                text: '볼륨을 통째로 복사하려면 postgres 를 먼저 멈춥니다. artel_minio-data 볼륨(업로드 문서, screen capture)과 .env 도 함께 보관하세요.',
-              },
-              {
-                kind: 'code',
-                code: 'rawVolumeBackup',
+                text: 'artel_minio-data 볼륨(업로드 문서, screen capture)과 .env 도 함께 보관하세요.',
               },
             ],
           },
@@ -654,56 +625,6 @@ ArtelSdk.Connect(config);`,
               {
                 kind: 'paragraph',
                 text: '데이터 볼륨은 남습니다.',
-              },
-            ],
-          },
-        ],
-      },
-      docker: {
-        title: 'docker run',
-        chooseWhen: '컨테이너를 하나씩 직접 띄울 때 고릅니다.',
-        steps: [
-          {
-            title: '실행',
-            blocks: [
-              {
-                kind: 'paragraph',
-                text: 'deploy 디렉터리에서 실행합니다. 마지막 proxy 컨테이너가 ./Caddyfile 을 읽습니다. 비밀값은 첫 줄에서 무작위로 만들어지며, orchestration 에 -p 를 붙이지 않는 것은 의도입니다. 8081 포트는 인증 없이 /internal/** 을 제공합니다.',
-              },
-              {
-                kind: 'code',
-                code: 'dockerRun',
-              },
-            ],
-          },
-          {
-            title: '네트워크와 볼륨',
-            blocks: [
-              {
-                kind: 'paragraph',
-                text: '컨테이너 이름이 artel 네트워크의 호스트 이름입니다. 볼륨은 artel_postgres-data, artel_minio-data, artel_caddy-data, artel_caddy-config 입니다.',
-              },
-            ],
-          },
-          {
-            title: '시작 후',
-            blocks: [
-              {
-                kind: 'paragraph',
-                text: 'http://localhost:8088/ 과 admin 주소 http://localhost:8090 을 엽니다. 스크립트가 끝에 두 주소를 출력합니다.',
-              },
-            ],
-          },
-          {
-            title: '정리',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'dockerCleanup',
-              },
-              {
-                kind: 'paragraph',
-                text: '볼륨과 네트워크는 남습니다.',
               },
             ],
           },
@@ -979,12 +900,6 @@ ArtelSdk.Connect(config);`,
           audience: 'Edit the settings and run it yourself.',
           cta: 'Open',
         },
-        {
-          id: 'docker',
-          name: 'docker run',
-          audience: 'Start each container yourself.',
-          cta: 'Open',
-        },
       ],
     },
     afterInstall: [
@@ -1134,47 +1049,45 @@ ArtelSdk.Connect(config);`,
         chooseWhen: 'Choose this to manage the settings files yourself.',
         steps: [
           {
-            title: 'Get the files',
+            title: 'What you need',
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'If you did not use install.sh, clone the repository.',
-              },
-              {
-                kind: 'code',
-                code: 'cloneRepository',
+                text: 'Docker Compose 2.23.1 or later.',
               },
             ],
           },
           {
-            title: 'Create .env',
+            title: 'docker-compose.yml',
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'Replace every __GENERATE_...__ value. Make a secret with the second command.',
+                text: 'Save this one file as docker-compose.yml in an empty directory.',
               },
               {
                 kind: 'code',
-                code: 'composeEnvFile',
+                code: 'composeFile',
+              },
+            ],
+          },
+          {
+            title: '.env',
+            blocks: [
+              {
+                kind: 'paragraph',
+                text: 'In .env in the same directory, fill in the five values below. For each one, run this command once and paste the random string.',
               },
               {
                 kind: 'code',
                 code: 'generateSecret',
               },
-            ],
-          },
-          {
-            title: 'Edit .env',
-            blocks: [
               {
-                kind: 'list',
-                items: [
-                  'ARTEL_PUBLIC_URL, ARTEL_SITE_ADDRESS, ARTEL_SECURE_COOKIE: change them when you serve from a real host name. A host name in ARTEL_SITE_ADDRESS makes Caddy fetch a TLS certificate; then use https:// in ARTEL_PUBLIC_URL and set ARTEL_SECURE_COOKIE=true.',
-                  'ARTEL_HTTP_PORT: host port (default 8088)',
-                  'ARTEL_S3_BUCKET: default artel. It must not be api, oauth2, login, ws, assets, projects or account.',
-                  'ARTEL_ADMIN_URL, ARTEL_ADMIN_PORT, ARTEL_ADMIN_SITE_ADDRESS: the admin page address, port and Caddy address (defaults http://localhost:8090, 8090, :8090). Keep its host name under the console host name.',
-                  'ARTEL_ORCHESTRATION_IMAGE, ARTEL_AGENT_IMAGE, ARTEL_CONSOLE_IMAGE, ARTEL_ADMIN_IMAGE: image references. Defaults are orchestration:develop, agent:develop, console:develop and admin:main under ghcr.io/project-artel/.',
-                ],
+                kind: 'code',
+                code: 'envFile',
+              },
+              {
+                kind: 'paragraph',
+                text: 'When you serve from a real host name, change ARTEL_PUBLIC_URL and ARTEL_ADMIN_URL; both use the same host name. Back up .env: without ARTEL_SECRETS_KEY a stored OpenRouter key cannot be read.',
               },
               {
                 kind: 'paragraph',
@@ -1226,19 +1139,6 @@ ArtelSdk.Connect(config);`,
             ],
           },
           {
-            title: 'Build from a clone',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'composeBuild',
-              },
-              {
-                kind: 'paragraph',
-                text: 'This builds only the two backends, orchestration and agent-server. The console and admin images come from the organization CI and are not built from a clone.',
-              },
-            ],
-          },
-          {
             title: 'Backup and restore',
             blocks: [
               {
@@ -1255,11 +1155,7 @@ ArtelSdk.Connect(config);`,
               },
               {
                 kind: 'paragraph',
-                text: 'To copy the volume itself, stop postgres first. Also keep the artel_minio-data volume (uploaded documents, screen captures) and .env.',
-              },
-              {
-                kind: 'code',
-                code: 'rawVolumeBackup',
+                text: 'Also keep the artel_minio-data volume (uploaded documents, screen captures) and .env.',
               },
             ],
           },
@@ -1273,56 +1169,6 @@ ArtelSdk.Connect(config);`,
               {
                 kind: 'paragraph',
                 text: 'Data volumes stay.',
-              },
-            ],
-          },
-        ],
-      },
-      docker: {
-        title: 'docker run',
-        chooseWhen: 'Choose this to start each container yourself.',
-        steps: [
-          {
-            title: 'Run',
-            blocks: [
-              {
-                kind: 'paragraph',
-                text: 'Run from the deploy directory: the last proxy container reads ./Caddyfile. Secrets are generated at the top. orchestration has no -p on purpose: port 8081 serves /internal/** without authentication.',
-              },
-              {
-                kind: 'code',
-                code: 'dockerRun',
-              },
-            ],
-          },
-          {
-            title: 'Network and volumes',
-            blocks: [
-              {
-                kind: 'paragraph',
-                text: 'Container names are the host names on the artel network. Volumes: artel_postgres-data, artel_minio-data, artel_caddy-data, artel_caddy-config.',
-              },
-            ],
-          },
-          {
-            title: 'After it starts',
-            blocks: [
-              {
-                kind: 'paragraph',
-                text: 'Open http://localhost:8088/ and the admin address http://localhost:8090. The script prints both at the end.',
-              },
-            ],
-          },
-          {
-            title: 'Clean up',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'dockerCleanup',
-              },
-              {
-                kind: 'paragraph',
-                text: 'Volumes and the network stay.',
               },
             ],
           },

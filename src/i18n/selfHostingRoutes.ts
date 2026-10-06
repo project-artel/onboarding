@@ -1,7 +1,7 @@
 // Routes of the self-hosting pages. The router, the hub cards and the route check all read this list,
 // so a card cannot point at a page that is not registered.
 
-export const selfHostingMethodIds = ['install-script', 'docker-compose', 'docker'] as const
+export const selfHostingMethodIds = ['install-script', 'docker-compose'] as const
 
 export type SelfHostingMethodId = (typeof selfHostingMethodIds)[number]
 
