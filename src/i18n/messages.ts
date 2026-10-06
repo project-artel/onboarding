@@ -374,7 +374,7 @@ ArtelSdk.Connect(config);`,
         blocks: [
           {
             kind: 'paragraph',
-            text: 'http://localhost:8088/ 에서 가장 먼저 가입한 계정이 admin 입니다. 이후 가입은 닫히며, 다시 열려면 .env 에 적습니다.',
+            text: 'http://localhost:8088/ 에서 가장 먼저 가입한 계정이 admin 입니다. 이후 가입은 닫히며, 다시 열려면 .env 에 적습니다. admin 페이지는 별도 주소(ARTEL_ADMIN_URL, 기본값 http://localhost:8090)이고, 같은 호스트 이름이면 한 번 로그인으로 둘 다 쓸 수 있습니다.',
           },
           {
             kind: 'code',
@@ -388,7 +388,7 @@ ArtelSdk.Connect(config);`,
           {
             kind: 'list',
             items: [
-              '/admin/ 의 Settings 탭에 입력합니다. 이 값이 우선합니다.',
+              'admin 주소(ARTEL_ADMIN_URL)의 Settings 탭에 입력합니다. 이 값이 우선합니다.',
               '또는 .env 에 적고 docker compose up -d 를 다시 실행합니다.',
             ],
           },
@@ -421,7 +421,7 @@ ArtelSdk.Connect(config);`,
           {
             kind: 'list',
             items: [
-              'admin 이 admin 페이지에서 사용자를 만듭니다.',
+              'admin 이 admin 주소의 페이지에서 사용자를 만듭니다.',
               '임시 비밀번호는 무작위 문자열이며 한 번만 보입니다.',
               '사용자는 첫 로그인에서 비밀번호를 바꿔야 합니다.',
             ],
@@ -476,8 +476,7 @@ ArtelSdk.Connect(config);`,
                 kind: 'list',
                 items: [
                   '--dir 설치 디렉터리 (기본값 $HOME/artel)',
-                  '--tag 이미지 태그 (기본값 latest)',
-                  '--port 호스트 포트 (기본값 8088)',
+                                    '--port 호스트 포트 (기본값 8088, admin 페이지는 ARTEL_ADMIN_PORT 기본값 8090)',
                   '--no-start 파일만 만들고 시작하지 않음',
                 ],
               },
@@ -501,7 +500,7 @@ ArtelSdk.Connect(config);`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'http://localhost:8088/ 을 엽니다.',
+                text: 'http://localhost:8088/ 과 admin 주소 http://localhost:8090 을 엽니다. 스크립트가 끝에 두 주소를 출력합니다.',
               },
               {
                 kind: 'code',
@@ -553,7 +552,9 @@ ArtelSdk.Connect(config);`,
                 items: [
                   'ARTEL_PUBLIC_URL, ARTEL_SITE_ADDRESS, ARTEL_SECURE_COOKIE: 실제 호스트 이름으로 제공할 때 바꿉니다. ARTEL_SITE_ADDRESS 에 호스트 이름을 넣으면 Caddy 가 TLS 인증서를 받으며, 이때 ARTEL_PUBLIC_URL 은 https:// 로, ARTEL_SECURE_COOKIE 는 true 로 둡니다.',
                   'ARTEL_HTTP_PORT: 호스트 포트 (기본값 8088)',
-                  'ARTEL_S3_BUCKET: 기본값 artel. api, oauth2, login, ws, admin, assets, projects, account 는 쓸 수 없습니다.',
+                  'ARTEL_S3_BUCKET: 기본값 artel. api, oauth2, login, ws, assets, projects, account 는 쓸 수 없습니다.',
+                  'ARTEL_ADMIN_URL, ARTEL_ADMIN_PORT, ARTEL_ADMIN_SITE_ADDRESS: admin 페이지의 주소, 포트, Caddy 주소 (기본값 http://localhost:8090, 8090, :8090). 호스트 이름은 콘솔과 같은 이름 아래에 둡니다.',
+                  'ARTEL_ORCHESTRATION_IMAGE, ARTEL_AGENT_IMAGE, ARTEL_CONSOLE_IMAGE, ARTEL_ADMIN_IMAGE: 이미지 지정. 기본값은 ghcr.io/project-artel/ 의 orchestration:develop, agent:develop, console:develop, admin:main 입니다.',
                 ],
               },
               {
@@ -601,7 +602,7 @@ ArtelSdk.Connect(config);`,
               },
               {
                 kind: 'paragraph',
-                text: 'migration 은 orchestration 서버가 시작할 때 실행됩니다.',
+                text: '이미지는 develop 과 main branch 를 따라가므로 업그레이드하면 그 시점의 내용으로 바뀝니다. migration 은 orchestration 서버가 시작할 때 실행됩니다.',
               },
             ],
           },
@@ -611,6 +612,10 @@ ArtelSdk.Connect(config);`,
               {
                 kind: 'code',
                 code: 'composeBuild',
+              },
+              {
+                kind: 'paragraph',
+                text: 'orchestration 과 agent-server 두 백엔드만 clone 에서 빌드합니다. 콘솔과 admin 페이지 이미지는 조직의 CI 가 만들며 clone 에서 빌드하지 않습니다.',
               },
             ],
           },
@@ -685,7 +690,7 @@ ArtelSdk.Connect(config);`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'http://localhost:8088/ 을 엽니다.',
+                text: 'http://localhost:8088/ 과 admin 주소 http://localhost:8090 을 엽니다. 스크립트가 끝에 두 주소를 출력합니다.',
               },
             ],
           },
@@ -988,7 +993,7 @@ ArtelSdk.Connect(config);`,
         blocks: [
           {
             kind: 'paragraph',
-            text: 'The first account to sign up at http://localhost:8088/ is the admin. Signup is then closed. To reopen it, set this in .env.',
+            text: 'The first account to sign up at http://localhost:8088/ is the admin. Signup is then closed. To reopen it, set this in .env. The admin page has its own address (ARTEL_ADMIN_URL, default http://localhost:8090); on the same host name one sign-in covers both.',
           },
           {
             kind: 'code',
@@ -1002,7 +1007,7 @@ ArtelSdk.Connect(config);`,
           {
             kind: 'list',
             items: [
-              'Enter it in the Settings tab at /admin/. This value wins.',
+              'Enter it in the Settings tab at the admin address (ARTEL_ADMIN_URL). This value wins.',
               'Or set it in .env and run docker compose up -d again.',
             ],
           },
@@ -1035,7 +1040,7 @@ ArtelSdk.Connect(config);`,
           {
             kind: 'list',
             items: [
-              'The admin creates users in the admin page.',
+              'The admin creates users on the admin address.',
               'The temporary password is a random string, shown once.',
               'The user must change it at first sign in.',
             ],
@@ -1090,8 +1095,7 @@ ArtelSdk.Connect(config);`,
                 kind: 'list',
                 items: [
                   '--dir install directory (default $HOME/artel)',
-                  '--tag image tag (default latest)',
-                  '--port host port (default 8088)',
+                                    '--port host port (default 8088; the admin page uses ARTEL_ADMIN_PORT, default 8090)',
                   '--no-start write the files and do not start',
                 ],
               },
@@ -1115,7 +1119,7 @@ ArtelSdk.Connect(config);`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'Open http://localhost:8088/.',
+                text: 'Open http://localhost:8088/ and the admin address http://localhost:8090. The script prints both at the end.',
               },
               {
                 kind: 'code',
@@ -1167,7 +1171,9 @@ ArtelSdk.Connect(config);`,
                 items: [
                   'ARTEL_PUBLIC_URL, ARTEL_SITE_ADDRESS, ARTEL_SECURE_COOKIE: change them when you serve from a real host name. A host name in ARTEL_SITE_ADDRESS makes Caddy fetch a TLS certificate; then use https:// in ARTEL_PUBLIC_URL and set ARTEL_SECURE_COOKIE=true.',
                   'ARTEL_HTTP_PORT: host port (default 8088)',
-                  'ARTEL_S3_BUCKET: default artel. It must not be api, oauth2, login, ws, admin, assets, projects or account.',
+                  'ARTEL_S3_BUCKET: default artel. It must not be api, oauth2, login, ws, assets, projects or account.',
+                  'ARTEL_ADMIN_URL, ARTEL_ADMIN_PORT, ARTEL_ADMIN_SITE_ADDRESS: the admin page address, port and Caddy address (defaults http://localhost:8090, 8090, :8090). Keep its host name under the console host name.',
+                  'ARTEL_ORCHESTRATION_IMAGE, ARTEL_AGENT_IMAGE, ARTEL_CONSOLE_IMAGE, ARTEL_ADMIN_IMAGE: image references. Defaults are orchestration:develop, agent:develop, console:develop and admin:main under ghcr.io/project-artel/.',
                 ],
               },
               {
@@ -1215,7 +1221,7 @@ ArtelSdk.Connect(config);`,
               },
               {
                 kind: 'paragraph',
-                text: 'Migrations run when the orchestration server starts.',
+                text: 'The images follow the develop and main branches, so an upgrade moves to whatever they hold at that moment. Migrations run when the orchestration server starts.',
               },
             ],
           },
@@ -1225,6 +1231,10 @@ ArtelSdk.Connect(config);`,
               {
                 kind: 'code',
                 code: 'composeBuild',
+              },
+              {
+                kind: 'paragraph',
+                text: 'This builds only the two backends, orchestration and agent-server. The console and admin images come from the organization CI and are not built from a clone.',
               },
             ],
           },
@@ -1299,7 +1309,7 @@ ArtelSdk.Connect(config);`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'Open http://localhost:8088/.',
+                text: 'Open http://localhost:8088/ and the admin address http://localhost:8090. The script prints both at the end.',
               },
             ],
           },
