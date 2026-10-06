@@ -1,6 +1,6 @@
 // Commands and slug lists on the self-hosting pages. They are identical in every locale, so they live
 // here once instead of inside each translation. Source of truth: deploy/README.md,
-// deploy/install.sh and deploy/.env.example in https://github.com/project-artel/artel.
+// deploy/install.sh and deploy/docker-compose.yml in https://github.com/project-artel/artel.
 
 export const installCommand =
   'curl -fsSL https://raw.githubusercontent.com/project-artel/artel/main/deploy/install.sh | sh'
@@ -9,19 +9,7 @@ export const installWithFlagsCommand = `${installCommand} -s -- --dir /opt/artel
 
 export const installAfterCommand = 'cd $HOME/artel\ndocker compose ps'
 
-export const envFileLines = [
-  'ARTEL_JWT_SECRET=replace-with-random-string',
-  'ARTEL_SECRETS_KEY=replace-with-random-string',
-  'DB_PASSWORD=replace-with-random-string',
-  'ARTEL_S3_ACCESS_KEY=replace-with-random-string',
-  'ARTEL_S3_SECRET_KEY=replace-with-random-string',
-  'ARTEL_PUBLIC_URL=http://localhost:8088',
-  'ARTEL_ADMIN_URL=http://localhost:8090',
-].join('\n')
-
 export const generateSecretCommand = 'openssl rand -hex 32'
-
-export const shellOverrideCheckCommand = "env | grep -E 'ARTEL|OPENROUTER|GITHUB|DB_'"
 
 export const composeUpCommands = 'docker compose up -d\ndocker compose ps'
 
@@ -37,25 +25,25 @@ export const restoreCommand =
 
 export const composeDownCommand = 'docker compose down'
 
-export const openRouterEnvironmentLine = 'OPENROUTER_API_KEY=sk-or-...'
+export const openRouterEnvironmentLine = 'x-openrouter-api-key: &openrouter_api_key "sk-or-..."'
 
-export const githubEnvironmentLines = 'GITHUB_CLIENT_ID=...\nGITHUB_CLIENT_SECRET=...'
+export const githubEnvironmentLines = 'GITHUB_CLIENT_ID: "..."\nGITHUB_CLIENT_SECRET: "..."'
 
-export const signupOpenLine = 'ARTEL_SIGNUP_OPEN=true'
+export const signupOpenLine = 'ARTEL_SIGNUP_OPEN: "true"'
 
 export const requiredChatModels = [
-  'openai/gpt-5.6-luna',
-  'openai/gpt-5.6-sol',
-  'openai/gpt-chat-latest',
-  'anthropic/claude-sonnet-5',
-  'anthropic/claude-opus-5',
+  'openai/gpt-6.1-sol',
+  'openai/gpt-6-astra',
+  'openai/gpt-6-luna',
+  'openai/gpt-5.6-terra',
+  'anthropic/claude-opus-5.5',
+  'anthropic/claude-sonnet-5.5',
   'google/gemini-3.8-flash',
-  'google/gemini-3.7-flash',
   'google/gemma-4-31b-it:free',
-  'x-ai/grok-4.6',
+  'x-ai/grok-4.7',
   'moonshotai/kimi-k3',
   'z-ai/glm-5.3-flash',
-  'qwen/qwen3.8-max',
+  'qwen/qwen3.7-max',
 ]
 
 export const embeddingModel = 'openai/text-embedding-3-large'

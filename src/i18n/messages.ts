@@ -11,9 +11,7 @@ export type SelfHostingCodeKey =
   | 'installWithFlags'
   | 'installAfter'
   | 'composeFile'
-  | 'envFile'
   | 'generateSecret'
-  | 'shellOverrideCheck'
   | 'composeUp'
   | 'composeLogs'
   | 'composeUpgrade'
@@ -364,7 +362,7 @@ ArtelSdk.Connect(config);`,
         blocks: [
           {
             kind: 'paragraph',
-            text: 'http://localhost:8088/ 에서 가장 먼저 가입한 계정이 admin 입니다. 이후 가입은 닫히며, 다시 열려면 .env 에 적습니다. admin 페이지는 별도 주소(ARTEL_ADMIN_URL, 기본값 http://localhost:8090)이고, 같은 호스트 이름이면 한 번 로그인으로 둘 다 쓸 수 있습니다.',
+            text: 'http://localhost:8088/ 에서 가장 먼저 가입한 계정이 admin 입니다. 이후 가입은 닫히며, 다시 열려면 docker-compose.yml 의 orchestration 서비스에서 아래 줄을 바꾸고 docker compose up -d 를 다시 실행합니다. admin 페이지는 별도 주소(x-admin-url, 기본값 http://localhost:8090)이고, 같은 호스트 이름이면 한 번 로그인으로 둘 다 쓸 수 있습니다.',
           },
           {
             kind: 'code',
@@ -378,8 +376,8 @@ ArtelSdk.Connect(config);`,
           {
             kind: 'list',
             items: [
-              'admin 주소(ARTEL_ADMIN_URL)의 Settings 탭에 입력합니다. 이 값이 우선합니다.',
-              '또는 .env 에 적고 docker compose up -d 를 다시 실행합니다.',
+              'admin 주소(x-admin-url)의 Settings 탭에 입력합니다. 이 값이 우선합니다.',
+              '또는 docker-compose.yml 맨 위 x-openrouter-api-key 에 적고 docker compose up -d 를 다시 실행합니다.',
             ],
           },
           {
@@ -401,7 +399,7 @@ ArtelSdk.Connect(config);`,
           },
           {
             kind: 'paragraph',
-            text: '최소 조건은 openai/gpt-5.6-luna 와 openai/text-embedding-3-large 입니다. Settings 탭의 Check models 버튼으로 확인합니다. Bedrock 은 필요 없습니다.',
+            text: '최소 조건은 openai/gpt-6-luna 와 openai/text-embedding-3-large 입니다. Settings 페이지의 Check models 버튼은 항상 현재 필요한 목록을 보여 줍니다. Bedrock 은 필요 없습니다.',
           },
         ],
       },
@@ -423,7 +421,7 @@ ArtelSdk.Connect(config);`,
         blocks: [
           {
             kind: 'paragraph',
-            text: '두 값을 모두 넣으면 로그인 화면에 GitHub 버튼이 보이고, 하나라도 비면 숨겨집니다. callback URL 은 <ARTEL_PUBLIC_URL>/login/oauth2/code/github 입니다.',
+            text: '두 값을 모두 넣으면 로그인 화면에 GitHub 버튼이 보이고, 하나라도 비면 숨겨집니다. callback URL 은 <x-public-url>/login/oauth2/code/github 입니다.',
           },
           {
             kind: 'code',
@@ -466,8 +464,8 @@ ArtelSdk.Connect(config);`,
                 kind: 'list',
                 items: [
                   '--dir 설치 디렉터리 (기본값 $HOME/artel)',
-                                    '--port 호스트 포트 (기본값 8088, admin 페이지는 ARTEL_ADMIN_PORT 기본값 8090)',
-                  '--no-start 파일만 만들고 시작하지 않음',
+                                    '--port 호스트 포트 (기본값 8088). 새 파일의 공개 주소와 published port 에 적히며 admin 페이지는 8090 그대로입니다.',
+                  '--no-start 파일만 쓰고 시작하지 않음',
                 ],
               },
               {
@@ -481,7 +479,7 @@ ArtelSdk.Connect(config);`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: '무작위 비밀값이 든 .env 를 만들고 docker compose up -d 를 실행합니다. 기존 .env 는 덮어쓰지 않으므로 다시 실행해도 안전합니다. .env 를 백업하세요. ARTEL_SECRETS_KEY 를 잃으면 저장한 OpenRouter 키를 읽을 수 없습니다.',
+                text: 'docker-compose.yml 하나를 내려받아 맨 위의 CHANGE_ME 를 무작위 비밀값으로 바꾸고 docker compose up -d 를 실행합니다. 기존 docker-compose.yml 은 덮어쓰지 않으므로 다시 실행하면 pull 과 재시작만 합니다. 이 파일에는 비밀값이 들어 있으니 commit 하거나 공유하지 말고 백업하세요. x-secrets-key 를 잃으면 저장한 OpenRouter 키를 읽을 수 없습니다.',
               },
             ],
           },
@@ -527,31 +525,23 @@ ArtelSdk.Connect(config);`,
             ],
           },
           {
-            title: '.env',
+            title: '맨 위 설정',
             blocks: [
               {
                 kind: 'paragraph',
-                text: '같은 디렉터리의 .env 에 아래 다섯 값을 채웁니다. 값마다 이 명령을 한 번씩 실행해 나온 무작위 문자열을 넣습니다.',
+                text: 'x- 로 시작하는 맨 위 블록의 CHANGE_ME 를 모두 바꿉니다. 값마다 아래 명령의 결과를 넣습니다.',
               },
               {
                 kind: 'code',
                 code: 'generateSecret',
               },
               {
-                kind: 'code',
-                code: 'envFile',
+                kind: 'paragraph',
+                text: 'x-public-url 과 x-admin-url 은 실제 호스트 이름으로 제공할 때만 바꾸며 같은 호스트 이름을 씁니다. 포트나 호스트 이름을 바꾸려면 두 URL, proxy 의 ports, configs 안의 사이트 주소(:80, :8090)를 함께 고칩니다.',
               },
               {
                 kind: 'paragraph',
-                text: '실제 호스트 이름으로 제공하면 ARTEL_PUBLIC_URL 과 ARTEL_ADMIN_URL 을 바꿉니다. 두 주소는 같은 호스트 이름을 씁니다. .env 를 백업하세요. ARTEL_SECRETS_KEY 를 잃으면 저장한 OpenRouter 키를 읽을 수 없습니다.',
-              },
-              {
-                kind: 'paragraph',
-                text: '셸에서 export 한 변수가 .env 보다 먼저 적용됩니다. 시작 전에 확인하세요.',
-              },
-              {
-                kind: 'code',
-                code: 'shellOverrideCheck',
+                text: '이 파일에는 이제 비밀값이 들어 있으니 commit 하거나 공유하지 말고 백업하세요. x-secrets-key 는 첫 시작 뒤에 바꾸지 않습니다. 잃으면 저장한 OpenRouter 키를 읽을 수 없습니다.',
               },
             ],
           },
@@ -564,7 +554,7 @@ ArtelSdk.Connect(config);`,
               },
               {
                 kind: 'paragraph',
-                text: '.env 를 고친 뒤에는 같은 명령을 다시 실행합니다.',
+                text: '파일을 고친 뒤에는 같은 명령을 다시 실행합니다.',
               },
             ],
           },
@@ -590,7 +580,7 @@ ArtelSdk.Connect(config);`,
               },
               {
                 kind: 'paragraph',
-                text: '이미지는 develop 과 main branch 를 따라가므로 업그레이드하면 그 시점의 내용으로 바뀝니다. migration 은 orchestration 서버가 시작할 때 실행됩니다.',
+                text: '이미지는 develop 과 main branch 를 따라가므로 업그레이드하면 그 시점의 내용으로 바뀝니다. 고친 docker-compose.yml 은 그대로 유지됩니다. migration 은 orchestration 서버가 시작할 때 실행됩니다.',
               },
             ],
           },
@@ -611,7 +601,7 @@ ArtelSdk.Connect(config);`,
               },
               {
                 kind: 'paragraph',
-                text: 'artel_minio-data 볼륨(업로드 문서, screen capture)과 .env 도 함께 보관하세요.',
+                text: 'artel_minio-data 볼륨(업로드 문서, screen capture)과 docker-compose.yml 도 함께 보관하세요.',
               },
             ],
           },
@@ -908,7 +898,7 @@ ArtelSdk.Connect(config);`,
         blocks: [
           {
             kind: 'paragraph',
-            text: 'The first account to sign up at http://localhost:8088/ is the admin. Signup is then closed. To reopen it, set this in .env. The admin page has its own address (ARTEL_ADMIN_URL, default http://localhost:8090); on the same host name one sign-in covers both.',
+            text: 'The first account to sign up at http://localhost:8088/ is the admin. Signup is then closed. To reopen it, change this line in the orchestration service of docker-compose.yml and run docker compose up -d again. The admin page has its own address (x-admin-url, default http://localhost:8090); on the same host name one sign-in covers both.',
           },
           {
             kind: 'code',
@@ -922,8 +912,8 @@ ArtelSdk.Connect(config);`,
           {
             kind: 'list',
             items: [
-              'Enter it in the Settings tab at the admin address (ARTEL_ADMIN_URL). This value wins.',
-              'Or set it in .env and run docker compose up -d again.',
+              'Enter it in the Settings tab at the admin address (x-admin-url). This value wins.',
+              'Or set x-openrouter-api-key at the top of docker-compose.yml and run docker compose up -d again.',
             ],
           },
           {
@@ -945,7 +935,7 @@ ArtelSdk.Connect(config);`,
           },
           {
             kind: 'paragraph',
-            text: 'The minimum is openai/gpt-5.6-luna and openai/text-embedding-3-large. The Check models button in the Settings tab verifies them. Bedrock is not needed.',
+            text: 'The minimum is openai/gpt-6-luna and openai/text-embedding-3-large. The Check models button on the Settings page always shows the current required list. Bedrock is not needed.',
           },
         ],
       },
@@ -967,7 +957,7 @@ ArtelSdk.Connect(config);`,
         blocks: [
           {
             kind: 'paragraph',
-            text: 'Set both values and the sign-in page shows a GitHub button; if either is blank it is hidden. The callback URL is <ARTEL_PUBLIC_URL>/login/oauth2/code/github.',
+            text: 'Set both values and the sign-in page shows a GitHub button; if either is blank it is hidden. The callback URL is <x-public-url>/login/oauth2/code/github.',
           },
           {
             kind: 'code',
@@ -1010,8 +1000,8 @@ ArtelSdk.Connect(config);`,
                 kind: 'list',
                 items: [
                   '--dir install directory (default $HOME/artel)',
-                                    '--port host port (default 8088; the admin page uses ARTEL_ADMIN_PORT, default 8090)',
-                  '--no-start write the files and do not start',
+                                    '--port host port (default 8088). Written into the public URL and published port of a new file; the admin page stays on 8090.',
+                  '--no-start write the file and do not start',
                 ],
               },
               {
@@ -1025,7 +1015,7 @@ ArtelSdk.Connect(config);`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'It writes a .env with random secrets and runs docker compose up -d. An existing .env is never overwritten, so running it again is safe. Back up .env: without ARTEL_SECRETS_KEY a stored OpenRouter key cannot be read.',
+                text: 'It downloads one docker-compose.yml, replaces the CHANGE_ME values at its top with random secrets, and runs docker compose up -d. An existing docker-compose.yml is never overwritten, so running it again only pulls and restarts. The file now contains secrets: do not commit or share it, and back it up. Without x-secrets-key a stored OpenRouter key cannot be read.',
               },
             ],
           },
@@ -1071,31 +1061,23 @@ ArtelSdk.Connect(config);`,
             ],
           },
           {
-            title: '.env',
+            title: 'Settings at the top',
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'In .env in the same directory, fill in the five values below. For each one, run this command once and paste the random string.',
+                text: 'In the block at the top (lines starting with x-), replace every CHANGE_ME. For each one, paste the result of this command.',
               },
               {
                 kind: 'code',
                 code: 'generateSecret',
               },
               {
-                kind: 'code',
-                code: 'envFile',
+                kind: 'paragraph',
+                text: 'Change x-public-url and x-admin-url only when you serve from a real host name; both use the same host name. To change the port or host name, edit the two URLs, the ports of the proxy service and the site addresses inside configs (:80, :8090) together.',
               },
               {
                 kind: 'paragraph',
-                text: 'When you serve from a real host name, change ARTEL_PUBLIC_URL and ARTEL_ADMIN_URL; both use the same host name. Back up .env: without ARTEL_SECRETS_KEY a stored OpenRouter key cannot be read.',
-              },
-              {
-                kind: 'paragraph',
-                text: 'Variables exported in your shell override .env. Check before you start.',
-              },
-              {
-                kind: 'code',
-                code: 'shellOverrideCheck',
+                text: 'The file now contains secrets: do not commit or share it, and back it up. Never change x-secrets-key after the first start; without it a stored OpenRouter key cannot be read.',
               },
             ],
           },
@@ -1108,7 +1090,7 @@ ArtelSdk.Connect(config);`,
               },
               {
                 kind: 'paragraph',
-                text: 'After editing .env, run the same command again.',
+                text: 'After editing the file, run the same command again.',
               },
             ],
           },
@@ -1134,7 +1116,7 @@ ArtelSdk.Connect(config);`,
               },
               {
                 kind: 'paragraph',
-                text: 'The images follow the develop and main branches, so an upgrade moves to whatever they hold at that moment. Migrations run when the orchestration server starts.',
+                text: 'The images follow the develop and main branches, so an upgrade moves to whatever they hold at that moment. Your edited docker-compose.yml is kept. Migrations run when the orchestration server starts.',
               },
             ],
           },
@@ -1155,7 +1137,7 @@ ArtelSdk.Connect(config);`,
               },
               {
                 kind: 'paragraph',
-                text: 'Also keep the artel_minio-data volume (uploaded documents, screen captures) and .env.',
+                text: 'Also keep the artel_minio-data volume (uploaded documents, screen captures) and docker-compose.yml.',
               },
             ],
           },
