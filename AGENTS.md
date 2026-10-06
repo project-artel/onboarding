@@ -30,6 +30,11 @@ For tracked Git work, follow:
 - `.agents/docs/commit.md`
 - `.agents/docs/pull-request.md`
 
+When a page route is added, removed, or renamed, update `public/sitemap.xml` and
+`public/llms.txt` in the same change. Follow `.agents/docs/seo.md` and the
+`sitemap-sync` skill. Never leave a route out of the sitemap or a sitemap URL
+without a route.
+
 Use project-local skills when installed and applicable. Skill instructions
 define their own triggers, formats, and output paths.
 

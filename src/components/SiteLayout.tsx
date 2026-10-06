@@ -5,6 +5,8 @@ import { locales } from '../i18n/locale'
 import { BrandMark } from './BrandMark'
 import { applyTheme, currentTheme } from '../theme'
 
+const siteOrigin = 'https://artel.kr'
+
 export function SiteLayout() {
   const { locale, t, href, swapTo } = useCopy()
   const { pathname } = useLocation()
@@ -21,7 +23,20 @@ export function SiteLayout() {
     document
       .querySelector('meta[name="description"]')
       ?.setAttribute('content', t.meta.description)
-  }, [locale, t])
+
+    // 같은 문서를 경로마다 다시 쓰므로 canonical 과 공유 미리보기 값도 경로를 따라간다.
+    const url = siteOrigin + (pathname === '/' ? '/' : pathname.replace(/\/$/, ''))
+    const set = (selector: string, attribute: string, value: string) =>
+      document.querySelector(selector)?.setAttribute(attribute, value)
+    set('link[rel="canonical"]', 'href', url)
+    set('meta[property="og:url"]', 'content', url)
+    set('meta[property="og:title"]', 'content', t.meta.title)
+    set('meta[property="og:description"]', 'content', t.meta.description)
+    set('meta[property="og:locale"]', 'content', locale === 'ko' ? 'ko_KR' : 'en_US')
+    set('meta[property="og:locale:alternate"]', 'content', locale === 'ko' ? 'en_US' : 'ko_KR')
+    set('meta[name="twitter:title"]', 'content', t.meta.title)
+    set('meta[name="twitter:description"]', 'content', t.meta.description)
+  }, [locale, t, pathname])
 
   // 경로가 바뀌면 위에서부터 읽는다. 라우터 기본값은 스크롤 위치를 유지한다.
   useEffect(() => {
