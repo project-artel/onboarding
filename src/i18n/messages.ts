@@ -81,6 +81,7 @@ type Copy = {
     notesTitle: string
     notes: string[]
     referenceCta: string
+    agent: { title: string; body: string; prompt: string; instructionsCta: string }
   }
   how: {
     title: string
@@ -316,6 +317,12 @@ artel qa run --test-run <id> --instance <id>`,
       '전체 명령과 옵션은 CLI 저장소의 README에 정리되어 있습니다.',
     ],
     referenceCta: '전체 레퍼런스 보기',
+    agent: {
+      title: 'AI 에이전트에게 설치 맡기기',
+      body: 'Claude Code, Codex, Cursor 같은 AI 코딩 에이전트에 아래 프롬프트를 붙여 넣으면 설치를 대신 진행합니다.',
+      prompt: 'https://artel.kr/cli.md 의 안내를 따라 이 컴퓨터에 ARTEL CLI 를 설치해 줘.',
+      instructionsCta: '에이전트용 안내 보기',
+    },
   },
   how: {
     title: '작동 원리',
@@ -889,6 +896,12 @@ artel qa run --test-run <id> --instance <id>`,
       'Every command and option is documented in the README of the CLI repository.',
     ],
     referenceCta: 'Read the full reference',
+    agent: {
+      title: 'Let your AI agent install it',
+      body: 'Paste the prompt below into an AI coding agent such as Claude Code, Codex, or Cursor, and it will run the install for you.',
+      prompt: 'Install the ARTEL CLI on this machine by following https://artel.kr/cli.md',
+      instructionsCta: 'View the agent instructions',
+    },
   },
   how: {
     title: 'How it works',
