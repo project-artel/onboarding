@@ -333,6 +333,8 @@ summary::-webkit-details-marker { display: none; }
 /* 설치 단계 본문. 코드블록은 문단과 20px 띄운다. */
 .install__body .step__body { max-width: 620px; }
 .install__body .code { margin-top: 20px; }
+.install__shot { display: block; width: 100%; height: auto; margin-top: 20px; border: 1px solid var(--rule); border-radius: var(--r-md); }
+.install__shot--narrow { width: 280px; }
 
 /* 작동 원리 §04 본문 문단. 본문 기준보다 한 단계 크고 행간이 넓다. */
 .how-context { margin: 0; max-width: 680px; font-size: 17px; color: var(--ink-2); line-height: 1.8; text-wrap: pretty; }

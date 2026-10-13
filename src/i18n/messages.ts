@@ -64,7 +64,7 @@ type Copy = {
   sdk: {
     title: string
     lead: string
-    steps: { title: string; body: string; code?: string }[]
+    steps: { title: string; body: string; code?: string; shotAlts: string[] }[]
     helpTitle: string
     help: string[]
     contactCta: string
@@ -151,7 +151,7 @@ const ko: Copy = {
       {
         index: '01',
         title: 'SDK 연결',
-        body: 'Unity 프로젝트에 패키지를 추가하고 연결 키를 입력합니다. 게임이 실행되는 동안 SDK가 화면 상태를 서버로 보냅니다.',
+        body: 'Unity 프로젝트에 패키지를 추가하고 게임에서 Artel 계정으로 로그인합니다. 게임이 실행되는 동안 SDK가 화면 상태를 서버로 보냅니다.',
         state: 'shipped',
       },
       {
@@ -203,7 +203,7 @@ const ko: Copy = {
     items: [
       'Unity 프로젝트에 패키지를 추가할 수 있어야 합니다. 게임 로직은 수정하지 않습니다.',
       '게임에서 ARTEL 서버로 나가는 네트워크 연결이 허용되어야 합니다.',
-      '프로젝트에서 발급한 연결 키가 필요합니다.',
+      '게임을 연결할 프로젝트의 멤버인 Artel 계정이 필요합니다.',
     ],
   },
   cta: {
@@ -227,52 +227,58 @@ const ko: Copy = {
       },
       {
         q: '지금 어디까지 동작하나요?',
-        a: 'sdkId 발급, SDK WebSocket 연결, 씬 상태 보고, 액션 주입이 동작합니다. 시나리오 생성과 QA 실행 화면은 아직 개발하고 있습니다.',
+        a: 'SDK 브라우저 로그인, SDK WebSocket 연결, 씬 상태 보고, 액션 주입이 동작합니다. 시나리오 생성과 QA 실행 화면은 아직 개발하고 있습니다.',
       },
     ],
   },
   footer: { contact: '문의', repository: '저장소', language: '언어' },
   sdk: {
     title: 'Unity SDK 설치',
-    lead: 'Unity Package Manager로 패키지를 추가한 뒤 연결 키를 입력하고, 게임을 실행해서 연결 상태를 확인합니다.',
+    lead: 'Unity Package Manager로 패키지를 추가하고, 게임을 실행해 Artel 계정으로 로그인하면 연결됩니다.',
     steps: [
       {
         title: '패키지 추가',
         body: 'Unity Package Manager에서 Add package from git URL을 선택하고 아래 주소를 붙여 넣습니다.',
         code: 'https://github.com/project-artel/artel-sdk.git?path=/Packages/kr.artel.sdk',
+        shotAlts: [
+          'Package Manager의 더하기 메뉴가 열리고 Add package from git URL이 선택된 화면.',
+          'Add package from git URL 입력칸에 Artel SDK의 git URL을 입력한 화면.',
+        ],
       },
       {
-        title: '프로젝트 연결',
-        body: 'Unity 메뉴에서 Tools → ARTEL 창을 열고 발급받은 연결 키를 입력합니다. 별도로 코드를 작성하지 않아도 됩니다.',
+        title: '게임 실행',
+        body: '게임을 실행하면 게임 화면 위에 Artel SDK 로그인 화면이 뜹니다. 로그인을 선택하면 브라우저가 열립니다. 별도로 코드를 작성하지 않아도 됩니다.',
+        shotAlts: ['게임 화면 위에 뜬 Artel SDK 로그인 화면과 로그인 버튼.'],
       },
       {
-        title: '연결 확인',
-        body: '게임을 실행하면 ARTEL 창에 연결 상태가 표시됩니다. 연결된 뒤에는 에이전트가 게임을 조작할 수 있습니다.',
+        title: '브라우저에서 로그인',
+        body: '브라우저에서 Artel에 로그인하세요. 로그인하면 SDK가 승인되고, 그 뒤에는 탭을 닫아도 됩니다. 이미 로그인되어 있다면 페이지가 열리자마자 승인됩니다.',
+        shotAlts: ['로그인하면 이 컴퓨터에서 기다리는 SDK를 승인한다고 안내하는 브라우저의 Artel 로그인 페이지.'],
+      },
+      {
+        title: '프로젝트 선택',
+        body: '게임으로 돌아와 연결할 프로젝트를 선택하세요. 인스턴스가 자동으로 등록되고 콘솔의 게임 인스턴스 목록에 연결됨으로 표시됩니다. 프로젝트가 하나뿐이면 SDK가 자동으로 선택합니다.',
+        shotAlts: [
+          '게임 안의 Artel SDK 화면에 연결할 프로젝트 목록이 표시된 화면.',
+          'Artel의 게임 인스턴스 목록에 새 인스턴스가 연결됨으로 표시된 화면.',
+        ],
       },
     ],
     helpTitle: '문제 해결',
     help: [
-      '연결 키는 프로젝트 담당자에게 요청해 주세요.',
-      '사내 방화벽이 게임에서 나가는 연결을 막고 있으면 연결 상태가 대기로 남습니다.',
+      '게임 화면 위에 Artel SDK 로그인 화면이 뜨지 않으면 Unity 에디터에서 실행했는지, 또는 Development Build인지 확인해 주세요. 일반 릴리스 빌드에는 SDK가 포함되지 않습니다.',
+      '브라우저 로그인은 Unity 에디터와 Windows, macOS, Linux용 빌드에서만 동작합니다.',
+      '사내 방화벽이 게임에서 나가는 연결을 막고 있으면 연결되지 않습니다.',
       '지원하는 Unity 버전은 아직 확정하지 않았습니다. 사용 중인 버전을 알려 주시면 확인해 드리겠습니다.',
     ],
     contactCta: '문의하기',
-    advancedTitle: '코드로 연결하기',
+    advancedTitle: '다른 서버에 연결하기',
     advancedNote:
-      'Unity 창을 쓰지 않고 코드에서 연결할 때 필요한 내용입니다. 서버 주소와 배포 경로가 아직 확정되지 않았으므로, 중괄호 부분은 발급받은 값으로 바꿔서 사용해 주세요.',
+      '직접 운영하는 Artel 서버에 연결할 때만 필요합니다. 씬에 ArtelManager를 두고 Server 항목의 secure, host, port, frontendOrigin을 바꾸거나, 게임을 실행할 때 아래 인자를 넘깁니다.',
     advanced: [
       {
-        label: '연결 키 발급',
-        code: 'curl -X POST https://{서버 주소}/api/sdkId',
-      },
-      {
-        label: '코드로 연결',
-        code: `var config = new ArtelConfig {
-    ServerAddress = "{서버 주소}",
-    SdkId = "{발급받은 연결 키}",
-};
-
-ArtelSdk.Connect(config);`,
+        label: '실행 인자',
+        code: 'MyGame.exe -artel-server artel.example.com:443 -artel-secure true -artel-frontend https://home.artel.example.com',
       },
     ],
     copy: '복사',
@@ -730,7 +736,7 @@ const en: Copy = {
       {
         index: '01',
         title: 'SDK connection',
-        body: 'Add the package to your Unity project and enter a connection key. While the game runs, the SDK sends the screen state to the server.',
+        body: 'Add the package to your Unity project and sign in with your Artel account from the game. While the game runs, the SDK sends the screen state to the server.',
         state: 'shipped',
       },
       {
@@ -782,7 +788,7 @@ const en: Copy = {
     items: [
       'Permission to add a package to the Unity project. Game logic is not modified.',
       'Outbound network connections from the game to the ARTEL server must be allowed.',
-      'A connection key issued for the project.',
+      'An Artel account that is a member of the project the game connects to.',
     ],
   },
   cta: {
@@ -806,52 +812,58 @@ const en: Copy = {
       },
       {
         q: 'What works today?',
-        a: 'sdkId issuance, the SDK WebSocket connection, scene state reporting, and action injection. Scenario generation and the QA run screens are still in development.',
+        a: 'SDK browser sign-in, the SDK WebSocket connection, scene state reporting, and action injection. Scenario generation and the QA run screens are still in development.',
       },
     ],
   },
   footer: { contact: 'Contact', repository: 'Repository', language: 'Language' },
   sdk: {
     title: 'Install the Unity SDK',
-    lead: 'Add the package with Unity Package Manager, enter your connection key, and run the game to check the connection.',
+    lead: 'Add the package with Unity Package Manager, run the game, and sign in with your Artel account to connect it.',
     steps: [
       {
         title: 'Add the package',
         body: 'In Unity Package Manager choose Add package from git URL and paste the address below.',
         code: 'https://github.com/project-artel/artel-sdk.git?path=/Packages/kr.artel.sdk',
+        shotAlts: [
+          'The plus menu in Package Manager open with Add package from git URL highlighted.',
+          'The Artel SDK git URL typed into the Add package from git URL field.',
+        ],
       },
       {
-        title: 'Connect the project',
-        body: 'Open Tools → ARTEL in the Unity menu and enter the connection key you were issued. You do not need to write code.',
+        title: 'Run the game',
+        body: 'Run the game. The Artel SDK sign-in screen appears over it. Choose 로그인 (Sign in) and your browser opens. You do not need to write code.',
+        shotAlts: ['The Artel SDK sign-in screen over the game, with its 로그인 button.'],
       },
       {
-        title: 'Check the connection',
-        body: 'When the game runs, the ARTEL window shows the connection status. After it connects, an agent can control the game.',
+        title: 'Sign in in the browser',
+        body: 'Sign in to Artel in the browser. Signing in approves the SDK, and you can close the tab after that. If you are already signed in, the SDK is approved as soon as the page opens.',
+        shotAlts: ['The Artel sign-in page in the browser, saying that signing in approves the SDK waiting on this machine.'],
+      },
+      {
+        title: 'Pick the project',
+        body: "Back in the game, pick the project to connect. The instance registers itself and shows as Connected in the console's game instance list. With only one project, the SDK picks it for you.",
+        shotAlts: [
+          'The Artel SDK screen in the game listing projects to connect to.',
+          'The game instance list in Artel showing the new instance as Connected.',
+        ],
       },
     ],
     helpTitle: 'Troubleshooting',
     help: [
-      'Ask your project owner for a connection key.',
-      'If a corporate firewall blocks outbound connections from the game, the status stays pending.',
+      'If the Artel SDK sign-in screen does not appear, check that you are running in the Unity editor or a Development Build. Release builds do not include the SDK.',
+      'Browser sign-in works only in the Unity editor and in Windows, macOS, and Linux builds.',
+      'If a corporate firewall blocks outbound connections from the game, it cannot connect.',
       'Supported Unity versions are not confirmed yet. Tell us which version you use and we will check it.',
     ],
     contactCta: 'Contact us',
-    advancedTitle: 'Connecting in code',
+    advancedTitle: 'Connecting to another server',
     advancedNote:
-      'Use this only if you connect from code instead of the Unity window. The server address and distribution path are not final, so replace anything in braces with the values you were issued.',
+      'Only needed when you run your own Artel server. Put ArtelManager in a scene and change secure, host, port, and frontendOrigin under Server, or pass these arguments when you launch the game.',
     advanced: [
       {
-        label: 'Issue a connection key',
-        code: 'curl -X POST https://{server}/api/sdkId',
-      },
-      {
-        label: 'Connect in code',
-        code: `var config = new ArtelConfig {
-    ServerAddress = "{server}",
-    SdkId = "{issued connection key}",
-};
-
-ArtelSdk.Connect(config);`,
+        label: 'Launch arguments',
+        code: 'MyGame.exe -artel-server artel.example.com:443 -artel-secure true -artel-frontend https://home.artel.example.com',
       },
     ],
     copy: 'Copy',
