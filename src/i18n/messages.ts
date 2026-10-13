@@ -114,7 +114,7 @@ type Copy = {
 
 const ko: Copy = {
   meta: {
-    title: 'ARTEL — 게임 QA를 에이전트가 대신 플레이합니다',
+    title: 'ARTEL | 에이전트가 플레이하는 게임 QA',
     description:
       'Unity 게임에 SDK를 연결하면 에이전트가 직접 조작하며 시나리오를 검증하고, 실패한 순간의 증거를 남깁니다.',
   },
@@ -129,96 +129,96 @@ const ko: Copy = {
   theme: { toLight: '라이트 모드로 전환', toDark: '다크 모드로 전환' },
   availability: { shipped: '동작 중', planned: '개발 예정' },
   hero: {
-    status: '개발 중인 제품입니다. 현재 SDK 연결과 액션 주입 구간이 동작합니다',
-    title: '게임 QA를 에이전트가 대신 플레이합니다',
+    status: '개발 중입니다. 지금은 SDK 연결과 입력 주입까지 동작합니다.',
+    title: '에이전트가 플레이하는 게임 QA 도구',
     subtitle:
-      'Unity 프로젝트에 SDK 하나를 연결하면 에이전트가 씬 상태를 읽고 직접 입력을 넣어 시나리오를 진행합니다. 사람은 결과와 증거만 확인하면 됩니다.',
+      'Unity 프로젝트에 ARTEL SDK를 추가하면 에이전트가 씬 상태를 읽고, 키보드와 마우스 입력을 게임에 보내 테스트 시나리오를 진행합니다.',
     primaryCta: 'SDK 다운로드',
     secondaryCta: '설치 문서 보기',
   },
   problem: {
-    title: '왜 필요한가요',
+    title: '해결하려는 문제',
     items: [
-      '빌드가 올라올 때마다 같은 회귀 시나리오를 사람이 처음부터 다시 돌게 됩니다.',
-      '재현 경로가 문장으로만 남아, 닫힌 이슈가 다시 열립니다.',
-      '검증할 시나리오를 늘릴수록 QA 인원이 병목이 됩니다.',
+      '빌드가 나올 때마다 같은 회귀 테스트를 사람이 처음부터 다시 진행해야 합니다.',
+      '재현 절차가 글로만 남아 있어서, 닫았던 이슈가 다시 열리는 경우가 생깁니다.',
+      '검증할 시나리오가 늘어날수록 QA 인력이 부족해집니다.',
     ],
   },
   steps: {
-    title: '작동 원리',
+    title: '사용 흐름',
     items: [
       {
         index: '01',
-        title: 'SDK를 게임에 연결합니다',
-        body: 'Unity 프로젝트에 패키지를 추가하고 연결 키를 입력하면 됩니다. 이후 SDK가 게임 화면의 상태를 계속 전달합니다.',
+        title: 'SDK 연결',
+        body: 'Unity 프로젝트에 패키지를 추가하고 연결 키를 입력합니다. 게임이 실행되는 동안 SDK가 화면 상태를 서버로 보냅니다.',
         state: 'shipped',
       },
       {
         index: '02',
-        title: '에이전트가 직접 플레이합니다',
-        body: '에이전트가 보고된 씬 상태를 읽고 다음 행동을 정한 뒤, 키보드·마우스 입력을 게임에 주입해 시나리오를 진행합니다.',
+        title: '에이전트 플레이',
+        body: '에이전트가 씬 상태를 읽고 다음 행동을 정한 뒤, 키보드와 마우스 입력을 게임에 보내 시나리오를 진행합니다.',
         state: 'shipped',
       },
       {
         index: '03',
-        title: '증거가 남습니다',
-        body: '액션 결과와 실행 로그가 타임라인으로 쌓이고, 실패한 순간의 상태가 이슈에 함께 붙습니다.',
+        title: '실행 기록',
+        body: '액션 결과와 실행 로그를 타임라인에 기록하고, 실패한 시점의 상태를 이슈에 첨부합니다.',
         state: 'planned',
       },
     ],
   },
   features: {
-    title: '무엇을 하나요',
+    title: '기능',
     items: [
       {
         title: '입력 주입',
-        body: '키보드·마우스 입력을 실제 플레이와 같은 경로로 게임에 전달합니다.',
+        body: '키보드와 마우스 입력을 플레이어가 조작할 때와 같은 경로로 게임에 전달합니다.',
         state: 'shipped',
       },
       {
         title: '화면 상태 인식',
-        body: '지금 화면에 무엇이 있는지 읽어 다음 행동을 판단합니다.',
+        body: '현재 화면에 무엇이 있는지 읽어서 다음 행동을 정합니다.',
         state: 'shipped',
       },
       {
         title: '시나리오 자동 생성',
-        body: '기획서를 올리면 게임 컨텍스트를 추출해 테스트 시나리오 초안을 만듭니다.',
+        body: '기획서를 올리면 게임 규칙과 목표를 추출해서 테스트 시나리오 초안을 만듭니다.',
         state: 'planned',
       },
       {
         title: '이슈 증거',
-        body: '실패 지점의 상태, 로그, 직전 액션을 하나의 이슈로 묶습니다.',
+        body: '실패한 시점의 상태, 로그, 직전 액션을 이슈 하나에 모읍니다.',
         state: 'planned',
       },
       {
         title: '테스트 런 구성',
-        body: '확정한 시나리오를 조합해 빌드마다 같은 세트를 실행합니다.',
+        body: '확정한 시나리오를 묶어서 빌드마다 같은 세트로 실행합니다.',
         state: 'planned',
       },
     ],
   },
   requirements: {
-    title: '필요한 것',
+    title: '준비 사항',
     items: [
-      'Unity 프로젝트에 패키지를 추가할 수 있는 권한이 필요합니다. 게임 로직은 수정하지 않습니다.',
-      '게임에서 서버로 나가는 네트워크 연결이 허용되어야 합니다.',
-      '발급받은 연결 키 하나면 설정이 끝납니다.',
+      'Unity 프로젝트에 패키지를 추가할 수 있어야 합니다. 게임 로직은 수정하지 않습니다.',
+      '게임에서 ARTEL 서버로 나가는 네트워크 연결이 허용되어야 합니다.',
+      '프로젝트에서 발급한 연결 키가 필요합니다.',
     ],
   },
   cta: {
-    title: '직접 연결해 보고 판단해 보세요',
-    body: 'SDK 연결까지는 문서만으로 끝납니다. 문의는 그다음에 주셔도 됩니다.',
+    title: 'SDK 설치 안내',
+    body: 'SDK 연결은 설치 문서를 보면서 진행할 수 있습니다. 궁금한 점이 있으면 문의해 주세요.',
   },
   faq: {
     title: '자주 묻는 질문',
     items: [
       {
         q: '게임 소스가 필요한가요?',
-        a: 'SDK 패키지를 프로젝트에 추가해야 하므로 빌드 파이프라인 접근은 필요합니다. 게임 로직을 수정하지는 않습니다.',
+        a: 'SDK 패키지를 프로젝트에 추가해야 하므로 프로젝트와 빌드 파이프라인에 접근할 수 있어야 합니다. 게임 로직은 수정하지 않습니다.',
       },
       {
         q: '어떤 게임에 쓸 수 있나요?',
-        a: '씬 상태를 읽고 입력으로 조작할 수 있는 Unity 게임이면 됩니다. 현재는 단일 플레이 흐름을 먼저 검증하고 있습니다.',
+        a: '씬 상태를 읽을 수 있고 입력으로 조작할 수 있는 Unity 게임이 대상입니다. 지금은 싱글 플레이 흐름부터 검증하고 있습니다.',
       },
       {
         q: '데이터는 어디에 저장되나요?',
@@ -226,14 +226,14 @@ const ko: Copy = {
       },
       {
         q: '지금 어디까지 동작하나요?',
-        a: 'sdkId 발급, SDK WebSocket 연결, 씬 상태 보고, 액션 주입까지 동작합니다. 시나리오 생성과 QA 실행 화면은 개발 중입니다.',
+        a: 'sdkId 발급, SDK WebSocket 연결, 씬 상태 보고, 액션 주입이 동작합니다. 시나리오 생성과 QA 실행 화면은 아직 개발하고 있습니다.',
       },
     ],
   },
   footer: { contact: '문의', repository: '저장소', language: '언어' },
   sdk: {
-    title: '설치는 세 단계입니다',
-    lead: 'Unity 프로젝트에 패키지를 추가하고, 프로젝트에 연결하고, 실행해서 확인하면 끝입니다.',
+    title: 'Unity SDK 설치',
+    lead: 'Unity Package Manager로 패키지를 추가한 뒤 연결 키를 입력하고, 게임을 실행해서 연결 상태를 확인합니다.',
     steps: [
       {
         title: '패키지 추가',
@@ -242,23 +242,23 @@ const ko: Copy = {
       },
       {
         title: '프로젝트 연결',
-        body: 'Unity 메뉴의 Tools → ARTEL 창에서 발급받은 연결 키를 입력합니다. 코드를 직접 작성할 필요는 없습니다.',
+        body: 'Unity 메뉴에서 Tools → ARTEL 창을 열고 발급받은 연결 키를 입력합니다. 별도로 코드를 작성하지 않아도 됩니다.',
       },
       {
-        title: '실행해서 확인',
-        body: '게임을 실행하면 연결 상태가 창에 표시됩니다. 여기까지 오면 에이전트가 게임을 조작할 수 있습니다.',
+        title: '연결 확인',
+        body: '게임을 실행하면 ARTEL 창에 연결 상태가 표시됩니다. 연결된 뒤에는 에이전트가 게임을 조작할 수 있습니다.',
       },
     ],
-    helpTitle: '막히는 부분이 있나요',
+    helpTitle: '문제 해결',
     help: [
-      '연결 키는 프로젝트 담당자에게 요청하시면 됩니다.',
-      '사내 방화벽이 게임에서 나가는 연결을 막으면 연결 상태가 대기로 남습니다.',
-      '지원 Unity 버전은 확정 중입니다. 사용하시는 버전을 알려주시면 확인해 드립니다.',
+      '연결 키는 프로젝트 담당자에게 요청해 주세요.',
+      '사내 방화벽이 게임에서 나가는 연결을 막고 있으면 연결 상태가 대기로 남습니다.',
+      '지원하는 Unity 버전은 아직 확정하지 않았습니다. 사용 중인 버전을 알려 주시면 확인해 드리겠습니다.',
     ],
     contactCta: '문의하기',
-    advancedTitle: '직접 코드로 연결하려면',
+    advancedTitle: '코드로 연결하기',
     advancedNote:
-      'Unity 창 대신 코드로 붙이고 싶을 때만 필요합니다. 서버 주소와 배포 경로는 확정 전이라 중괄호 부분은 발급받은 값으로 바꿔 주세요.',
+      'Unity 창을 쓰지 않고 코드에서 연결할 때 필요한 내용입니다. 서버 주소와 배포 경로가 아직 확정되지 않았으므로, 중괄호 부분은 발급받은 값으로 바꿔서 사용해 주세요.',
     advanced: [
       {
         label: '연결 키 발급',
@@ -319,7 +319,7 @@ artel qa run --test-run <id> --instance <id>`,
   },
   how: {
     title: '작동 원리',
-    lead: '에이전트가 게임을 플레이한다는 것이 어떤 구조로 성립하는지 정리했습니다.',
+    lead: '에이전트가 게임을 플레이할 때 각 구성 요소가 맡는 역할을 정리했습니다.',
     componentsTitle: '구성 요소',
     components: [
       {
@@ -377,7 +377,7 @@ artel qa run --test-run <id> --instance <id>`,
         state: 'planned',
       },
     ],
-    contextTitle: '기획서는 어떻게 쓰이나요',
+    contextTitle: '기획서 활용 방식',
     contextBody:
       '업로드한 기획서에서 게임 규칙과 목표를 추출해 게임 컨텍스트로 저장합니다. 에이전트는 이 컨텍스트를 근거로 시나리오를 만들고, 실행 중에도 판단 근거로 참조합니다. 이 구간은 개발 예정입니다.',
   },
@@ -687,9 +687,9 @@ artel qa run --test-run <id> --instance <id>`,
 
 const en: Copy = {
   meta: {
-    title: 'ARTEL — An agent plays your game QA',
+    title: 'ARTEL | Game QA played by an agent',
     description:
-      'Drop the SDK into your Unity game and an agent drives it, running scenarios and leaving evidence at the moment things break.',
+      'Add the SDK to your Unity game and an agent plays it, runs test scenarios, and records evidence when a step fails.',
   },
   nav: {
     sdk: 'Install SDK',
@@ -702,96 +702,96 @@ const en: Copy = {
   theme: { toLight: 'Switch to light mode', toDark: 'Switch to dark mode' },
   availability: { shipped: 'Working', planned: 'Planned' },
   hero: {
-    status: 'Early product — SDK connection and action injection work today',
-    title: 'An agent plays your game QA',
+    status: 'In development. SDK connection and input injection work today.',
+    title: 'A game QA tool where an agent plays the game',
     subtitle:
-      'Add one SDK to your Unity project and an agent reads the scene, injects real input, and walks through scenarios. You only review the outcome and the evidence.',
+      'Add the ARTEL SDK to your Unity project and an agent reads the scene state and sends keyboard and mouse input to the game to run test scenarios.',
     primaryCta: 'Download SDK',
     secondaryCta: 'Read install guide',
   },
   problem: {
-    title: 'Why it exists',
+    title: 'The problem',
     items: [
-      'Every build sends a person through the same regression scenarios from the top.',
-      'Reproduction steps survive only as prose, so closed issues come back.',
-      'The more scenarios you want covered, the more your QA headcount becomes the bottleneck.',
+      'Every new build means a person runs the same regression tests again from the start.',
+      'Reproduction steps are kept only as text, so closed issues sometimes reopen.',
+      'As the number of scenarios grows, there are not enough QA staff to cover them.',
     ],
   },
   steps: {
-    title: 'How it works',
+    title: 'Workflow',
     items: [
       {
         index: '01',
-        title: 'Connect the SDK',
-        body: 'Add the package to your Unity project and enter a connection key. From there the SDK keeps reporting what is happening on screen.',
+        title: 'SDK connection',
+        body: 'Add the package to your Unity project and enter a connection key. While the game runs, the SDK sends the screen state to the server.',
         state: 'shipped',
       },
       {
         index: '02',
-        title: 'The agent plays',
-        body: 'The agent reads the reported state, decides the next move, and injects keyboard and mouse input to advance the scenario.',
+        title: 'Agent play',
+        body: 'The agent reads the scene state, decides the next action, and sends keyboard and mouse input to the game to advance the scenario.',
         state: 'shipped',
       },
       {
         index: '03',
-        title: 'Evidence stays',
-        body: 'Action results and run logs land on a timeline, and the state at the failure point is attached to an issue.',
+        title: 'Run record',
+        body: 'Action results and run logs are recorded on a timeline, and the state at the failure point is attached to an issue.',
         state: 'planned',
       },
     ],
   },
   features: {
-    title: 'What it does',
+    title: 'Features',
     items: [
       {
         title: 'Input injection',
-        body: 'Keyboard and mouse input reach the game the same way a player does.',
+        body: 'Keyboard and mouse input reaches the game through the same path a player uses.',
         state: 'shipped',
       },
       {
         title: 'On-screen state',
-        body: 'What is on screen right now is read continuously to decide the next move.',
+        body: 'Reads what is on screen to decide the next action.',
         state: 'shipped',
       },
       {
         title: 'Scenario generation',
-        body: 'Upload a design document and game context is extracted into draft test scenarios.',
+        body: 'Extracts rules and goals from an uploaded design document and drafts test scenarios from them.',
         state: 'planned',
       },
       {
         title: 'Issue evidence',
-        body: 'State, logs, and the preceding action are bundled into one issue.',
+        body: 'Collects the state, logs, and preceding action at the failure point into one issue.',
         state: 'planned',
       },
       {
         title: 'Test run composition',
-        body: 'Approved scenarios are grouped so every build runs the same set.',
+        body: 'Groups approved scenarios so every build runs the same set.',
         state: 'planned',
       },
     ],
   },
   requirements: {
-    title: 'What you need',
+    title: 'Requirements',
     items: [
-      'Access to add a package to the Unity project. No game logic changes required.',
-      'Outbound WebSocket connections allowed from the game client.',
-      'A server address and an issued sdkId.',
+      'Permission to add a package to the Unity project. Game logic is not modified.',
+      'Outbound network connections from the game to the ARTEL server must be allowed.',
+      'A connection key issued for the project.',
     ],
   },
   cta: {
-    title: 'Wire it up and judge for yourself',
-    body: 'Getting to a connected SDK takes only the docs. Talk to us after that.',
+    title: 'Installing the SDK',
+    body: 'You can connect the SDK by following the install guide. Contact us if you have questions.',
   },
   faq: {
     title: 'Questions',
     items: [
       {
         q: 'Do you need our source code?',
-        a: 'You add a package to the project, so build pipeline access is needed. Game logic is not modified.',
+        a: 'You add a package to the project, so you need access to the project and its build pipeline. Game logic is not modified.',
       },
       {
         q: 'Which games does it work with?',
-        a: 'Any Unity game whose scene state can be read and driven by input. Single-player flows are what we validate first.',
+        a: 'Unity games whose scene state can be read and controlled through input. We are validating single-player flows first.',
       },
       {
         q: 'Where does the data live?',
@@ -805,8 +805,8 @@ const en: Copy = {
   },
   footer: { contact: 'Contact', repository: 'Repository', language: 'Language' },
   sdk: {
-    title: 'Three steps to install',
-    lead: 'Add the package to your Unity project, connect it, and press play. That is the whole setup.',
+    title: 'Install the Unity SDK',
+    lead: 'Add the package with Unity Package Manager, enter your connection key, and run the game to check the connection.',
     steps: [
       {
         title: 'Add the package',
@@ -815,23 +815,23 @@ const en: Copy = {
       },
       {
         title: 'Connect the project',
-        body: 'Open Tools → ARTEL in the Unity menu and enter your connection key. No code required.',
+        body: 'Open Tools → ARTEL in the Unity menu and enter the connection key you were issued. You do not need to write code.',
       },
       {
-        title: 'Press play',
-        body: 'The window shows the connection status while the game runs. Once it connects, an agent can drive the game.',
+        title: 'Check the connection',
+        body: 'When the game runs, the ARTEL window shows the connection status. After it connects, an agent can control the game.',
       },
     ],
-    helpTitle: 'Stuck somewhere?',
+    helpTitle: 'Troubleshooting',
     help: [
       'Ask your project owner for a connection key.',
       'If a corporate firewall blocks outbound connections from the game, the status stays pending.',
-      'Supported Unity versions are still being confirmed — tell us yours and we will check.',
+      'Supported Unity versions are not confirmed yet. Tell us which version you use and we will check it.',
     ],
     contactCta: 'Contact us',
-    advancedTitle: 'Prefer to wire it up in code?',
+    advancedTitle: 'Connecting in code',
     advancedNote:
-      'Only needed if you skip the Unity window. The server address and distribution path are not final, so replace anything in braces with the values you were issued.',
+      'Use this only if you connect from code instead of the Unity window. The server address and distribution path are not final, so replace anything in braces with the values you were issued.',
     advanced: [
       {
         label: 'Issue a connection key',
@@ -892,7 +892,7 @@ artel qa run --test-run <id> --instance <id>`,
   },
   how: {
     title: 'How it works',
-    lead: 'What actually makes "an agent plays the game" true.',
+    lead: 'What each component does while an agent plays the game.',
     componentsTitle: 'Components',
     components: [
       {
@@ -931,7 +931,7 @@ artel qa run --test-run <id> --instance <id>`,
       },
       {
         title: 'Generate and approve scenarios',
-        body: 'Refine scenarios through chat and canvas, then lock them in.',
+        body: 'Refine scenarios through chat and the canvas, then approve them.',
         state: 'planned',
       },
       {
@@ -1030,7 +1030,7 @@ artel qa run --test-run <id> --instance <id>`,
         ],
       },
       {
-        title: 'Manage users',
+        title: 'User management',
         blocks: [
           {
             kind: 'list',
