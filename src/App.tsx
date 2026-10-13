@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SiteLayout } from './components/SiteLayout'
+import { CliPage } from './pages/CliPage'
 import { HowItWorksPage } from './pages/HowItWorksPage'
 import { LandingPage } from './pages/LandingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
@@ -15,6 +16,7 @@ function localeRoutes() {
     <>
       <Route index element={<LandingPage />} />
       <Route path="sdk" element={<SdkPage />} />
+      <Route path="cli" element={<CliPage />} />
       <Route path="self-hosting" element={<SelfHostingPage />} />
       {selfHostingMethodIds.map((id) => (
         <Route key={id} path={`self-hosting/${id}`} element={<SelfHostingMethodPage method={id} />} />

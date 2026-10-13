@@ -38,7 +38,7 @@ export type SelfHostingMethodPage = {
 
 type Copy = {
   meta: { title: string; description: string }
-  nav: { sdk: string; selfHosting: string; how: string; skipToContent: string; home: string }
+  nav: { sdk: string; cli: string; selfHosting: string; how: string; skipToContent: string; home: string }
   theme: { toLight: string; toDark: string }
   availability: Record<Availability, string>
   hero: {
@@ -73,6 +73,14 @@ type Copy = {
     advanced: { label: string; code: string }[]
     copy: string
     copied: string
+  }
+  cli: {
+    title: string
+    lead: string
+    steps: { title: string; body: string; code?: string }[]
+    notesTitle: string
+    notes: string[]
+    referenceCta: string
   }
   how: {
     title: string
@@ -112,6 +120,7 @@ const ko: Copy = {
   },
   nav: {
     sdk: 'SDK 설치',
+    cli: 'CLI 설치',
     selfHosting: '직접 설치',
     how: '작동 원리',
     skipToContent: '본문으로 건너뛰기',
@@ -267,6 +276,46 @@ ArtelSdk.Connect(config);`,
     ],
     copy: '복사',
     copied: '복사했습니다',
+  },
+  cli: {
+    title: 'CLI로 터미널과 CI에서 QA를 실행합니다',
+    lead: '브라우저에서 콘솔을 열지 않아도 터미널이나 CI에서 게임에 QA agent를 실행할 수 있습니다.',
+    steps: [
+      {
+        title: 'CLI 설치',
+        body: 'Node.js 22.12.0 이상이 필요합니다. 릴리스는 alpha tag로 배포되므로 @alpha를 반드시 붙여야 합니다. latest tag는 오래된 빌드를 가리킵니다.',
+        code: 'npm install -g @project-artel/cli@alpha\nartel --version',
+      },
+      {
+        title: '전역 설치 없이 실행',
+        body: '설치하지 않고 한 번만 확인하려면 npx를 사용합니다.',
+        code: 'npx @project-artel/cli@alpha --help',
+      },
+      {
+        title: '로그인',
+        body: '아래 명령은 브라우저에서 콘솔을 열고, 로그인이 끝나면 인증 정보를 ~/.artel/credentials.json에 저장합니다.',
+        code: 'artel auth login',
+      },
+      {
+        title: 'CI에서는 CLI token 사용',
+        body: '콘솔의 계정 설정에 있는 CLI tokens 패널에서 token을 발급하고, CI의 환경 변수 ARTEL_TOKEN에 설정합니다. 이 경우 브라우저 로그인은 필요하지 않습니다.',
+        code: 'export ARTEL_TOKEN=<발급받은 token>',
+      },
+      {
+        title: '첫 명령 실행',
+        body: '프로젝트 목록을 확인하고, 빌드를 시작하고, QA를 실행하는 순서입니다. <id> 부분은 실제 값으로 바꿔 주세요.',
+        code: `artel project list
+artel game start --build ./Build/Game.exe --project <id>
+artel game list --project <id>
+artel qa run --test-run <id> --instance <id>`,
+      },
+    ],
+    notesTitle: '알아 두면 좋은 점',
+    notes: [
+      'artel qa run의 exit code가 판정 결과입니다. run이 통과했을 때만 0을 반환하므로 CI의 통과 조건으로 쓸 수 있습니다.',
+      '전체 명령과 옵션은 CLI 저장소의 README에 정리되어 있습니다.',
+    ],
+    referenceCta: '전체 레퍼런스 보기',
   },
   how: {
     title: '작동 원리',
@@ -644,6 +693,7 @@ const en: Copy = {
   },
   nav: {
     sdk: 'Install SDK',
+    cli: 'Install CLI',
     selfHosting: 'Self-hosting',
     how: 'How it works',
     skipToContent: 'Skip to content',
@@ -799,6 +849,46 @@ ArtelSdk.Connect(config);`,
     ],
     copy: 'Copy',
     copied: 'Copied',
+  },
+  cli: {
+    title: 'Run QA from a terminal or CI with the CLI',
+    lead: 'Start a QA agent against your game from a terminal or CI, without opening the console in a browser.',
+    steps: [
+      {
+        title: 'Install the CLI',
+        body: 'Requires Node.js 22.12.0 or newer. Releases are published under the alpha tag, so @alpha is required. The latest tag points at an outdated build.',
+        code: 'npm install -g @project-artel/cli@alpha\nartel --version',
+      },
+      {
+        title: 'Run without a global install',
+        body: 'To try it once without installing, use npx.',
+        code: 'npx @project-artel/cli@alpha --help',
+      },
+      {
+        title: 'Sign in',
+        body: 'This opens the console in a browser and, once you sign in, stores the credential at ~/.artel/credentials.json.',
+        code: 'artel auth login',
+      },
+      {
+        title: 'Use a CLI token in CI',
+        body: 'Issue a token in the CLI tokens panel of the console account settings, then set it as the ARTEL_TOKEN environment variable in CI. No browser sign-in is needed.',
+        code: 'export ARTEL_TOKEN=<your issued token>',
+      },
+      {
+        title: 'Run your first commands',
+        body: 'List projects, start a build, and run QA. Replace each <id> with a real value.',
+        code: `artel project list
+artel game start --build ./Build/Game.exe --project <id>
+artel game list --project <id>
+artel qa run --test-run <id> --instance <id>`,
+      },
+    ],
+    notesTitle: 'Good to know',
+    notes: [
+      'The exit code of artel qa run is the verdict. It is 0 only when the run passed, so it can gate CI.',
+      'Every command and option is documented in the README of the CLI repository.',
+    ],
+    referenceCta: 'Read the full reference',
   },
   how: {
     title: 'How it works',
