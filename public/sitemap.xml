@@ -25,6 +25,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/sdk" />
   </url>
   <url>
+    <loc>https://artel.kr/cli</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/cli" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/cli" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/cli" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/cli</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/cli" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/cli" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/cli" />
+  </url>
+  <url>
     <loc>https://artel.kr/self-hosting</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/self-hosting" />
     <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/self-hosting" />
