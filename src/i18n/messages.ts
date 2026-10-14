@@ -432,15 +432,19 @@ artel qa run --test-run <id> --instance <id>`,
         ],
       },
       {
-        title: 'OpenRouter 키와 Bedrock 키',
+        title: 'OpenRouter 키, Bedrock 키, Claude API 키',
         blocks: [
           {
             kind: 'paragraph',
-            text: '키는 환경 변수나 docker-compose.yml 로 받지 않습니다. 첫 계정(admin)으로 로그인해 admin 주소(x-admin-url)의 Settings 탭에서 OpenRouter 키를 입력하고, 필요하면 Bedrock 키도 입력합니다. 저장한 키는 데이터베이스에 x-secrets-key 로 암호화되어 들어가며 화면에는 뒷자리만 보입니다.',
+            text: '키는 환경 변수나 docker-compose.yml 로 받지 않습니다. 첫 계정(admin)으로 로그인해 admin 주소(x-admin-url)의 Settings 탭에서 OpenRouter 키를 입력하고, 필요하면 Bedrock 키와 Claude API 키(Anthropic)도 입력합니다. 저장한 키는 데이터베이스에 x-secrets-key 로 암호화되어 들어가며 화면에는 뒷자리만 보입니다.',
           },
           {
             kind: 'paragraph',
             text: 'Bedrock 키를 저장하지 않으면 agent-server 는 표준 AWS 자격 증명 체인(예: IAM 역할)을 사용합니다. Bedrock region 은 docker-compose.yml 의 orchestration 과 agent-server 서비스에 있는 BEDROCK_REGION 으로 정하며 기본값은 us-west-2 입니다.',
+          },
+          {
+            kind: 'paragraph',
+            text: 'Claude API 키는 환경 변수로 받지 않습니다. claude/... 모델은 꺼진 상태로 시작하고, Settings 탭의 Claude API 키 확인이 통과한 뒤에 켜집니다.',
           },
         ],
       },
@@ -537,7 +541,7 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'docker-compose.yml 하나를 내려받아 맨 위의 CHANGE_ME 를 무작위 비밀값으로 바꾸고 docker compose up -d 를 실행합니다. 기존 docker-compose.yml 은 덮어쓰지 않으므로 다시 실행하면 pull 과 재시작만 합니다. 이 파일에는 비밀값이 들어 있으니 commit 하거나 공유하지 말고 백업하세요. x-secrets-key 를 잃으면 저장한 OpenRouter 키와 Bedrock 키를 읽을 수 없습니다.',
+                text: 'docker-compose.yml 하나를 내려받아 맨 위의 CHANGE_ME 를 무작위 비밀값으로 바꾸고 docker compose up -d 를 실행합니다. 기존 docker-compose.yml 은 덮어쓰지 않으므로 다시 실행하면 pull 과 재시작만 합니다. 이 파일에는 비밀값이 들어 있으니 commit 하거나 공유하지 말고 백업하세요. x-secrets-key 를 잃으면 저장한 OpenRouter 키, Bedrock 키, Claude API 키를 읽을 수 없습니다.',
               },
             ],
           },
@@ -599,7 +603,7 @@ artel qa run --test-run <id> --instance <id>`,
               },
               {
                 kind: 'paragraph',
-                text: '이 파일에는 이제 비밀값이 들어 있으니 commit 하거나 공유하지 말고 백업하세요. x-secrets-key 는 첫 시작 뒤에 바꾸지 않습니다. 잃으면 저장한 OpenRouter 키와 Bedrock 키를 읽을 수 없습니다.',
+                text: '이 파일에는 이제 비밀값이 들어 있으니 commit 하거나 공유하지 말고 백업하세요. x-secrets-key 는 첫 시작 뒤에 바꾸지 않습니다. 잃으면 저장한 OpenRouter 키, Bedrock 키, Claude API 키를 읽을 수 없습니다.',
               },
             ],
           },
@@ -1018,15 +1022,19 @@ artel qa run --test-run <id> --instance <id>`,
         ],
       },
       {
-        title: 'OpenRouter key and Bedrock key',
+        title: 'OpenRouter key, Bedrock key and Claude API key',
         blocks: [
           {
             kind: 'paragraph',
-            text: 'Keys are not read from environment variables or docker-compose.yml. Sign in as the first account (admin), open the Settings tab at the admin address (x-admin-url), and enter the OpenRouter key, and optionally the Bedrock key. Stored keys are encrypted in the database with x-secrets-key, and only their last characters are ever shown.',
+            text: 'Keys are not read from environment variables or docker-compose.yml. Sign in as the first account (admin), open the Settings tab at the admin address (x-admin-url), and enter the OpenRouter key, and optionally the Bedrock key and the Claude API key (Anthropic). Stored keys are encrypted in the database with x-secrets-key, and only their last characters are ever shown.',
           },
           {
             kind: 'paragraph',
             text: 'When no Bedrock key is stored, the agent-server uses the standard AWS credential chain (for example an IAM role). The Bedrock region is BEDROCK_REGION on the orchestration and agent-server services in docker-compose.yml, default us-west-2.',
+          },
+          {
+            kind: 'paragraph',
+            text: 'The Claude API key is not read from an environment variable either. The claude/... models start switched off and are switched on after the Claude API key check on the Settings tab passes.',
           },
         ],
       },
@@ -1123,7 +1131,7 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'It downloads one docker-compose.yml, replaces the CHANGE_ME values at its top with random secrets, and runs docker compose up -d. An existing docker-compose.yml is never overwritten, so running it again only pulls and restarts. The file now contains secrets: do not commit or share it, and back it up. Without x-secrets-key a stored OpenRouter or Bedrock key cannot be read.',
+                text: 'It downloads one docker-compose.yml, replaces the CHANGE_ME values at its top with random secrets, and runs docker compose up -d. An existing docker-compose.yml is never overwritten, so running it again only pulls and restarts. The file now contains secrets: do not commit or share it, and back it up. Without x-secrets-key a stored OpenRouter, Bedrock or Claude API key cannot be read.',
               },
             ],
           },
@@ -1185,7 +1193,7 @@ artel qa run --test-run <id> --instance <id>`,
               },
               {
                 kind: 'paragraph',
-                text: 'The file now contains secrets: do not commit or share it, and back it up. Never change x-secrets-key after the first start; without it a stored OpenRouter or Bedrock key cannot be read.',
+                text: 'The file now contains secrets: do not commit or share it, and back it up. Never change x-secrets-key after the first start; without it a stored OpenRouter, Bedrock or Claude API key cannot be read.',
               },
             ],
           },
