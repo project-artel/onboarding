@@ -423,7 +423,7 @@ artel qa run --test-run <id> --instance <id>`,
         blocks: [
           {
             kind: 'paragraph',
-            text: 'http://localhost:8088/ 에서 가장 먼저 가입한 계정이 admin 입니다. 이후 가입은 닫히며, 다시 열려면 docker-compose.yml 의 orchestration 서비스에서 아래 줄을 바꾸고 docker compose up -d 를 다시 실행합니다. admin 페이지는 별도 주소(x-admin-url, 기본값 http://localhost:8090)이고, 같은 호스트 이름이면 한 번 로그인으로 둘 다 쓸 수 있습니다.',
+            text: 'http://localhost:8088/ 에서 가장 먼저 가입한 계정이 admin 입니다. 이후 가입은 닫히며, 다시 열려면 docker-compose.yml 의 orchestration 서비스에서 아래 줄을 바꾸고 docker compose up -d 를 다시 실행합니다. 관리 화면은 콘솔 안의 /admin 에 있고 admin 계정에게만 보입니다.',
           },
           {
             kind: 'code',
@@ -436,7 +436,7 @@ artel qa run --test-run <id> --instance <id>`,
         blocks: [
           {
             kind: 'paragraph',
-            text: '키는 환경 변수나 docker-compose.yml 로 받지 않습니다. 첫 계정(admin)으로 로그인해 admin 주소(x-admin-url)의 Settings 탭에서 OpenRouter 키를 입력하고, 필요하면 Bedrock 키와 Claude API 키(Anthropic)도 입력합니다. 저장한 키는 데이터베이스에 x-secrets-key 로 암호화되어 들어가며 화면에는 뒷자리만 보입니다.',
+            text: '키는 환경 변수나 docker-compose.yml 로 받지 않습니다. 첫 계정(admin)으로 로그인해 http://localhost:8088/admin/settings (상단 바의 "관리" 링크, 설정 탭)에서 OpenRouter 키를 입력하고, 필요하면 Bedrock 키와 Claude API 키(Anthropic)도 입력합니다. 저장한 키는 데이터베이스에 x-secrets-key 로 암호화되어 들어가며 화면에는 뒷자리만 보입니다.',
           },
           {
             kind: 'paragraph',
@@ -471,7 +471,7 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'list',
             items: [
-              'admin 이 admin 주소의 페이지에서 사용자를 만듭니다.',
+              'admin 이 콘솔의 /admin/users 에서 사용자를 만듭니다.',
               '임시 비밀번호는 무작위 문자열이며 한 번만 보입니다.',
               '사용자는 첫 로그인에서 비밀번호를 바꿔야 합니다.',
             ],
@@ -526,7 +526,7 @@ artel qa run --test-run <id> --instance <id>`,
                 kind: 'list',
                 items: [
                   '--dir 설치 디렉터리 (기본값 $HOME/artel)',
-                                    '--port 호스트 포트 (기본값 8088). 새 파일의 공개 주소와 published port 에 적히며 admin 페이지는 8090 그대로입니다.',
+                                    '--port 호스트 포트 (기본값 8088). 새 파일의 공개 주소와 published port 에 적힙니다.',
                   '--no-start 파일만 쓰고 시작하지 않음',
                 ],
               },
@@ -550,7 +550,7 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'http://localhost:8088/ 과 admin 주소 http://localhost:8090 을 엽니다. 스크립트가 끝에 두 주소를 출력합니다.',
+                text: 'http://localhost:8088/ 을 엽니다. 키를 입력할 주소(http://localhost:8088/admin/settings)는 스크립트가 끝에 함께 출력합니다.',
               },
               {
                 kind: 'code',
@@ -599,7 +599,7 @@ artel qa run --test-run <id> --instance <id>`,
               },
               {
                 kind: 'paragraph',
-                text: 'x-public-url 과 x-admin-url 은 실제 호스트 이름으로 제공할 때만 바꾸며 같은 호스트 이름을 씁니다. 포트나 호스트 이름을 바꾸려면 두 URL, proxy 의 ports, configs 안의 사이트 주소(:80, :8090)를 함께 고칩니다.',
+                text: 'x-public-url 은 실제 호스트 이름으로 제공할 때만 바꿉니다. 포트나 호스트 이름을 바꾸려면 이 URL, proxy 의 ports, configs 안의 사이트 주소(:80)를 함께 고칩니다.',
               },
               {
                 kind: 'paragraph',
@@ -1013,7 +1013,7 @@ artel qa run --test-run <id> --instance <id>`,
         blocks: [
           {
             kind: 'paragraph',
-            text: 'The first account to sign up at http://localhost:8088/ is the admin. Signup is then closed. To reopen it, change this line in the orchestration service of docker-compose.yml and run docker compose up -d again. The admin page has its own address (x-admin-url, default http://localhost:8090); on the same host name one sign-in covers both.',
+            text: 'The first account to sign up at http://localhost:8088/ is the admin. Signup is then closed. To reopen it, change this line in the orchestration service of docker-compose.yml and run docker compose up -d again. The admin screens are part of the console under /admin and are visible to admin accounts only.',
           },
           {
             kind: 'code',
@@ -1026,7 +1026,7 @@ artel qa run --test-run <id> --instance <id>`,
         blocks: [
           {
             kind: 'paragraph',
-            text: 'Keys are not read from environment variables or docker-compose.yml. Sign in as the first account (admin), open the Settings tab at the admin address (x-admin-url), and enter the OpenRouter key, and optionally the Bedrock key and the Claude API key (Anthropic). Stored keys are encrypted in the database with x-secrets-key, and only their last characters are ever shown.',
+            text: 'Keys are not read from environment variables or docker-compose.yml. Sign in as the first account (admin), open http://localhost:8088/admin/settings (the "Admin" link in the top bar, then the Settings tab), and enter the OpenRouter key, and optionally the Bedrock key and the Claude API key (Anthropic). Stored keys are encrypted in the database with x-secrets-key, and only their last characters are ever shown.',
           },
           {
             kind: 'paragraph',
@@ -1061,7 +1061,7 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'list',
             items: [
-              'The admin creates users on the admin address.',
+              'The admin creates users at /admin/users in the console.',
               'The temporary password is a random string, shown once.',
               'The user must change it at first sign in.',
             ],
@@ -1116,7 +1116,7 @@ artel qa run --test-run <id> --instance <id>`,
                 kind: 'list',
                 items: [
                   '--dir install directory (default $HOME/artel)',
-                                    '--port host port (default 8088). Written into the public URL and published port of a new file; the admin page stays on 8090.',
+                                    '--port host port (default 8088). Written into the public URL and published port of a new file.',
                   '--no-start write the file and do not start',
                 ],
               },
@@ -1140,7 +1140,7 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'Open http://localhost:8088/ and the admin address http://localhost:8090. The script prints both at the end.',
+                text: 'Open http://localhost:8088/. The script also prints the address for the keys (http://localhost:8088/admin/settings) at the end.',
               },
               {
                 kind: 'code',
@@ -1189,7 +1189,7 @@ artel qa run --test-run <id> --instance <id>`,
               },
               {
                 kind: 'paragraph',
-                text: 'Change x-public-url and x-admin-url only when you serve from a real host name; both use the same host name. To change the port or host name, edit the two URLs, the ports of the proxy service and the site addresses inside configs (:80, :8090) together.',
+                text: 'Change x-public-url only when you serve from a real host name. To change the port or host name, edit that URL, the ports of the proxy service and the site address inside configs (:80) together.',
               },
               {
                 kind: 'paragraph',
