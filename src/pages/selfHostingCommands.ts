@@ -25,8 +25,6 @@ export const restoreCommand =
 
 export const composeDownCommand = 'docker compose down'
 
-export const openRouterEnvironmentLine = 'x-openrouter-api-key: &openrouter_api_key "sk-or-..."'
-
 export const githubEnvironmentLines = 'GITHUB_CLIENT_ID: "..."\nGITHUB_CLIENT_SECRET: "..."'
 
 export const signupOpenLine = 'ARTEL_SIGNUP_OPEN: "true"'

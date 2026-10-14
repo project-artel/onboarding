@@ -16,7 +16,6 @@ const codeByKey: Record<SelfHostingCodeKey, string> = {
   restore: commands.restoreCommand,
   composeDown: commands.composeDownCommand,
   signupOpen: commands.signupOpenLine,
-  openRouterEnvironment: commands.openRouterEnvironmentLine,
   models: [...commands.requiredChatModels, commands.embeddingModel].join('\n'),
   githubEnvironment: commands.githubEnvironmentLines,
 }
