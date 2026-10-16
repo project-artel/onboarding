@@ -37,7 +37,17 @@ export type SelfHostingMethodPage = {
 
 type Copy = {
   meta: { title: string; description: string }
-  nav: { sdk: string; cli: string; skills: string; selfHosting: string; how: string; skipToContent: string; home: string }
+  nav: {
+    install: string
+    installMenu: string
+    sdk: string
+    cli: string
+    skills: string
+    selfHosting: string
+    how: string
+    skipToContent: string
+    home: string
+  }
   theme: { toLight: string; toDark: string }
   availability: Record<Availability, string>
   hero: {
@@ -128,9 +138,11 @@ const ko: Copy = {
       'Unity 게임에 SDK를 연결하면 에이전트가 직접 조작하며 시나리오를 검증하고, 실패한 순간의 증거를 남깁니다.',
   },
   nav: {
-    sdk: 'SDK 설치',
-    cli: 'CLI 설치',
-    skills: 'Skill 설치',
+    install: '설치',
+    installMenu: '설치 방법',
+    sdk: 'SDK',
+    cli: 'CLI',
+    skills: 'Skill',
     selfHosting: '직접 설치',
     how: '작동 원리',
     skipToContent: '본문으로 건너뛰기',
@@ -740,9 +752,11 @@ const en: Copy = {
       'Add the SDK to your Unity game and an agent plays it, runs test scenarios, and records evidence when a step fails.',
   },
   nav: {
-    sdk: 'Install SDK',
-    cli: 'Install CLI',
-    skills: 'Install skills',
+    install: 'Install',
+    installMenu: 'Ways to install',
+    sdk: 'SDK',
+    cli: 'CLI',
+    skills: 'Skills',
     selfHosting: 'Self-hosting',
     how: 'How it works',
     skipToContent: 'Skip to content',

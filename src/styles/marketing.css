@@ -66,6 +66,41 @@ summary::-webkit-details-marker { display: none; }
 .site-nav a { text-decoration: none; color: var(--ink-2); }
 .site-nav a:hover { color: var(--flare); }
 .site-nav a[aria-current="page"] { color: var(--flare); font-weight: 600; }
+.site-nav { align-items: center; }
+
+/* 설치 메뉴. 설치 페이지 네 개를 한 항목으로 묶고, 버튼으로 펼친다. */
+.nav-menu { position: relative; }
+.nav-menu__button {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0; border: 0; background: none; cursor: pointer;
+  font: inherit; color: var(--ink-2);
+}
+.nav-menu__button:hover { color: var(--flare); }
+.nav-menu__button[data-active="true"] { color: var(--flare); font-weight: 600; }
+.nav-menu__caret {
+  width: 6px; height: 6px; margin-top: -3px;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+.nav-menu__button[aria-expanded="true"] .nav-menu__caret { margin-top: 3px; transform: rotate(225deg); }
+.nav-menu__list {
+  position: absolute; top: calc(100% + 18px); left: -14px; z-index: 30;
+  margin: 0; padding: 6px; list-style: none; min-width: 168px;
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 5px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.08);
+}
+.nav-menu__list a { display: block; padding: 9px 12px; border-radius: 3px; }
+.nav-menu__list a:hover { background: var(--paper-2); }
+
+/* 설치 페이지 보조 탭. 헤더 아래에서 네 페이지를 나란히 보여 준다. */
+.install-tabs { border-bottom: 1px solid var(--rule); background: var(--paper); }
+.install-tabs__inner { display: flex; gap: 24px; overflow-x: auto; font-size: 14px; }
+.install-tabs a {
+  flex: none; padding: 12px 0; text-decoration: none; color: var(--ink-2);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.install-tabs a:hover { color: var(--flare); }
+.install-tabs a[aria-current="page"] { color: var(--flare); font-weight: 600; border-bottom-color: var(--flare); }
 
 /* 언어 전환. 로케일은 경로가 진실이라 실제 링크 내비게이션이고, 링크에는
    `aria-pressed`가 유효하지 않다. 활성 표시는 `aria-current`가 맡는다. */
@@ -133,7 +168,7 @@ summary::-webkit-details-marker { display: none; }
 .section__body { padding: var(--section-y) 0 var(--section-y) 40px; max-width: 760px; }
 
 @media (max-width: 720px) {
-  .section__split { grid-template-columns: 1fr; }
+  .section__split { grid-template-columns: minmax(0, 1fr); }
   .section__label { border-right: none; border-bottom: 1px solid var(--rule); padding: 40px 0 20px; }
   .section__body { padding: 32px 0 48px; }
 }
