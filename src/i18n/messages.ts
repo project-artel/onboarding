@@ -81,6 +81,15 @@ type Copy = {
     notes: string[]
     referenceCta: string
     agent: { title: string; body: string; prompt: string; instructionsCta: string }
+    skills: {
+      title: string
+      body: string
+      command: string
+      listTitle: string
+      items: { name: string; body: string }[]
+      optionsNote: string
+      repositoryCta: string
+    }
   }
   how: {
     title: string
@@ -327,6 +336,20 @@ artel qa run --test-run <id> --instance <id>`,
       body: 'Claude Code, Codex, Cursor 같은 AI 코딩 에이전트에 아래 프롬프트를 붙여 넣으면 설치를 대신 진행합니다.',
       prompt: 'https://artel.kr/cli.md 의 안내를 따라 이 컴퓨터에 ARTEL CLI 를 설치해 줘.',
       instructionsCta: '에이전트용 안내 보기',
+    },
+    skills: {
+      title: '에이전트 skill 설치',
+      body: 'ARTEL을 다루는 방법을 AI 에이전트에게 가르치는 skill 모음입니다. Claude Code, Codex, Cursor 등 skills CLI가 지원하는 에이전트에서 쓸 수 있습니다.',
+      command: 'npx skills add project-artel/artel-skills',
+      listTitle: '포함된 skill 4개',
+      items: [
+        { name: 'artel-unity-sdk', body: 'Unity SDK 설치, 로그인, development build, 등록까지 안내합니다.' },
+        { name: 'artel-cli', body: 'artel CLI를 설치하고 로그인한 뒤 터미널에서 QA를 실행합니다.' },
+        { name: 'artel-mcp', body: '로컬 MCP 서버로 Claude Code나 Codex가 게임을 직접 조작하게 합니다. 프로토타입입니다.' },
+        { name: 'artel-game-functions', body: '치트 [ArtelCheat]와 behavior [ArtelBehavior]를 추가해 QA 에이전트가 장면 이동, 적 처치, 엔딩 확인을 할 수 있게 합니다.' },
+      ],
+      optionsNote: '기본은 현재 프로젝트에만 설치합니다. -g를 붙이면 모든 프로젝트에, --skill <이름>을 붙이면 skill 하나만, --list를 붙이면 목록만 보여 줍니다.',
+      repositoryCta: 'artel-skills 저장소 보기',
     },
   },
   how: {
@@ -913,6 +936,20 @@ artel qa run --test-run <id> --instance <id>`,
       body: 'Paste the prompt below into an AI coding agent such as Claude Code, Codex, or Cursor, and it will run the install for you.',
       prompt: 'Install the ARTEL CLI on this machine by following https://artel.kr/cli.md',
       instructionsCta: 'View the agent instructions',
+    },
+    skills: {
+      title: 'Install the agent skills',
+      body: 'A set of skills that teach an AI agent how to work with ARTEL. They work with Claude Code, Codex, Cursor, and other agents supported by the skills CLI.',
+      command: 'npx skills add project-artel/artel-skills',
+      listTitle: 'Four skills included',
+      items: [
+        { name: 'artel-unity-sdk', body: 'Walks through installing the Unity SDK, signing in, making a development build, and registering it.' },
+        { name: 'artel-cli', body: 'Installs and signs in to the artel CLI, then runs QA from a terminal.' },
+        { name: 'artel-mcp', body: 'A local MCP server that lets Claude Code or Codex drive the game. This is a prototype.' },
+        { name: 'artel-game-functions', body: 'Adds cheats [ArtelCheat] and behaviors [ArtelBehavior] so the QA agent can jump to a scene, defeat enemies, and see the ending.' },
+      ],
+      optionsNote: 'By default it installs into the current project only. Add -g to install for every project, --skill <name> to install one skill, or --list to only list them.',
+      repositoryCta: 'View the artel-skills repository',
     },
   },
   how: {

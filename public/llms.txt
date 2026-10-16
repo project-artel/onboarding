@@ -31,6 +31,7 @@ ARTEL은 게임 QA 도구입니다. Unity 게임에 SDK를 연결하면 에이�
 - [Server, agent, and deploy files](https://github.com/project-artel/artel)
 - [Unity SDK](https://github.com/project-artel/artel-sdk)
 - [ARTEL CLI](https://github.com/project-artel/artel-cli)
+- [ARTEL agent skills](https://github.com/project-artel/artel-skills): skills for AI coding agents (Unity SDK setup, CLI, local MCP server, game cheats and behaviors). Install with `npx skills add project-artel/artel-skills`
 
 ## Contact
 
