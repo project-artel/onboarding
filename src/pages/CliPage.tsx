@@ -27,30 +27,6 @@ export function CliPage() {
         </a>
       </RailSection>
 
-      <RailSection num="SKILLS" title={t.cli.skills.title}>
-        <p className="step__body">{t.cli.skills.body}</p>
-        <CodeBlock code={t.cli.skills.command} />
-        <h3 className="install__title install__title--after-block">{t.cli.skills.listTitle}</h3>
-        <ul className="marks marks--tight">
-          {t.cli.skills.items.map((item) => (
-            <li key={item.name}>
-              <span>
-                <code>{item.name}</code> {item.body}
-              </span>
-            </li>
-          ))}
-        </ul>
-        <p className="step__body">{t.cli.skills.optionsNote}</p>
-        <a
-          className="btn btn--ghost"
-          href="https://github.com/project-artel/artel-skills"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {t.cli.skills.repositoryCta}
-        </a>
-      </RailSection>
-
       <section className="section section--alt">
         <div className="shell section__full">
           <ol className="install">

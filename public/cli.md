@@ -71,19 +71,3 @@ artel project list
 
 lists the projects the user can access. `artel --help` lists every command, and
 the full reference is https://github.com/project-artel/artel-cli#readme.
-
-## 7. Optional: agent skills
-
-ARTEL also publishes agent skills that teach an AI agent to install the Unity
-SDK, use the CLI, drive a game through a local MCP server, and add cheats and
-behaviors for the QA agent. Ask the user whether they want them. Do not install
-without their answer.
-
-If they agree, run this in the project directory:
-
-```
-npx skills add project-artel/artel-skills
-```
-
-Add `-g` to install for every project, `--skill <name>` to install one skill, or
-`--list` to only list them. The repository is https://github.com/project-artel/artel-skills

@@ -37,7 +37,7 @@ export type SelfHostingMethodPage = {
 
 type Copy = {
   meta: { title: string; description: string }
-  nav: { sdk: string; cli: string; selfHosting: string; how: string; skipToContent: string; home: string }
+  nav: { sdk: string; cli: string; skills: string; selfHosting: string; how: string; skipToContent: string; home: string }
   theme: { toLight: string; toDark: string }
   availability: Record<Availability, string>
   hero: {
@@ -81,15 +81,15 @@ type Copy = {
     notes: string[]
     referenceCta: string
     agent: { title: string; body: string; prompt: string; instructionsCta: string }
-    skills: {
-      title: string
-      body: string
-      command: string
-      listTitle: string
-      items: { name: string; body: string }[]
-      optionsNote: string
-      repositoryCta: string
-    }
+  }
+  skills: {
+    title: string
+    lead: string
+    agent: { title: string; body: string; prompt: string; instructionsCta: string }
+    install: { title: string; body: string; command: string; optionsNote: string }
+    listTitle: string
+    items: { name: string; body: string }[]
+    repositoryCta: string
   }
   how: {
     title: string
@@ -130,6 +130,7 @@ const ko: Copy = {
   nav: {
     sdk: 'SDK 설치',
     cli: 'CLI 설치',
+    skills: 'Skill 설치',
     selfHosting: '직접 설치',
     how: '작동 원리',
     skipToContent: '본문으로 건너뛰기',
@@ -337,21 +338,31 @@ artel qa run --test-run <id> --instance <id>`,
       prompt: 'https://artel.kr/cli.md 의 안내를 따라 이 컴퓨터에 ARTEL CLI 를 설치해 줘.',
       instructionsCta: '에이전트용 안내 보기',
     },
-    skills: {
-      title: '에이전트 skill 설치',
-      body: 'ARTEL을 다루는 방법을 AI 에이전트에게 가르치는 skill 모음입니다. Claude Code, Codex, Cursor 등 skills CLI가 지원하는 에이전트에서 쓸 수 있습니다.',
-      command: 'npx skills add project-artel/artel-skills',
-      listTitle: '포함된 skill 5개',
-      items: [
-        { name: 'artel-unity-sdk', body: 'Unity SDK 설치, 로그인, development build, 등록까지 안내합니다.' },
-        { name: 'artel-cli', body: 'artel CLI를 설치하고 로그인한 뒤 터미널에서 QA를 실행합니다.' },
-        { name: 'artel-mcp', body: '로컬 MCP 서버로 Claude Code나 Codex가 게임을 직접 조작하게 합니다. 프로토타입입니다.' },
-        { name: 'artel-cheats', body: '치트([ArtelCheat])를 추가해 QA 에이전트가 씬 이동, 스테이지 해금, 적 처치, 엔딩 확인을 한 번에 할 수 있게 합니다.' },
-        { name: 'artel-behaviors', body: 'behavior([ArtelBehavior])를 추가해 QA 에이전트가 켜 두면 게임 안에서 매 프레임 계속 공격하거나 턴을 넘기게 합니다.' },
-      ],
-      optionsNote: '기본은 현재 프로젝트에만 설치합니다. -g를 붙이면 모든 프로젝트에, --skill <이름>을 붙이면 skill 하나만, --list를 붙이면 목록만 보여 줍니다.',
-      repositoryCta: 'artel-skills 저장소 보기',
+  },
+  skills: {
+    title: 'AI 에이전트에게 ARTEL 사용법을 가르치는 skill',
+    lead: 'ARTEL의 Unity SDK 설치, CLI 사용, 게임 조작 방법을 정리한 skill 모음입니다. Claude Code, Codex, Cursor 등 skills CLI가 지원하는 에이전트에서 쓸 수 있습니다.',
+    agent: {
+      title: 'AI 에이전트에게 설치 맡기기',
+      body: 'AI 코딩 에이전트에 아래 프롬프트를 붙여 넣으면, 설치 여부를 먼저 물어본 뒤 skill을 설치합니다.',
+      prompt: 'https://artel.kr/skills.md 의 안내를 따라 ARTEL skill 을 설치해 줘.',
+      instructionsCta: '에이전트용 안내 보기',
     },
+    install: {
+      title: '직접 설치',
+      body: '터미널에서 아래 명령을 실행합니다. 기본은 현재 프로젝트에만 설치합니다.',
+      command: 'npx skills add project-artel/artel-skills',
+      optionsNote: '-g를 붙이면 모든 프로젝트에, --skill <이름>을 붙이면 skill 하나만, --list를 붙이면 설치 없이 목록만 보여 줍니다.',
+    },
+    listTitle: '포함된 skill 5개',
+    items: [
+      { name: 'artel-unity-sdk', body: 'Unity SDK 설치, 로그인, development build, 등록까지 안내합니다.' },
+      { name: 'artel-cli', body: 'artel CLI를 설치하고 로그인한 뒤 터미널에서 QA를 실행합니다.' },
+      { name: 'artel-mcp', body: '로컬 MCP 서버로 Claude Code나 Codex가 게임을 직접 조작하게 합니다. 프로토타입입니다.' },
+      { name: 'artel-cheats', body: '치트([ArtelCheat])를 추가해 QA 에이전트가 씬 이동, 스테이지 해금, 적 처치, 엔딩 확인을 한 번에 할 수 있게 합니다.' },
+      { name: 'artel-behaviors', body: 'behavior([ArtelBehavior])를 추가해 QA 에이전트가 켜 두면 게임 안에서 매 프레임 계속 공격하거나 턴을 넘기게 합니다.' },
+    ],
+    repositoryCta: 'artel-skills 저장소 보기',
   },
   how: {
     title: '작동 원리',
@@ -731,6 +742,7 @@ const en: Copy = {
   nav: {
     sdk: 'Install SDK',
     cli: 'Install CLI',
+    skills: 'Install skills',
     selfHosting: 'Self-hosting',
     how: 'How it works',
     skipToContent: 'Skip to content',
@@ -938,21 +950,31 @@ artel qa run --test-run <id> --instance <id>`,
       prompt: 'Install the ARTEL CLI on this machine by following https://artel.kr/cli.md',
       instructionsCta: 'View the agent instructions',
     },
-    skills: {
-      title: 'Install the agent skills',
-      body: 'A set of skills that teach an AI agent how to work with ARTEL. They work with Claude Code, Codex, Cursor, and other agents supported by the skills CLI.',
-      command: 'npx skills add project-artel/artel-skills',
-      listTitle: 'Five skills included',
-      items: [
-        { name: 'artel-unity-sdk', body: 'Walks through installing the Unity SDK, signing in, making a development build, and registering it.' },
-        { name: 'artel-cli', body: 'Installs and signs in to the artel CLI, then runs QA from a terminal.' },
-        { name: 'artel-mcp', body: 'A local MCP server that lets Claude Code or Codex drive the game. This is a prototype.' },
-        { name: 'artel-cheats', body: 'Adds cheats ([ArtelCheat]) so the QA agent can jump to a scene, unlock a stage, defeat enemies, or see the ending in one call.' },
-        { name: 'artel-behaviors', body: 'Adds behaviors ([ArtelBehavior]) that keep attacking or passing turns inside the game every frame while the QA agent watches.' },
-      ],
-      optionsNote: 'By default it installs into the current project only. Add -g to install for every project, --skill <name> to install one skill, or --list to only list them.',
-      repositoryCta: 'View the artel-skills repository',
+  },
+  skills: {
+    title: 'Skills that teach an AI agent to use ARTEL',
+    lead: 'A set of skills that cover installing the Unity SDK, using the CLI, and driving a game. They work with Claude Code, Codex, Cursor, and other agents supported by the skills CLI.',
+    agent: {
+      title: 'Let your AI agent install them',
+      body: 'Paste the prompt below into an AI coding agent. It asks you first, then installs the skills.',
+      prompt: 'Install the ARTEL skills by following https://artel.kr/skills.md',
+      instructionsCta: 'View the agent instructions',
     },
+    install: {
+      title: 'Install it yourself',
+      body: 'Run this in a terminal. By default it installs into the current project only.',
+      command: 'npx skills add project-artel/artel-skills',
+      optionsNote: 'Add -g to install for every project, --skill <name> to install one skill, or --list to only list them without installing.',
+    },
+    listTitle: 'Five skills included',
+    items: [
+      { name: 'artel-unity-sdk', body: 'Walks through installing the Unity SDK, signing in, making a development build, and registering it.' },
+      { name: 'artel-cli', body: 'Installs and signs in to the artel CLI, then runs QA from a terminal.' },
+      { name: 'artel-mcp', body: 'A local MCP server that lets Claude Code or Codex drive the game. This is a prototype.' },
+      { name: 'artel-cheats', body: 'Adds cheats ([ArtelCheat]) so the QA agent can jump to a scene, unlock a stage, defeat enemies, or see the ending in one call.' },
+      { name: 'artel-behaviors', body: 'Adds behaviors ([ArtelBehavior]) that keep attacking or passing turns inside the game every frame while the QA agent watches.' },
+    ],
+    repositoryCta: 'View the artel-skills repository',
   },
   how: {
     title: 'How it works',
