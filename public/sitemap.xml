@@ -37,6 +37,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/cli" />
   </url>
   <url>
+    <loc>https://artel.kr/skills</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/skills" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/skills" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/skills" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/skills</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/skills" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/skills" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/skills" />
+  </url>
+  <url>
     <loc>https://artel.kr/self-hosting</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/self-hosting" />
     <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/self-hosting" />

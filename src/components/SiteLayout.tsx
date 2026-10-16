@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useCopy } from '../i18n/useCopy'
 import { locales } from '../i18n/locale'
 import { BrandMark } from './BrandMark'
+import { InstallMenu, InstallTabs } from './InstallNav'
 import { applyTheme, currentTheme } from '../theme'
 
 const siteOrigin = 'https://artel.kr'
@@ -55,9 +56,7 @@ export function SiteLayout() {
             <span className="brand__word">ARTEL</span>
           </Link>
           <nav className="site-nav" aria-label={t.nav.home}>
-            <NavLink to={href('/sdk')}>{t.nav.sdk}</NavLink>
-            <NavLink to={href('/cli')}>{t.nav.cli}</NavLink>
-            <NavLink to={href('/self-hosting')}>{t.nav.selfHosting}</NavLink>
+            <InstallMenu />
             <NavLink to={href('/how-it-works')}>{t.nav.how}</NavLink>
           </nav>
           <div className="locale" role="group" aria-label={t.footer.language}>
@@ -97,6 +96,7 @@ export function SiteLayout() {
           )}
         </div>
       </header>
+      <InstallTabs />
 
       <main id="main">
         <Outlet />

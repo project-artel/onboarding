@@ -5,6 +5,7 @@ import { HowItWorksPage } from './pages/HowItWorksPage'
 import { LandingPage } from './pages/LandingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { SdkPage } from './pages/SdkPage'
+import { SkillsPage } from './pages/SkillsPage'
 import { SelfHostingMethodPage } from './pages/SelfHostingMethodPage'
 import { SelfHostingPage } from './pages/SelfHostingPage'
 import { selfHostingMethodIds } from './i18n/selfHostingRoutes'
@@ -17,6 +18,7 @@ function localeRoutes() {
       <Route index element={<LandingPage />} />
       <Route path="sdk" element={<SdkPage />} />
       <Route path="cli" element={<CliPage />} />
+      <Route path="skills" element={<SkillsPage />} />
       <Route path="self-hosting" element={<SelfHostingPage />} />
       {selfHostingMethodIds.map((id) => (
         <Route key={id} path={`self-hosting/${id}`} element={<SelfHostingMethodPage method={id} />} />
