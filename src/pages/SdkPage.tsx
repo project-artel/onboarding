@@ -45,7 +45,6 @@ export function SdkPage() {
           <div className="hero__copy hero__copy--narrow">
             <p className="page-hero__kicker">INSTALL</p>
             <h1 className="hero__title page-hero__title">{t.sdk.title}</h1>
-            <p className="hero__lead">{t.sdk.lead}</p>
           </div>
         </div>
       </section>

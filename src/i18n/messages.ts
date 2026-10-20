@@ -32,7 +32,6 @@ export type SelfHostingSection = { title: string; blocks: SelfHostingBlock[] }
 
 export type SelfHostingMethodPage = {
   title: string
-  chooseWhen: string
   state?: Availability
   steps: SelfHostingSection[]
 }
@@ -55,7 +54,6 @@ type Copy = {
   hero: {
     status: string
     title: string
-    subtitle: string
     primaryCta: string
     secondaryCta: string
   }
@@ -69,12 +67,11 @@ type Copy = {
     items: { title: string; body: string; state: Availability }[]
   }
   requirements: { title: string; items: string[] }
-  cta: { title: string; body: string }
+  cta: { title: string }
   faq: { title: string; items: { q: string; a: string }[] }
   footer: { contact: string; repository: string; language: string }
   sdk: {
     title: string
-    lead: string
     steps: { title: string; body: string; code?: string; shotAlts: string[] }[]
     helpTitle: string
     help: string[]
@@ -88,7 +85,7 @@ type Copy = {
   cli: {
     title: string
     lead: string
-    steps: { title: string; body: string; code?: string }[]
+    steps: { title: string; body?: string; code?: string }[]
     notesTitle: string
     notes: string[]
     referenceCta: string
@@ -105,16 +102,11 @@ type Copy = {
   }
   how: {
     title: string
-    lead: string
-    componentsTitle: string
-    components: { name: string; body: string }[]
     flowTitle: string
     flowAlt: string
     flow: string[]
     lifecycleTitle: string
     lifecycle: { title: string; body: string; state: Availability }[]
-    contextTitle: string
-    contextBody: string
   }
   selfHosting: {
     title: string
@@ -126,7 +118,7 @@ type Copy = {
     }
     afterInstall: SelfHostingSection[]
     methods: Record<SelfHostingMethodId, SelfHostingMethodPage>
-    method: { back: string; chooseWhenLabel: string; othersTitle: string }
+    method: { back: string; othersTitle: string }
     deployReadmeLabel: string
     licenseLabel: string
   }
@@ -155,8 +147,6 @@ const ko: Copy = {
   hero: {
     status: '개발 중',
     title: '에이전트가 플레이하는 게임 QA 도구',
-    subtitle:
-      'Unity 게임에 SDK를 추가하면 에이전트가 게임을 직접 조작하며 테스트합니다.',
     primaryCta: 'SDK 다운로드',
     secondaryCta: '설치 문서 보기',
   },
@@ -195,23 +185,8 @@ const ko: Copy = {
     title: '기능',
     items: [
       {
-        title: '입력 주입',
-        body: '플레이어와 같은 경로로 키보드와 마우스 입력을 보냅니다.',
-        state: 'shipped',
-      },
-      {
-        title: '화면 상태 인식',
-        body: '현재 화면에 무엇이 있는지 읽어서 다음 행동을 정합니다.',
-        state: 'shipped',
-      },
-      {
         title: '시나리오 자동 생성',
         body: '기획서에서 테스트 시나리오 초안을 만듭니다.',
-        state: 'planned',
-      },
-      {
-        title: '이슈 증거',
-        body: '실패한 시점의 상태, 로그, 직전 액션을 이슈 하나에 모읍니다.',
         state: 'planned',
       },
       {
@@ -231,15 +206,10 @@ const ko: Copy = {
   },
   cta: {
     title: 'SDK 설치 안내',
-    body: '궁금한 점은 문의해 주세요.',
   },
   faq: {
     title: '자주 묻는 질문',
     items: [
-      {
-        q: '게임 소스가 필요한가요?',
-        a: '패키지를 추가할 수 있으면 됩니다. 게임 로직은 고치지 않습니다.',
-      },
       {
         q: '어떤 게임에 쓸 수 있나요?',
         a: 'Unity 게임입니다. 지금은 싱글 플레이를 먼저 지원합니다.',
@@ -253,7 +223,6 @@ const ko: Copy = {
   footer: { contact: '문의', repository: '저장소', language: '언어' },
   sdk: {
     title: 'Unity SDK 설치',
-    lead: '패키지를 추가하고 게임에서 로그인하면 연결됩니다.',
     steps: [
       {
         title: '패키지 추가',
@@ -292,7 +261,7 @@ const ko: Copy = {
     contactCta: '문의하기',
     advancedTitle: '다른 서버에 연결하기',
     advancedNote:
-      '직접 설치한 서버에 연결할 때만 필요합니다. ArtelManager의 Server 항목을 바꾸거나 아래 인자로 실행합니다.',
+      'ArtelManager의 Server 항목을 바꾸거나 아래 인자로 실행합니다.',
     advanced: [
       {
         label: '실행 인자',
@@ -313,7 +282,6 @@ const ko: Copy = {
       },
       {
         title: '로그인',
-        body: '브라우저에서 로그인합니다.',
         code: 'artel auth login',
       },
       {
@@ -357,7 +325,7 @@ artel qa run --test-run <id> --instance <id>`,
       command: 'npx skills add project-artel/artel-skills',
       optionsNote: '모든 프로젝트에 설치하려면 -g를 붙입니다.',
     },
-    listTitle: '포함된 skill 5개',
+    listTitle: '포함된 skill',
     items: [
       { name: 'artel-unity-sdk', body: 'Unity SDK를 설치하고 연결합니다.' },
       { name: 'artel-cli', body: '터미널에서 QA를 실행합니다.' },
@@ -369,26 +337,6 @@ artel qa run --test-run <id> --instance <id>`,
   },
   how: {
     title: '작동 원리',
-    lead: '에이전트가 게임을 플레이하는 구조입니다.',
-    componentsTitle: '구성 요소',
-    components: [
-      {
-        name: 'Unity SDK',
-        body: '게임 안에서 화면 상태를 보고하고 입력을 넣습니다.',
-      },
-      {
-        name: 'Agent 서버',
-        body: '상태와 시나리오를 보고 다음 행동을 정합니다.',
-      },
-      {
-        name: 'Orchestration 서버',
-        body: '프로젝트, 시나리오, QA 실행을 관리합니다.',
-      },
-      {
-        name: '대시보드',
-        body: '실행을 리플레이로 되짚고 타임라인에서 액션과 증거를 확인합니다.',
-      },
-    ],
     flowTitle: '데이터 흐름',
     flowAlt:
       '게임 안의 SDK가 씬 상태를 Orchestration 서버로 보고하고, Agent 서버가 다음 액션을 정해 다시 SDK로 내려보내며, 실행 결과가 대시보드에 기록되는 흐름',
@@ -427,9 +375,6 @@ artel qa run --test-run <id> --instance <id>`,
         state: 'planned',
       },
     ],
-    contextTitle: '기획서 활용 방식',
-    contextBody:
-      '기획서에서 규칙과 목표를 뽑아 시나리오와 실행의 근거로 씁니다.',
   },
   selfHosting: {
     title: '직접 설치',
@@ -479,7 +424,6 @@ artel qa run --test-run <id> --instance <id>`,
     methods: {
       'install-script': {
         title: '설치 스크립트',
-        chooseWhen: '명령 한 줄로 설치할 때 고릅니다.',
         steps: [
           {
             title: '실행',
@@ -533,7 +477,6 @@ artel qa run --test-run <id> --instance <id>`,
       },
       'docker-compose': {
         title: 'Docker Compose',
-        chooseWhen: '설정 파일을 직접 고치며 운영할 때 고릅니다.',
         steps: [
           {
             title: '필요한 것',
@@ -635,7 +578,6 @@ artel qa run --test-run <id> --instance <id>`,
       },
       'desktop-app': {
         title: '데스크톱 앱',
-        chooseWhen: 'Docker 없이 설치할 때 고릅니다.',
         state: 'planned',
         steps: [
           {
@@ -667,7 +609,6 @@ artel qa run --test-run <id> --instance <id>`,
     },
     method: {
       back: '← 직접 설치로 돌아가기',
-      chooseWhenLabel: '이럴 때',
       othersTitle: '다른 설치 방법',
     },
     deployReadmeLabel: 'deploy/README.md',
@@ -702,8 +643,6 @@ const en: Copy = {
   hero: {
     status: 'In development',
     title: 'A game QA tool where an agent plays the game',
-    subtitle:
-      'Add the SDK to your Unity game and an agent plays it to test it.',
     primaryCta: 'Download SDK',
     secondaryCta: 'Read install guide',
   },
@@ -742,23 +681,8 @@ const en: Copy = {
     title: 'Features',
     items: [
       {
-        title: 'Input injection',
-        body: 'Sends keyboard and mouse input the way a player does.',
-        state: 'shipped',
-      },
-      {
-        title: 'On-screen state',
-        body: 'Reads what is on screen to decide the next action.',
-        state: 'shipped',
-      },
-      {
         title: 'Scenario generation',
         body: 'Drafts test scenarios from a design document.',
-        state: 'planned',
-      },
-      {
-        title: 'Issue evidence',
-        body: 'Collects the state, logs, and preceding action at the failure point into one issue.',
         state: 'planned',
       },
       {
@@ -778,15 +702,10 @@ const en: Copy = {
   },
   cta: {
     title: 'Installing the SDK',
-    body: 'Questions? Contact us.',
   },
   faq: {
     title: 'Questions',
     items: [
-      {
-        q: 'Do you need our source code?',
-        a: 'Only enough access to add a package. Game logic is not changed.',
-      },
       {
         q: 'Which games does it work with?',
         a: 'Unity games. Single-player comes first.',
@@ -800,7 +719,6 @@ const en: Copy = {
   footer: { contact: 'Contact', repository: 'Repository', language: 'Language' },
   sdk: {
     title: 'Install the Unity SDK',
-    lead: 'Add the package and sign in from the game.',
     steps: [
       {
         title: 'Add the package',
@@ -839,7 +757,7 @@ const en: Copy = {
     contactCta: 'Contact us',
     advancedTitle: 'Connecting to another server',
     advancedNote:
-      'Only for a self-hosted server. Change Server on ArtelManager, or launch with these arguments.',
+      'Change Server on ArtelManager, or launch with these arguments.',
     advanced: [
       {
         label: 'Launch arguments',
@@ -860,7 +778,6 @@ const en: Copy = {
       },
       {
         title: 'Sign in',
-        body: 'Sign in in the browser.',
         code: 'artel auth login',
       },
       {
@@ -904,7 +821,7 @@ artel qa run --test-run <id> --instance <id>`,
       command: 'npx skills add project-artel/artel-skills',
       optionsNote: 'Add -g to install for every project.',
     },
-    listTitle: 'Five skills included',
+    listTitle: 'Included skills',
     items: [
       { name: 'artel-unity-sdk', body: 'Installs and connects the Unity SDK.' },
       { name: 'artel-cli', body: 'Runs QA from a terminal.' },
@@ -916,26 +833,6 @@ artel qa run --test-run <id> --instance <id>`,
   },
   how: {
     title: 'How it works',
-    lead: 'How an agent plays the game.',
-    componentsTitle: 'Components',
-    components: [
-      {
-        name: 'Unity SDK',
-        body: 'Reports the screen from inside the game and injects input.',
-      },
-      {
-        name: 'Agent server',
-        body: 'Decides the next move from the state and the scenario.',
-      },
-      {
-        name: 'Orchestration server',
-        body: 'Manages projects, scenarios, and QA runs.',
-      },
-      {
-        name: 'Dashboard',
-        body: 'Replays a run and shows actions and evidence on a timeline.',
-      },
-    ],
     flowTitle: 'Data flow',
     flowAlt:
       'The SDK inside the game reports scene state to the orchestration server, the agent server decides the next action and sends it back down to the SDK, and run results are recorded for the dashboard',
@@ -974,9 +871,6 @@ artel qa run --test-run <id> --instance <id>`,
         state: 'planned',
       },
     ],
-    contextTitle: 'How the design doc is used',
-    contextBody:
-      'Rules and goals from the design document ground the scenarios and the run.',
   },
   selfHosting: {
     title: 'Self-hosting',
@@ -1026,7 +920,6 @@ artel qa run --test-run <id> --instance <id>`,
     methods: {
       'install-script': {
         title: 'Install script',
-        chooseWhen: 'Choose this to install with one command.',
         steps: [
           {
             title: 'Run',
@@ -1080,7 +973,6 @@ artel qa run --test-run <id> --instance <id>`,
       },
       'docker-compose': {
         title: 'Docker Compose',
-        chooseWhen: 'Choose this to manage the settings files yourself.',
         steps: [
           {
             title: 'What you need',
@@ -1182,7 +1074,6 @@ artel qa run --test-run <id> --instance <id>`,
       },
       'desktop-app': {
         title: 'Desktop app',
-        chooseWhen: 'Choose this to install without Docker.',
         state: 'planned',
         steps: [
           {
@@ -1214,7 +1105,6 @@ artel qa run --test-run <id> --instance <id>`,
     },
     method: {
       back: '← Back to self-hosting',
-      chooseWhenLabel: 'Choose this if',
       othersTitle: 'Other methods',
     },
     deployReadmeLabel: 'deploy/README.md',

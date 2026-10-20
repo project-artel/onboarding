@@ -352,7 +352,6 @@ summary::-webkit-details-marker { display: none; }
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-.cta__body { margin: 0; font-size: 17px; color: var(--ink-2); line-height: 1.75; text-wrap: pretty; }
 .hero__actions--cta { margin-top: 28px; }
 
 /* 작동 원리 수명주기 스텝은 랜딩 스텝보다 한 단계 작다. */
@@ -372,8 +371,6 @@ summary::-webkit-details-marker { display: none; }
 .install__shot--narrow { width: 280px; }
 
 /* 작동 원리 §04 본문 문단. 본문 기준보다 한 단계 크고 행간이 넓다. */
-.how-context { margin: 0; max-width: 680px; font-size: 17px; color: var(--ink-2); line-height: 1.8; text-wrap: pretty; }
-.how-context__cta { margin-top: 28px; }
 
 /* 마지막 섹션의 규칙선은 푸터 border-top과 겹쳐 2px로 보인다. */
 main > .section:last-child { border-bottom: none; }

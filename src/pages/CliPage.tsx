@@ -37,7 +37,7 @@ export function CliPage() {
                 </div>
                 <div className="install__body">
                   <h2 className="install__title">{step.title}</h2>
-                  <p className="step__body">{step.body}</p>
+                  {step.body ? <p className="step__body">{step.body}</p> : null}
                   {step.code ? <CodeBlock code={step.code} /> : null}
                 </div>
               </li>

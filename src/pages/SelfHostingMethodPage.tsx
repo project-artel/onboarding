@@ -26,7 +26,6 @@ export function SelfHostingMethodPage({ method }: { method: SelfHostingMethodId 
             </Link>
             <h1 className="hero__title page-hero__title">{content.title}</h1>
             {content.state ? <StateBadge state={content.state} /> : null}
-            <p className="hero__lead">{content.chooseWhen}</p>
           </div>
         </div>
       </section>

@@ -17,7 +17,6 @@ export function LandingPage() {
           <div className="hero__copy">
             <p className="hero__eyebrow">{t.hero.status}</p>
             <h1 className="hero__title">{t.hero.title}</h1>
-            <p className="hero__lead">{t.hero.subtitle}</p>
             <div className="hero__actions">
               <Link className="btn btn--primary" to={href('/sdk')}>
                 {t.hero.primaryCta}
@@ -106,7 +105,6 @@ export function LandingPage() {
         <div className="shell hero__inner">
           <div className="hero__copy hero__copy--narrow">
             <h2 className="cta__title">{t.cta.title}</h2>
-            <p className="cta__body">{t.cta.body}</p>
             <div className="hero__actions hero__actions--cta">
               <Link className="btn btn--primary" to={href('/sdk')}>
                 {t.hero.primaryCta}
