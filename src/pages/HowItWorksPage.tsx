@@ -1,5 +1,4 @@
 import { RailSection } from '../components/RailSection'
-import { StateBadge } from '../components/StateBadge'
 import { useCopy } from '../i18n/useCopy'
 
 export function HowItWorksPage() {
@@ -12,7 +11,7 @@ export function HowItWorksPage() {
         <span className="crop crop--tr" aria-hidden="true" />
         <div className="shell hero__inner hero__inner--page">
           <div className="hero__copy hero__copy--narrow">
-            <p className="page-hero__kicker">ARCHITECTURE</p>
+            <p className="page-hero__kicker">SYSTEM</p>
             <h1 className="hero__title page-hero__title">{t.how.title}</h1>
           </div>
         </div>
@@ -37,18 +36,11 @@ export function HowItWorksPage() {
         <ol className="steps steps--sm">
           {t.how.lifecycle.map((phase, index) => (
             <li key={phase.title}>
-              <span
-                className={
-                  phase.state === 'shipped' ? 'step__num' : 'step__num step__num--planned'
-                }
-              >
+              <span className="step__num">
                 {String(index + 1).padStart(2, '0')}
               </span>
               <div>
-                <div className="step__head">
-                  <h3 className="step__title">{phase.title}</h3>
-                  <StateBadge state={phase.state} />
-                </div>
+                <h3 className="step__title">{phase.title}</h3>
                 <p className="step__body">{phase.body}</p>
               </div>
             </li>

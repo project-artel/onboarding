@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { StateBadge } from '../components/StateBadge'
 import { RailSection } from '../components/RailSection'
 import { SelfHostingBlocks } from '../components/SelfHostingBlocks'
 import { selfHostingMethodPath } from '../i18n/selfHostingRoutes'
@@ -42,7 +41,6 @@ export function SelfHostingPage() {
               <Link className="method-card" to={href(selfHostingMethodPath(card.id))}>
                 <span className="method-card__name">{card.name}</span>
                 <span className="method-card__audience">{card.audience}</span>
-                {card.state ? <StateBadge state={card.state} /> : null}
                 <span className="method-card__cta">{card.cta} →</span>
               </Link>
             </li>

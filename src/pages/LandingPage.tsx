@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { RailSection } from '../components/RailSection'
-import { StateBadge } from '../components/StateBadge'
 import { useCopy } from '../i18n/useCopy'
 
 export function LandingPage() {
@@ -15,11 +14,13 @@ export function LandingPage() {
         <span className="crop crop--br" aria-hidden="true" />
         <div className="shell hero__inner">
           <div className="hero__copy">
-            <p className="hero__eyebrow">{t.hero.status}</p>
             <h1 className="hero__title">{t.hero.title}</h1>
             <div className="hero__actions">
-              <Link className="btn btn--primary" to={href('/sdk')}>
-                {t.hero.primaryCta}
+              <Link className="btn btn--primary" to={href('/self-hosting/desktop-app')}>
+                {t.hero.appCta}
+              </Link>
+              <Link className="btn btn--ghost" to={href('/sdk')}>
+                {t.hero.sdkCta}
               </Link>
             </div>
           </div>
@@ -49,18 +50,11 @@ export function LandingPage() {
         <ol className="steps">
           {t.steps.items.map((step) => (
             <li key={step.index}>
-              <span
-                className={
-                  step.state === 'shipped' ? 'step__num' : 'step__num step__num--planned'
-                }
-              >
+              <span className="step__num">
                 {step.index}
               </span>
               <div>
-                <div className="step__head">
-                  <h3 className="step__title">{step.title}</h3>
-                  <StateBadge state={step.state} />
-                </div>
+                <h3 className="step__title">{step.title}</h3>
                 <p className="step__body">{step.body}</p>
               </div>
             </li>
@@ -78,7 +72,6 @@ export function LandingPage() {
           <ul className="cards">
             {t.features.items.map((feature) => (
               <li key={feature.title}>
-                <StateBadge state={feature.state} />
                 <h3 className="card__title">{feature.title}</h3>
                 <p className="card__body">{feature.body}</p>
               </li>
@@ -87,17 +80,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <RailSection alt num="§ 04" title={t.requirements.title}>
-        <ul className="marks marks--muted">
-          {t.requirements.items.map((item) => (
-            <li key={item}>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </RailSection>
-
-      <RailSection num="§ 05" title={t.faq.title}>
+      <RailSection alt num="§ 04" title={t.faq.title}>
         <div className="faq">
           {t.faq.items.map((item) => (
             <details key={item.q}>

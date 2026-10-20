@@ -1,10 +1,6 @@
 import type { Locale } from './locale'
 import type { SelfHostingMethodId } from './selfHostingRoutes'
 
-// 구현 상태는 카피에서 지운다고 사라지지 않는다. 배지로 명시해 두면 문구를
-// 고치는 사람이 미구현 기능을 현재형으로 바꿔 쓰는 일을 막는다.
-export type Availability = 'shipped' | 'planned'
-
 // Download page of the desktop app. Plain text, so `npm run check` can load this file without a bundler.
 const desktopReleasesUrl = 'https://github.com/project-artel/artel-desktop/releases/latest'
 
@@ -32,7 +28,6 @@ export type SelfHostingSection = { title: string; blocks: SelfHostingBlock[] }
 
 export type SelfHostingMethodPage = {
   title: string
-  state?: Availability
   steps: SelfHostingSection[]
 }
 
@@ -50,22 +45,20 @@ type Copy = {
     home: string
   }
   theme: { toLight: string; toDark: string }
-  availability: Record<Availability, string>
   hero: {
-    status: string
     title: string
-    primaryCta: string
+    appCta: string
+    sdkCta: string
   }
   problem: { title: string; items: string[] }
   steps: {
     title: string
-    items: { index: string; title: string; body: string; state: Availability }[]
+    items: { index: string; title: string; body: string }[]
   }
   features: {
     title: string
-    items: { title: string; body: string; state: Availability }[]
+    items: { title: string; body: string }[]
   }
-  requirements: { title: string; items: string[] }
   faq: { title: string; items: { q: string; a: string }[] }
   footer: { contact: string; repository: string; language: string }
   sdk: {
@@ -104,7 +97,7 @@ type Copy = {
     flowAlt: string
     flow: string[]
     lifecycleTitle: string
-    lifecycle: { title: string; body: string; state: Availability }[]
+    lifecycle: { title: string; body: string }[]
   }
   selfHosting: {
     title: string
@@ -112,7 +105,7 @@ type Copy = {
     overview: { title: string; items: string[] }
     chooser: {
       title: string
-      cards: { id: SelfHostingMethodId; name: string; audience: string; cta: string; state?: Availability }[]
+      cards: { id: SelfHostingMethodId; name: string; audience: string; cta: string }[]
     }
     afterInstall: SelfHostingSection[]
     methods: Record<SelfHostingMethodId, SelfHostingMethodPage>
@@ -128,7 +121,7 @@ const ko: Copy = {
   meta: {
     title: 'ARTEL | 에이전트가 플레이하는 게임 QA',
     description:
-      'Unity 게임에 SDK를 연결하면 에이전트가 직접 조작하며 시나리오를 검증하고, 실패한 순간의 증거를 남깁니다.',
+      'Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 시나리오를 검증하고 실패 순간의 증거를 남기는 게임 QA 도구',
   },
   nav: {
     install: '설치',
@@ -137,16 +130,15 @@ const ko: Copy = {
     cli: 'CLI',
     skills: 'Skill',
     selfHosting: '직접 설치',
-    how: '작동 원리',
+    how: '아키텍처',
     skipToContent: '본문으로 건너뛰기',
     home: '홈',
   },
   theme: { toLight: '라이트 모드로 전환', toDark: '다크 모드로 전환' },
-  availability: { shipped: '동작 중', planned: '개발 예정' },
   hero: {
-    status: '개발 중',
     title: '에이전트가 플레이하는 게임 QA 도구',
-    primaryCta: 'SDK 다운로드',
+    appCta: '데스크톱 앱 다운로드',
+    sdkCta: 'Unity SDK 설치',
   },
   problem: {
     title: '해결하려는 문제',
@@ -162,44 +154,29 @@ const ko: Copy = {
       {
         index: '01',
         title: 'SDK 연결',
-        body: 'Unity 프로젝트에 패키지를 추가하고 게임에서 로그인합니다.',
-        state: 'shipped',
+        body: 'Unity 프로젝트에 패키지 추가, 게임에서 로그인',
       },
       {
         index: '02',
         title: '에이전트 플레이',
-        body: '에이전트가 화면을 읽고 키보드와 마우스로 게임을 조작합니다.',
-        state: 'shipped',
+        body: '에이전트가 화면을 읽고 키보드와 마우스로 게임 조작',
       },
       {
         index: '03',
         title: '실행 기록',
-        body: '실패한 순간의 상태와 로그를 이슈에 남깁니다.',
-        state: 'planned',
+        body: '실패한 순간의 상태와 로그를 이슈로 기록',
       },
     ],
   },
   features: {
     title: '기능',
     items: [
-      {
-        title: '시나리오 자동 생성',
-        body: '기획서에서 테스트 시나리오 초안을 만듭니다.',
-        state: 'planned',
-      },
-      {
-        title: '테스트 런 구성',
-        body: '확정한 시나리오를 묶어서 빌드마다 같은 세트로 실행합니다.',
-        state: 'planned',
-      },
-    ],
-  },
-  requirements: {
-    title: '준비 사항',
-    items: [
-      'Unity 프로젝트에 패키지를 추가할 권한',
-      '게임에서 ARTEL 서버로 나가는 네트워크',
-      'ARTEL 계정',
+      { title: '화면 지도', body: '플레이하며 지나간 화면과 이동 경로를 지도로 기록' },
+      { title: '케이스 라이브러리', body: '기획 문서에서 테스트 케이스 초안 생성' },
+      { title: '지식 그래프', body: '기획 문서의 규칙과 용어를 에이전트의 판단 근거로 사용' },
+      { title: 'Macro', body: '성공한 조작을 저장해 다음 실행에서 재사용' },
+      { title: '성능', body: '빌드와 QA 실행별 프레임 시간, draw call, 메모리 할당' },
+      { title: 'GitHub 이슈 연동', body: '찾은 이슈를 GitHub 이슈로 내보내기' },
     ],
   },
   faq: {
@@ -207,11 +184,11 @@ const ko: Copy = {
     items: [
       {
         q: '어떤 게임에 쓸 수 있나요?',
-        a: 'Unity 게임입니다. 지금은 싱글 플레이를 먼저 지원합니다.',
+        a: 'Unity 게임. 지금은 싱글 플레이부터 지원',
       },
       {
         q: '데이터는 어디에 저장되나요?',
-        a: 'ARTEL 서버에 저장됩니다. 직접 설치하면 그 컴퓨터에 저장되고, admin 이 동의한 경우에만 하루 한 번 사용 통계를 보냅니다. 게임 내용과 개인 정보는 보내지 않습니다.',
+        a: 'ARTEL 서버. 직접 설치하면 그 컴퓨터. 사용 통계는 admin 이 동의한 경우에만 하루 한 번 전송하고, 게임 내용과 개인 정보는 보내지 않음',
       },
     ],
   },
@@ -221,7 +198,7 @@ const ko: Copy = {
     steps: [
       {
         title: '패키지 추가',
-        body: 'Unity Package Manager에서 Add package from git URL을 선택하고 아래 주소를 붙여 넣습니다.',
+        body: 'Unity Package Manager의 Add package from git URL에 아래 주소 입력',
         code: 'https://github.com/project-artel/artel-sdk.git?path=/Packages/kr.artel.sdk',
         shotAlts: [
           'Package Manager의 더하기 메뉴가 열리고 Add package from git URL이 선택된 화면.',
@@ -230,17 +207,17 @@ const ko: Copy = {
       },
       {
         title: '게임 실행',
-        body: '게임을 실행하고 로그인 화면에서 로그인을 누르면 브라우저가 열립니다.',
+        body: '게임 실행 후 로그인 화면에서 로그인 선택, 브라우저가 열림',
         shotAlts: ['게임 화면 위에 뜬 Artel SDK 로그인 화면과 로그인 버튼.'],
       },
       {
         title: '브라우저에서 로그인',
-        body: '로그인하면 SDK가 승인됩니다. 탭은 닫아도 됩니다.',
+        body: '로그인하면 SDK 승인 완료, 탭은 닫아도 됨',
         shotAlts: ['로그인하면 이 컴퓨터에서 기다리는 SDK를 승인한다고 안내하는 브라우저의 Artel 로그인 페이지.'],
       },
       {
         title: '프로젝트 선택',
-        body: '게임에서 프로젝트를 고르면 콘솔의 게임 인스턴스 목록에 연결됨으로 표시됩니다.',
+        body: '게임에서 프로젝트를 고르면 콘솔의 게임 인스턴스 목록에 연결됨으로 표시',
         shotAlts: [
           '게임 안의 Artel SDK 화면에 연결할 프로젝트 목록이 표시된 화면.',
           'Artel의 게임 인스턴스 목록에 새 인스턴스가 연결됨으로 표시된 화면.',
@@ -256,7 +233,7 @@ const ko: Copy = {
     contactCta: '문의하기',
     advancedTitle: '다른 서버에 연결하기',
     advancedNote:
-      'ArtelManager의 Server 항목을 바꾸거나 아래 인자로 실행합니다.',
+      'ArtelManager의 Server 항목 변경, 또는 아래 인자로 실행',
     advanced: [
       {
         label: '실행 인자',
@@ -264,15 +241,15 @@ const ko: Copy = {
       },
     ],
     copy: '복사',
-    copied: '복사했습니다',
+    copied: '복사됨',
   },
   cli: {
     title: 'CLI',
-    lead: '터미널이나 CI에서 QA를 실행합니다.',
+    lead: '터미널과 CI에서 QA 실행',
     steps: [
       {
         title: 'CLI 설치',
-        body: 'Node.js 22.12 이상이 필요합니다.',
+        body: 'Node.js 22.12 이상 필요',
         code: 'npm install -g @project-artel/cli@alpha\nartel --version',
       },
       {
@@ -281,12 +258,12 @@ const ko: Copy = {
       },
       {
         title: 'CI에서는 CLI token 사용',
-        body: '콘솔의 계정 설정에서 CLI token을 발급해 ARTEL_TOKEN에 넣습니다.',
+        body: '콘솔의 계정 설정에서 CLI token 발급 후 ARTEL_TOKEN에 설정',
         code: 'export ARTEL_TOKEN=<발급받은 token>',
       },
       {
         title: '첫 명령 실행',
-        body: '<id>는 실제 값으로 바꿉니다.',
+        body: '<id>는 실제 값으로 교체',
         code: `artel project list
 artel game start --build ./Build/Game.exe --project <id>
 artel game list --project <id>
@@ -300,80 +277,75 @@ artel qa run --test-run <id> --instance <id>`,
     referenceCta: '전체 레퍼런스 보기',
     agent: {
       title: 'AI 에이전트에게 설치 맡기기',
-      body: 'AI 코딩 에이전트에 아래 프롬프트를 붙여 넣습니다.',
+      body: 'AI 코딩 에이전트에 아래 프롬프트 붙여 넣기',
       prompt: 'https://artel.kr/cli.md 의 안내를 따라 이 컴퓨터에 ARTEL CLI 를 설치해 줘.',
       instructionsCta: '에이전트용 안내 보기',
     },
   },
   skills: {
     title: 'Skill',
-    lead: 'AI 코딩 에이전트가 ARTEL SDK와 CLI를 쓰게 해 주는 skill입니다.',
+    lead: 'AI 코딩 에이전트가 ARTEL SDK와 CLI를 쓰게 해 주는 skill',
     agent: {
       title: 'AI 에이전트에게 설치 맡기기',
-      body: 'AI 코딩 에이전트에 아래 프롬프트를 붙여 넣습니다.',
+      body: 'AI 코딩 에이전트에 아래 프롬프트 붙여 넣기',
       prompt: 'https://artel.kr/skills.md 의 안내를 따라 ARTEL skill 을 설치해 줘.',
       instructionsCta: '에이전트용 안내 보기',
     },
     install: {
       title: '직접 설치',
-      body: '현재 프로젝트에 설치합니다.',
+      body: '현재 프로젝트에 설치',
       command: 'npx skills add project-artel/artel-skills',
-      optionsNote: '모든 프로젝트에 설치하려면 -g를 붙입니다.',
+      optionsNote: '모든 프로젝트에 설치하려면 -g 추가',
     },
     listTitle: '포함된 skill',
     items: [
-      { name: 'artel-unity-sdk', body: 'Unity SDK를 설치하고 연결합니다.' },
-      { name: 'artel-cli', body: '터미널에서 QA를 실행합니다.' },
-      { name: 'artel-mcp', body: '에이전트가 MCP로 게임을 직접 조작합니다. 프로토타입입니다.' },
-      { name: 'artel-cheats', body: 'QA 에이전트가 쓸 치트([ArtelCheat])를 추가합니다.' },
-      { name: 'artel-behaviors', body: 'QA 에이전트가 켜 둘 behavior([ArtelBehavior])를 추가합니다.' },
+      { name: 'artel-unity-sdk', body: 'Unity SDK 설치와 연결' },
+      { name: 'artel-cli', body: '터미널에서 QA 실행' },
+      { name: 'artel-mcp', body: '에이전트가 MCP로 게임 직접 조작 (프로토타입)' },
+      { name: 'artel-cheats', body: 'QA 에이전트가 쓸 치트([ArtelCheat]) 추가' },
+      { name: 'artel-behaviors', body: 'QA 에이전트가 켜 둘 behavior([ArtelBehavior]) 추가' },
     ],
     repositoryCta: 'artel-skills 저장소 보기',
   },
   how: {
-    title: '작동 원리',
+    title: '아키텍처',
     flowTitle: '데이터 흐름',
     flowAlt:
       '게임 안의 SDK가 씬 상태를 Orchestration 서버로 보고하고, Agent 서버가 다음 액션을 정해 다시 SDK로 내려보내며, 실행 결과가 대시보드에 기록되는 흐름',
     flow: [
-      'SDK가 씬 상태를 보고합니다.',
-      'Agent 서버가 시나리오와 상태를 비교해 다음 액션을 정합니다.',
-      'Orchestration 서버가 액션을 해당 게임 인스턴스로 전달합니다.',
-      'SDK가 입력을 주입하고 결과를 되돌려 보냅니다.',
-      '실행 로그와 이슈가 기록되고 대시보드에서 조회됩니다.',
+      'SDK가 씬 상태 보고',
+      'Agent 서버가 시나리오와 상태를 비교해 다음 액션 결정',
+      'Orchestration 서버가 액션을 게임 인스턴스로 전달',
+      'SDK가 입력을 주입하고 결과 반환',
+      '실행 로그와 이슈를 기록하고 콘솔에서 조회',
     ],
     lifecycleTitle: 'QA 실행 수명주기',
     lifecycle: [
       {
-        title: '기획서 업로드',
-        body: '문서를 올리면 게임 컨텍스트를 추출해 시나리오의 근거로 사용합니다.',
-        state: 'planned',
+        title: '기획 문서 업로드',
+        body: '문서의 규칙과 용어를 지식 그래프로 정리',
       },
       {
-        title: '시나리오 생성과 승인',
-        body: '대화와 캔버스로 시나리오를 다듬고 확정합니다.',
-        state: 'planned',
+        title: '테스트 케이스 확정',
+        body: '케이스 라이브러리에서 초안을 다듬어 확정',
       },
       {
         title: '테스트 런 구성',
-        body: '확정한 시나리오를 조합해 실행 단위를 만듭니다.',
-        state: 'planned',
+        body: '확정한 케이스를 묶어 실행 단위 구성',
       },
       {
         title: '게임 인스턴스 연결',
-        body: '빌드를 등록하고 SDK가 연결된 인스턴스를 붙입니다.',
-        state: 'shipped',
+        body: '빌드를 등록하고 SDK가 연결된 인스턴스 연결',
       },
       {
         title: 'QA 실행과 이슈 조회',
-        body: '에이전트가 시나리오를 실행하고, 남긴 증거를 확인합니다.',
-        state: 'planned',
+        body: '에이전트가 케이스를 실행하고 남긴 증거 확인',
       },
     ],
   },
   selfHosting: {
     title: '직접 설치',
-    lead: '한 대의 컴퓨터에서 ARTEL 전체를 실행합니다.',
+    lead: '한 대의 컴퓨터에서 ARTEL 전체 실행',
     overview: {
       title: '필요한 것',
       items: ['RAM 8 GB 이상', 'OpenRouter 계정'],
@@ -384,21 +356,20 @@ artel qa run --test-run <id> --instance <id>`,
         {
           id: 'install-script',
           name: '설치 스크립트',
-          audience: 'Docker 로 명령 한 줄에 설치합니다.',
+          audience: 'Docker 로 명령 한 줄 설치',
           cta: '열기',
         },
         {
           id: 'docker-compose',
           name: 'Docker Compose',
-          audience: 'Docker Compose 설정을 직접 관리합니다.',
+          audience: 'Docker Compose 설정 직접 관리',
           cta: '열기',
         },
         {
           id: 'desktop-app',
           name: '데스크톱 앱',
-          audience: '앱으로 설치합니다.',
+          audience: '앱으로 설치',
           cta: '열기',
-          state: 'planned',
         },
       ],
     },
@@ -451,7 +422,7 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: '만들어진 docker-compose.yml 에 비밀값이 들어 있습니다. 공유하지 말고 백업하세요. 잃으면 저장한 키를 읽을 수 없습니다.',
+                text: '만들어진 docker-compose.yml 에 비밀값 포함. 공유 금지, 백업 필수. 잃으면 저장한 키를 읽을 수 없음',
               },
             ],
           },
@@ -460,7 +431,7 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'http://localhost:8088/ 을 엽니다.',
+                text: 'http://localhost:8088/ 열기',
               },
             ],
           },
@@ -483,7 +454,7 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: '빈 디렉터리에서 실행합니다.',
+                text: '빈 디렉터리에서 실행',
               },
               {
                 kind: 'code',
@@ -501,7 +472,7 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: '맨 위의 CHANGE_ME 를 모두 아래 명령의 결과로 바꿉니다.',
+                text: '맨 위의 CHANGE_ME 를 모두 아래 명령의 결과로 교체',
               },
               {
                 kind: 'code',
@@ -509,7 +480,7 @@ artel qa run --test-run <id> --instance <id>`,
               },
               {
                 kind: 'paragraph',
-                text: '이 파일은 공유하지 말고 백업하세요. x-secrets-key 는 첫 시작 뒤에 바꾸지 않습니다.',
+                text: '이 파일은 공유 금지, 백업 필수. x-secrets-key 는 첫 시작 뒤 변경 금지',
               },
             ],
           },
@@ -549,7 +520,7 @@ artel qa run --test-run <id> --instance <id>`,
               },
               {
                 kind: 'paragraph',
-                text: '복원은 빈 데이터베이스에 합니다.',
+                text: '복원은 빈 데이터베이스에',
               },
               {
                 kind: 'code',
@@ -557,7 +528,7 @@ artel qa run --test-run <id> --instance <id>`,
               },
               {
                 kind: 'paragraph',
-                text: 'artel_minio-data 볼륨과 docker-compose.yml 도 함께 백업합니다.',
+                text: 'artel_minio-data 볼륨과 docker-compose.yml 도 함께 백업',
               },
             ],
           },
@@ -574,7 +545,6 @@ artel qa run --test-run <id> --instance <id>`,
       },
       'desktop-app': {
         title: '데스크톱 앱',
-        state: 'planned',
         steps: [
           {
             title: '앱 내려받기',
@@ -607,13 +577,13 @@ artel qa run --test-run <id> --instance <id>`,
       back: '← 직접 설치로 돌아가기',
       othersTitle: '다른 설치 방법',
     },
-    remoteFile: { loading: '불러오는 중', failed: '불러오지 못했습니다.', openOnGitHub: 'GitHub에서 보기' },
+    remoteFile: { loading: '불러오는 중', failed: '불러오지 못함', openOnGitHub: 'GitHub에서 보기' },
     deployReadmeLabel: 'deploy/README.md',
     licenseLabel: 'LICENSE (AGPL-3.0)',
   },
   notFound: {
-    title: '페이지를 찾을 수 없습니다',
-    body: '주소를 다시 확인해 주세요.',
+    title: '없는 페이지',
+    body: '주소 확인 필요',
     back: '홈으로',
   },
 }
@@ -631,16 +601,15 @@ const en: Copy = {
     cli: 'CLI',
     skills: 'Skills',
     selfHosting: 'Self-hosting',
-    how: 'How it works',
+    how: 'Architecture',
     skipToContent: 'Skip to content',
     home: 'Home',
   },
   theme: { toLight: 'Switch to light mode', toDark: 'Switch to dark mode' },
-  availability: { shipped: 'Working', planned: 'Planned' },
   hero: {
-    status: 'In development',
     title: 'A game QA tool where an agent plays the game',
-    primaryCta: 'Download SDK',
+    appCta: 'Download the desktop app',
+    sdkCta: 'Install the Unity SDK',
   },
   problem: {
     title: 'The problem',
@@ -657,43 +626,28 @@ const en: Copy = {
         index: '01',
         title: 'SDK connection',
         body: 'Add the package to your Unity project and sign in from the game.',
-        state: 'shipped',
       },
       {
         index: '02',
         title: 'Agent play',
         body: 'The agent reads the screen and plays with keyboard and mouse.',
-        state: 'shipped',
       },
       {
         index: '03',
         title: 'Run record',
         body: 'The state and logs at a failure go into an issue.',
-        state: 'planned',
       },
     ],
   },
   features: {
     title: 'Features',
     items: [
-      {
-        title: 'Scenario generation',
-        body: 'Drafts test scenarios from a design document.',
-        state: 'planned',
-      },
-      {
-        title: 'Test run composition',
-        body: 'Groups approved scenarios so every build runs the same set.',
-        state: 'planned',
-      },
-    ],
-  },
-  requirements: {
-    title: 'Requirements',
-    items: [
-      'Permission to add a package to the Unity project',
-      'Outbound network from the game to the ARTEL server',
-      'An ARTEL account',
+      { title: 'Screen map', body: 'Screens and paths the agent walked through, drawn as a map' },
+      { title: 'Case library', body: 'Test case drafts from the planning document' },
+      { title: 'Knowledge graph', body: 'Rules and terms from the planning document that ground the agent' },
+      { title: 'Macros', body: 'Successful moves saved and replayed in later runs' },
+      { title: 'Performance', body: 'Frame time, draw calls and memory allocation per build and QA run' },
+      { title: 'GitHub issues', body: 'Found issues exported to GitHub issues' },
     ],
   },
   faq: {
@@ -825,7 +779,7 @@ artel qa run --test-run <id> --instance <id>`,
     repositoryCta: 'View the artel-skills repository',
   },
   how: {
-    title: 'How it works',
+    title: 'Architecture',
     flowTitle: 'Data flow',
     flowAlt:
       'The SDK inside the game reports scene state to the orchestration server, the agent server decides the next action and sends it back down to the SDK, and run results are recorded for the dashboard',
@@ -839,29 +793,24 @@ artel qa run --test-run <id> --instance <id>`,
     lifecycleTitle: 'QA run lifecycle',
     lifecycle: [
       {
-        title: 'Upload the design doc',
-        body: 'Game context is extracted from the document and becomes the basis for scenarios.',
-        state: 'planned',
+        title: 'Upload the planning document',
+        body: 'Its rules and terms go into the knowledge graph.',
       },
       {
-        title: 'Generate and approve scenarios',
-        body: 'Refine scenarios through chat and the canvas, then approve them.',
-        state: 'planned',
+        title: 'Settle test cases',
+        body: 'Refine the drafts in the case library and approve them.',
       },
       {
         title: 'Compose a test run',
-        body: 'Group approved scenarios into an executable unit.',
-        state: 'planned',
+        body: 'Group approved cases into an executable unit.',
       },
       {
         title: 'Connect a game instance',
         body: 'Register the build and connect the instance carrying the SDK.',
-        state: 'shipped',
       },
       {
         title: 'Run QA and read issues',
-        body: 'The agent drives the scenarios and you review the evidence it left.',
-        state: 'planned',
+        body: 'The agent runs the cases and you review the evidence it left.',
       },
     ],
   },
@@ -892,7 +841,6 @@ artel qa run --test-run <id> --instance <id>`,
           name: 'Desktop app',
           audience: 'Install an app.',
           cta: 'Open',
-          state: 'planned',
         },
       ],
     },
@@ -1068,7 +1016,6 @@ artel qa run --test-run <id> --instance <id>`,
       },
       'desktop-app': {
         title: 'Desktop app',
-        state: 'planned',
         steps: [
           {
             title: 'Download the app',
