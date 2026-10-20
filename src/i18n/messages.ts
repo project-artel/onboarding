@@ -556,7 +556,7 @@ artel qa run --test-run <id> --instance <id>`,
           },
           {
             kind: 'paragraph',
-            text: '보내는 값은 아래가 전부입니다.',
+            text: '보내는 값',
           },
           {
             kind: 'paragraph',
@@ -1259,7 +1259,7 @@ artel qa run --test-run <id> --instance <id>`,
           },
           {
             kind: 'paragraph',
-            text: 'This is everything that is sent.',
+            text: 'Sent',
           },
           {
             kind: 'paragraph',
