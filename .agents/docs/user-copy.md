@@ -42,6 +42,26 @@ A heading names the thing. It is not a slogan, a promise, or a pitch-deck phrase
 Name things by what they are, not by where they sit on the page ("맨 위 설정"). Use one word for one meaning
 across the site.
 
+## Tone
+
+Write the way a Korean product team writes to its users: plain, warm where a person is addressed, never
+showing off. Read every string aloud as if saying it to the reader across a desk. If it sounds like a slogan,
+a pitch deck, a terse log line, or a translated manual, rewrite it.
+
+| Tone to avoid | Example the owner rejected | Rewritten |
+| --- | --- | --- |
+| Curt, clipped answer to a polite question | Unity 게임. 지금은 싱글 플레이부터 지원 | Unity로 만든 게임이라면 쓸 수 있어요. 지금은 싱글 플레이 게임부터 지원하고 있어요. |
+| Cryptic `label: value` shorthand, trying to look clever | API 키 입력: admin 으로 /admin/settings | 관리 > 설정에서 API 키 입력 |
+| Slogan or catchphrase | 기획서만 주면, 테스트는 에이전트가 | Unity 게임 QA Agent |
+| Pitch-deck framing | 해결하려는 문제 | 지금의 게임 QA |
+| Stiff explanatory prose in a list | 빌드가 나올 때마다 같은 회귀 테스트를 사람이 처음부터 다시 진행해야 합니다. | 빌드마다 사람이 처음부터 다시 하는 회귀 테스트 |
+| Stating the obvious | 처음 가입한 계정이 admin 이 됩니다. | 첫 회원가입으로 관리자 계정 생성 |
+| Unexplained jargon | 통과했을 때만 0으로 끝나므로 | QA가 실패하면 CI 작업도 실패로 끝남 |
+
+- Mixed English and Korean is fine for product terms, but do not leave English words like `admin` in Korean
+  prose where the console itself shows a Korean word (관리자, 관리).
+- No figurative or grand wording, no exclamation marks, no emoji.
+
 ## Sentence form in Korean
 
 | Where | Form | Example |
