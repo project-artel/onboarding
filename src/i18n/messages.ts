@@ -244,7 +244,7 @@ const ko: Copy = {
       },
       {
         q: '데이터는 어디에 저장되나요?',
-        a: '실행 로그와 증거는 ARTEL 서버에 저장됩니다. 직접 설치하면 내 컴퓨터에 저장됩니다.',
+        a: '실행 로그와 증거는 ARTEL 서버에 저장됩니다. 직접 설치하면 내 컴퓨터에 저장됩니다. 다만 admin 이 동의하면 ARTEL 개선을 위해 하루에 한 번 사용 통계를 ARTEL 서버로 보냅니다. 게임 내용과 개인 정보는 보내지 않습니다.',
       },
       {
         q: '지금 어디까지 동작하나요?',
@@ -858,7 +858,7 @@ const en: Copy = {
       },
       {
         q: 'Where does the data live?',
-        a: 'Run logs and evidence are stored on ARTEL servers. If you self-host, they stay on your machine.',
+        a: 'Run logs and evidence are stored on ARTEL servers. If you self-host, they stay on your machine. If the admin agrees, a self-hosted install also sends usage statistics to ARTEL once a day to help improve ARTEL. Game content and personal information are never sent.',
       },
       {
         q: 'What works today?',
