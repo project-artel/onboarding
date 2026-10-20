@@ -393,8 +393,6 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'list',
             items: [
-              '처음 가입한 계정은 관리자 계정',
-              '다른 사람의 계정은 관리자가 관리 > 사용자에서 생성',
               'API 키는 관리자가 관리 > 설정에서 입력',
             ],
           },
@@ -836,8 +834,6 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'list',
             items: [
-              'The first account to sign up is the admin account',
-              "Other people's accounts are created by the admin in Admin > Users",
               'API keys are entered by the admin in Admin > Settings',
             ],
           },
