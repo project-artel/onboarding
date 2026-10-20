@@ -56,13 +56,12 @@ type Copy = {
     items: { title: string; body: string }[]
   }
   faq: { title: string; items: { q: string; a: string }[] }
-  footer: { contact: string; repository: string; language: string }
+  footer: { repository: string; language: string }
   sdk: {
     title: string
     steps: { title: string; body: string; code?: string; shotAlts: string[] }[]
     helpTitle: string
     help: string[]
-    contactCta: string
     advancedTitle: string
     advancedNote: string
     advanced: { label: string; code: string }[]
@@ -179,15 +178,31 @@ const ko: Copy = {
     items: [
       {
         q: '어떤 게임에 쓸 수 있나요?',
-        a: 'Unity 게임에 쓸 수 있습니다. 지금은 싱글 플레이 게임부터 지원합니다.',
+        a: 'Unity로 만든 게임이라면 쓸 수 있어요. 지금은 싱글 플레이 게임부터 지원하고 있어요.',
+      },
+      {
+        q: '게임 코드를 고쳐야 하나요?',
+        a: '아니요, 패키지만 추가하면 돼요. 게임 로직은 건드리지 않아요. 치트와 behavior를 등록해 두면 에이전트가 씬 이동 같은 준비를 더 빨리 끝낼 수 있어요.',
+      },
+      {
+        q: '어떤 AI 모델을 쓰나요?',
+        a: 'OpenRouter, AWS Bedrock, Claude API로 연결한 모델 중에서 골라 쓸 수 있어요. 사용량과 비용은 콘솔의 사용량 화면에서 확인할 수 있어요.',
+      },
+      {
+        q: '모바일 게임도 되나요?',
+        a: '아직은 Unity 에디터와 Windows, macOS, Linux 빌드에서만 동작해요.',
+      },
+      {
+        q: 'CI에서 돌릴 수 있나요?',
+        a: '네, CLI와 CLI token으로 빌드마다 QA를 돌릴 수 있어요. QA가 실패하면 CI 작업도 실패로 끝나요.',
       },
       {
         q: '데이터는 어디에 저장되나요?',
-        a: 'ARTEL 서버에 저장됩니다. 셀프 호스팅하면 설치한 컴퓨터에 저장됩니다. 사용 통계는 admin 이 동의한 경우에만 하루 한 번 보내며, 게임 내용과 개인 정보는 보내지 않습니다.',
+        a: 'ARTEL 서버에 저장돼요. 셀프 호스팅하면 설치한 컴퓨터에 저장돼요. 사용 통계는 admin 이 동의한 경우에만 하루 한 번 보내고, 게임 내용과 개인 정보는 보내지 않아요.',
       },
     ],
   },
-  footer: { contact: '문의', repository: '저장소', language: '언어' },
+  footer: { repository: '저장소', language: '언어' },
   sdk: {
     title: 'Unity SDK 설치',
     steps: [
@@ -225,7 +240,6 @@ const ko: Copy = {
       '브라우저 로그인 지원: 에디터, Windows, macOS, Linux 빌드',
       '연결이 안 될 때: 게임의 외부 연결을 막는 방화벽 확인',
     ],
-    contactCta: '문의하기',
     advancedTitle: '다른 서버에 연결하기',
     advancedNote:
       'ArtelManager의 Server 항목 변경, 또는 아래 인자로 실행',
@@ -606,7 +620,23 @@ const en: Copy = {
     items: [
       {
         q: 'Which games does it work with?',
-        a: 'Unity games. Single-player games are supported first.',
+        a: 'Any game made with Unity. Single-player games are supported first.',
+      },
+      {
+        q: 'Do I have to change my game code?',
+        a: 'No, you only add a package and your game logic stays as it is. If you register cheats and behaviors, the agent can get set up faster, for example by jumping straight to a scene.',
+      },
+      {
+        q: 'Which AI models does it use?',
+        a: 'You pick from the models you connect through OpenRouter, AWS Bedrock or the Claude API. Usage and cost are on the console usage screen.',
+      },
+      {
+        q: 'Does it work with mobile games?',
+        a: 'Not yet. It works in the Unity editor and in Windows, macOS and Linux builds.',
+      },
+      {
+        q: 'Can I run it in CI?',
+        a: 'Yes. With the CLI and a CLI token you can run QA on every build, and a failed QA run fails the CI job.',
       },
       {
         q: 'Where does the data live?',
@@ -614,7 +644,7 @@ const en: Copy = {
       },
     ],
   },
-  footer: { contact: 'Contact', repository: 'Repository', language: 'Language' },
+  footer: { repository: 'Repository', language: 'Language' },
   sdk: {
     title: 'Install the Unity SDK',
     steps: [
@@ -652,7 +682,6 @@ const en: Copy = {
       'Browser sign-in: editor, Windows, macOS and Linux builds',
       'No connection: check for a firewall blocking outbound connections from the game',
     ],
-    contactCta: 'Contact us',
     advancedTitle: 'Connecting to another server',
     advancedNote:
       'Change Server on ArtelManager, or launch with these arguments.',

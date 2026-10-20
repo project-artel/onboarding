@@ -109,7 +109,6 @@ export function SiteLayout() {
             <BrandMark size={18} />
             <span className="brand__word">ARTEL</span>
           </span>
-          <a href="mailto:contact@artel.dev">{t.footer.contact}</a>
           <a href="https://github.com/project-artel" rel="noreferrer noopener" target="_blank">
             {t.footer.repository}
           </a>

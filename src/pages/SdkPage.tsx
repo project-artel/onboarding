@@ -90,9 +90,6 @@ export function SdkPage() {
             </li>
           ))}
         </ul>
-        <a className="btn btn--ghost" href="mailto:contact@artel.dev">
-          {t.sdk.contactCta}
-        </a>
 
         <details className="advanced">
           <summary>{t.sdk.advancedTitle}</summary>

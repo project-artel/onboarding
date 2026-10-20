@@ -38,6 +38,3 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테�
 - [ARTEL CLI](https://github.com/project-artel/artel-cli)
 - [ARTEL agent skills](https://github.com/project-artel/artel-skills)
 
-## Contact
-
-contact@artel.dev
