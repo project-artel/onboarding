@@ -114,7 +114,7 @@ type Copy = {
 
 const ko: Copy = {
   meta: {
-    title: 'ARTEL | 기획서만 주면, 테스트는 에이전트가',
+    title: 'ARTEL | Unity 게임 QA Agent',
     description:
       'Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테스트 케이스를 검증하고 실패 순간의 증거를 남기는 게임 QA 도구',
   },
@@ -131,7 +131,7 @@ const ko: Copy = {
   },
   theme: { toLight: '라이트 모드로 전환', toDark: '다크 모드로 전환' },
   hero: {
-    title: '기획서만 주면, 테스트는 에이전트가',
+    title: 'Unity 게임 QA Agent',
     appCta: '데스크톱 앱 다운로드',
     sdkCta: 'Unity SDK 설치',
   },
@@ -541,7 +541,7 @@ artel qa run --test-run <id> --instance <id>`,
 
 const en: Copy = {
   meta: {
-    title: 'ARTEL | The agent tests your game',
+    title: 'ARTEL | QA agent for Unity games',
     description:
       'Add the SDK to your Unity game and an agent plays it, checks your test cases, and keeps evidence when a step fails.',
   },
@@ -558,7 +558,7 @@ const en: Copy = {
   },
   theme: { toLight: 'Switch to light mode', toDark: 'Switch to dark mode' },
   hero: {
-    title: 'Give it the planning doc. The agent tests the game.',
+    title: 'QA agent for Unity games',
     appCta: 'Download the desktop app',
     sdkCta: 'Install the Unity SDK',
   },
