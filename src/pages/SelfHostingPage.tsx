@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { RailSection } from '../components/RailSection'
-import { StateBadge } from '../components/StateBadge'
 import { SelfHostingBlocks } from '../components/SelfHostingBlocks'
 import { selfHostingMethodPath } from '../i18n/selfHostingRoutes'
 import { useCopy } from '../i18n/useCopy'
@@ -52,7 +51,6 @@ export function SelfHostingPage() {
       {page.afterInstall.map((section, index) => (
         <RailSection
           alt={index % 2 === 0}
-          aside={section.state ? <StateBadge state={section.state} /> : undefined}
           key={section.title}
           num={String(index + 3).padStart(2, '0')}
           title={section.title}

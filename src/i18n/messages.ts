@@ -27,7 +27,7 @@ export type SelfHostingBlock =
   | { kind: 'list'; items: string[] }
   | { kind: 'code'; code: SelfHostingCodeKey }
 
-export type SelfHostingSection = { title: string; state?: Availability; blocks: SelfHostingBlock[] }
+export type SelfHostingSection = { title: string; blocks: SelfHostingBlock[] }
 
 export type SelfHostingMethodPage = {
   title: string
@@ -244,7 +244,7 @@ const ko: Copy = {
       },
       {
         q: '데이터는 어디에 저장되나요?',
-        a: '실행 로그와 증거는 ARTEL 서버에 저장됩니다. 직접 설치하면 내 컴퓨터에 저장됩니다. 다만 admin 이 동의하면 하루에 한 번 사용 통계(합계 숫자)를 ARTEL 서버로 보냅니다. 기본값은 꺼짐이고, 보내는 값 전체는 self-hosting 안내에 있습니다.',
+        a: '실행 로그와 증거는 ARTEL 서버에 저장됩니다. 직접 설치하면 내 컴퓨터에 저장됩니다. 다만 admin 이 동의하면 ARTEL 개선을 위해 하루에 한 번 사용 통계를 ARTEL 서버로 보냅니다. 게임 내용과 개인 정보는 보내지 않습니다.',
       },
       {
         q: '지금 어디까지 동작하나요?',
@@ -539,91 +539,6 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'paragraph',
             text: 'ARTEL_GITHUB_SIGNUP_OPEN=false (기본값) 이면 admin 이 같은 이메일로 만든 사용자만 GitHub 로 로그인합니다.',
-          },
-        ],
-      },
-      {
-        title: '사용 통계 전송 (선택, 기본 꺼짐)',
-        state: 'planned',
-        blocks: [
-          {
-            kind: 'paragraph',
-            text: '직접 설치한 ARTEL 은 admin 이 동의하기 전에는 아무것도 보내지 않습니다. 동의하면 UTC 기준 하루에 한 번 그날의 사용 통계를 ARTEL 서버로 보냅니다.',
-          },
-          {
-            kind: 'paragraph',
-            text: '설치할 때 --telemetry 플래그(또는 환경 변수 ARTEL_TELEMETRY=on)를 주거나, 첫 admin 가입 화면의 체크박스를 켜거나, /admin/settings 에서 켭니다. 플래그는 새로 만드는 docker-compose.yml 에만 적용됩니다. /admin/settings 에서는 다음에 보낼 JSON 을 그대로 볼 수 있고, 언제든 끌 수 있습니다.',
-          },
-          {
-            kind: 'paragraph',
-            text: '보내는 값',
-          },
-          {
-            kind: 'paragraph',
-            text: '설치 정보',
-          },
-          {
-            kind: 'list',
-            items: [
-              'install id: 이 설치에 무작위로 만든 UUID. 사람이 아니라 설치를 구분합니다.',
-              'orchestration-server 버전과 그날 쓰인 agent-server 버전',
-              '통계가 다루는 날짜(UTC)',
-            ],
-          },
-          {
-            kind: 'paragraph',
-            text: 'QA run. agent 구조 이름, 구조 fingerprint, model, reasoning effort 가 같은 것끼리 묶습니다.',
-          },
-          {
-            kind: 'list',
-            items: [
-              '끝난 scenario 실행 수와 상태(완료, 실패, 취소 등)별 수',
-              'step 전체 수와 통과 수',
-              'test case 전체 수와 통과 수',
-              '실행 시간의 합과 최댓값(초)',
-              'tool 이름별 호출 수. ARTEL 에 내장된 tool 이름만 보내고, 나머지는 other 로 합쳐서 셉니다.',
-            ],
-          },
-          {
-            kind: 'paragraph',
-            text: 'LLM 사용량. 기능(QA run, scenario 생성, knowledge 검색, game context, embedding), provider, model, 비용을 낸 API key(admin key 또는 사용자 key)가 같은 것끼리 묶습니다.',
-          },
-          {
-            kind: 'list',
-            items: [
-              '호출 수',
-              '입력 token, 출력 token, cache 에서 읽은 입력 token, cache 에 쓴 token, reasoning token 의 합',
-              '비용 합(USD)',
-              '응답 시간 합(ms)',
-            ],
-          },
-          {
-            kind: 'paragraph',
-            text: '오류. 발생한 곳(QA run 또는 orchestration-server), 오류 code, 예외 class 이름이 같은 것끼리 묶습니다.',
-          },
-          {
-            kind: 'list',
-            items: [
-              '발생 횟수',
-              '처음 발생한 오류의 코드 위치 최대 10개(module:function:line). 파일 경로와 오류 메시지는 보내지 않습니다.',
-            ],
-          },
-          {
-            kind: 'paragraph',
-            text: '보내지 않는 값',
-          },
-          {
-            kind: 'list',
-            items: [
-              'QA run 의 원본 기록: 로그 메시지, agent 의 추론, action, screen capture, game state',
-              'content map, knowledge 문서, scenario, test case 본문, 프로젝트 이름, 게임 이름',
-              'email, 이름, user id, IP 주소. 받는 서버는 보낸 쪽 IP 주소도 저장하지 않습니다.',
-              '게임이 등록한 함수의 이름',
-            ],
-          },
-          {
-            kind: 'paragraph',
-            text: '/admin/settings 에서 끌 때 이미 보낸 통계를 삭제하도록 요청할 수 있습니다. ARTEL_TELEMETRY_URL 을 비우면 보내는 기능 자체가 꺼집니다.',
           },
         ],
       },
@@ -943,7 +858,7 @@ const en: Copy = {
       },
       {
         q: 'Where does the data live?',
-        a: 'Run logs and evidence are stored on ARTEL servers. If you self-host, they stay on your machine. The one exception is optional daily usage statistics (totals only), sent to ARTEL only if the admin agrees. It is off by default, and the self-hosting guide lists every value that is sent.',
+        a: 'Run logs and evidence are stored on ARTEL servers. If you self-host, they stay on your machine. If the admin agrees, a self-hosted install also sends usage statistics to ARTEL once a day to help improve ARTEL. Game content and personal information are never sent.',
       },
       {
         q: 'What works today?',
@@ -1242,91 +1157,6 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'paragraph',
             text: 'With ARTEL_GITHUB_SIGNUP_OPEN=false (the default), a GitHub account signs in only when an admin already created a user with the same email.',
-          },
-        ],
-      },
-      {
-        title: 'Usage statistics (optional, off by default)',
-        state: 'planned',
-        blocks: [
-          {
-            kind: 'paragraph',
-            text: 'A self-hosted ARTEL sends nothing until the admin agrees. After that it sends the usage statistics for each day to ARTEL once per UTC day.',
-          },
-          {
-            kind: 'paragraph',
-            text: 'Pass the --telemetry flag (or the environment variable ARTEL_TELEMETRY=on) when you install, tick the checkbox on the first admin signup screen, or turn it on in /admin/settings. The flag applies only to a docker-compose.yml that is being created. /admin/settings shows the exact JSON that will be sent next, and you can turn it off there at any time.',
-          },
-          {
-            kind: 'paragraph',
-            text: 'Sent',
-          },
-          {
-            kind: 'paragraph',
-            text: 'Install',
-          },
-          {
-            kind: 'list',
-            items: [
-              'Install id: a random UUID made for this install. It tells installs apart, not people.',
-              'The orchestration-server version and the agent-server versions used that day',
-              'The date the statistics cover (UTC)',
-            ],
-          },
-          {
-            kind: 'paragraph',
-            text: 'QA runs, grouped by agent structure name, structure fingerprint, model and reasoning effort',
-          },
-          {
-            kind: 'list',
-            items: [
-              'Number of finished scenario runs, and the number per status (completed, failed, cancelled and so on)',
-              'Total steps and passed steps',
-              'Total test cases and passed test cases',
-              'Sum and maximum of run time, in seconds',
-              'Calls per tool name. Only names of tools built into ARTEL are sent; every other name is counted under other.',
-            ],
-          },
-          {
-            kind: 'paragraph',
-            text: 'LLM usage, grouped by feature (QA run, scenario generation, knowledge search, game context, embedding), provider, model and whose API key paid (the admin key or a user key)',
-          },
-          {
-            kind: 'list',
-            items: [
-              'Number of calls',
-              'Sums of input tokens, output tokens, input tokens read from cache, tokens written to cache, and reasoning tokens',
-              'Sum of cost, in USD',
-              'Sum of response time, in milliseconds',
-            ],
-          },
-          {
-            kind: 'paragraph',
-            text: 'Errors, grouped by where they happened (QA run or orchestration-server), error code and exception class name',
-          },
-          {
-            kind: 'list',
-            items: [
-              'Number of occurrences',
-              'Up to 10 code locations of the first occurrence, as module:function:line. No file paths and no error messages.',
-            ],
-          },
-          {
-            kind: 'paragraph',
-            text: 'Never sent',
-          },
-          {
-            kind: 'list',
-            items: [
-              'Raw QA run records: log messages, agent reasoning, actions, screen captures, game state',
-              'Content maps, knowledge documents, scenarios, test case text, project names, game names',
-              'Emails, names, user ids, IP addresses. The receiving server does not store the sender IP address either.',
-              'Names of functions a game registered',
-            ],
-          },
-          {
-            kind: 'paragraph',
-            text: 'When you turn it off in /admin/settings, you can ask for the statistics already sent to be deleted. Leaving ARTEL_TELEMETRY_URL blank turns the feature off completely.',
           },
         ],
       },
