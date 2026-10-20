@@ -18,6 +18,8 @@ const codeByKey: Record<SelfHostingCodeKey, string> = {
   signupOpen: commands.signupOpenLine,
   models: [...commands.requiredChatModels, commands.embeddingModel].join('\n'),
   githubEnvironment: commands.githubEnvironmentLines,
+  desktopCli: commands.desktopCliCommands,
+  desktopServerCommands: commands.desktopServerCommands,
 }
 
 function Block({ block }: { block: SelfHostingBlock }) {
@@ -36,6 +38,14 @@ function Block({ block }: { block: SelfHostingBlock }) {
       )
     case 'code':
       return <CodeBlock code={codeByKey[block.code]} />
+    case 'link':
+      return (
+        <p className="step__body">
+          <a className="btn btn--primary" href={block.href} rel="noreferrer noopener" target="_blank">
+            {block.label}
+          </a>
+        </p>
+      )
   }
 }
 

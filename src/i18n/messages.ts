@@ -5,6 +5,9 @@ import type { SelfHostingMethodId } from './selfHostingRoutes'
 // 고치는 사람이 미구현 기능을 현재형으로 바꿔 쓰는 일을 막는다.
 export type Availability = 'shipped' | 'planned'
 
+// Download page of the desktop app. Plain text, so `npm run check` can load this file without a bundler.
+const desktopReleasesUrl = 'https://github.com/project-artel/artel-desktop/releases/latest'
+
 // Keys of the commands and slug lists kept once in `pages/selfHostingCommands.ts`.
 export type SelfHostingCodeKey =
   | 'install'
@@ -21,17 +24,21 @@ export type SelfHostingCodeKey =
   | 'signupOpen'
   | 'models'
   | 'githubEnvironment'
+  | 'desktopCli'
+  | 'desktopServerCommands'
 
 export type SelfHostingBlock =
   | { kind: 'paragraph'; text: string }
   | { kind: 'list'; items: string[] }
   | { kind: 'code'; code: SelfHostingCodeKey }
+  | { kind: 'link'; label: string; href: string }
 
 export type SelfHostingSection = { title: string; blocks: SelfHostingBlock[] }
 
 export type SelfHostingMethodPage = {
   title: string
   chooseWhen: string
+  state?: Availability
   steps: SelfHostingSection[]
 }
 
@@ -120,7 +127,7 @@ type Copy = {
     overview: { title: string; items: string[] }
     chooser: {
       title: string
-      cards: { id: SelfHostingMethodId; name: string; audience: string; cta: string }[]
+      cards: { id: SelfHostingMethodId; name: string; audience: string; cta: string; state?: Availability }[]
     }
     afterInstall: SelfHostingSection[]
     methods: Record<SelfHostingMethodId, SelfHostingMethodPage>
@@ -462,6 +469,13 @@ artel qa run --test-run <id> --instance <id>`,
           audience: '설정 파일을 직접 고치며 운영합니다.',
           cta: '열기',
         },
+        {
+          id: 'desktop-app',
+          name: '데스크톱 앱',
+          audience: 'Docker 없이 앱 하나로 이 컴퓨터에서 실행합니다.',
+          cta: '열기',
+          state: 'planned',
+        },
       ],
     },
     afterInstall: [
@@ -724,6 +738,71 @@ artel qa run --test-run <id> --instance <id>`,
               {
                 kind: 'paragraph',
                 text: '데이터 볼륨은 남습니다.',
+              },
+            ],
+          },
+        ],
+      },
+      'desktop-app': {
+        title: '데스크톱 앱',
+        chooseWhen: 'Docker 없이 이 컴퓨터에서 ARTEL 전체를 실행할 때 고릅니다. 아직 배포 전이며, 첫 release 가 올라오면 아래 버튼이 연결됩니다.',
+        state: 'planned',
+        steps: [
+          {
+            title: '앱 내려받기',
+            blocks: [
+              {
+                kind: 'paragraph',
+                text: 'ARTEL 데스크톱 앱을 설치하면 PostgreSQL, orchestration 서버, agent 서버, 콘솔이 앱에 함께 들어 있어 이 컴퓨터에서 전체가 실행됩니다. Docker 는 필요 없습니다. 설치하면 artel 명령도 PATH 에 들어갑니다.',
+              },
+              {
+                kind: 'link',
+                label: 'GitHub Releases 에서 내려받기',
+                href: desktopReleasesUrl,
+              },
+            ],
+          },
+          {
+            title: '지원 환경',
+            blocks: [
+              {
+                kind: 'list',
+                items: [
+                  'Windows x64, arm64',
+                  'macOS Apple silicon, Intel',
+                  'Linux x64, arm64 (AppImage, deb)',
+                  'Linux 는 glibc 2.36 이상이 필요합니다 (Ubuntu 24.04, Debian 12 이상).',
+                ],
+              },
+            ],
+          },
+          {
+            title: '처음 실행',
+            blocks: [
+              {
+                kind: 'paragraph',
+                text: '앱 창에서 가입합니다. 가장 먼저 가입한 계정이 admin 이 되고, 이후 계정은 admin 이 만듭니다. OpenRouter 키는 다른 설치 방법과 같이 콘솔의 관리 설정에서 입력합니다.',
+              },
+            ],
+          },
+          {
+            title: 'Docker 없이 터미널에서',
+            blocks: [
+              {
+                kind: 'paragraph',
+                text: '앱 없이 터미널에서 실행하려면 Node 22.12 이상이 필요합니다. 처음 시작할 때 runtime 을 내려받으며 약 300 MB 입니다.',
+              },
+              {
+                kind: 'code',
+                code: 'desktopCli',
+              },
+              {
+                kind: 'paragraph',
+                text: '상태 확인, 로그 보기, 중지는 아래 명령입니다.',
+              },
+              {
+                kind: 'code',
+                code: 'desktopServerCommands',
               },
             ],
           },
@@ -1080,6 +1159,13 @@ artel qa run --test-run <id> --instance <id>`,
           audience: 'Edit the settings and run it yourself.',
           cta: 'Open',
         },
+        {
+          id: 'desktop-app',
+          name: 'Desktop app',
+          audience: 'Run it on this computer with one app and no Docker.',
+          cta: 'Open',
+          state: 'planned',
+        },
       ],
     },
     afterInstall: [
@@ -1342,6 +1428,71 @@ artel qa run --test-run <id> --instance <id>`,
               {
                 kind: 'paragraph',
                 text: 'Data volumes stay.',
+              },
+            ],
+          },
+        ],
+      },
+      'desktop-app': {
+        title: 'Desktop app',
+        chooseWhen: 'Choose this to run all of ARTEL on this computer without Docker. It is not released yet; the button below resolves once the first release is published.',
+        state: 'planned',
+        steps: [
+          {
+            title: 'Download the app',
+            blocks: [
+              {
+                kind: 'paragraph',
+                text: 'The ARTEL desktop app bundles PostgreSQL, the orchestration server, the agent server and the console, so the whole stack runs on this computer. Docker is not needed. Installing it also puts the artel command on your PATH.',
+              },
+              {
+                kind: 'link',
+                label: 'Download from GitHub Releases',
+                href: desktopReleasesUrl,
+              },
+            ],
+          },
+          {
+            title: 'Supported systems',
+            blocks: [
+              {
+                kind: 'list',
+                items: [
+                  'Windows x64 and arm64',
+                  'macOS Apple silicon and Intel',
+                  'Linux x64 and arm64 (AppImage, deb)',
+                  'Linux needs glibc 2.36 or later (Ubuntu 24.04, Debian 12 or newer).',
+                ],
+              },
+            ],
+          },
+          {
+            title: 'First launch',
+            blocks: [
+              {
+                kind: 'paragraph',
+                text: 'Sign up in the app window. The first account becomes the admin, and the admin creates later accounts. Enter the OpenRouter key in the console admin settings, the same as with the other methods.',
+              },
+            ],
+          },
+          {
+            title: 'Without Docker, from a terminal',
+            blocks: [
+              {
+                kind: 'paragraph',
+                text: 'To run it from a terminal without the app, you need Node 22.12 or later. The first start downloads the runtime, about 300 MB.',
+              },
+              {
+                kind: 'code',
+                code: 'desktopCli',
+              },
+              {
+                kind: 'paragraph',
+                text: 'Check the status, read the logs and stop it with these commands.',
+              },
+              {
+                kind: 'code',
+                code: 'desktopServerCommands',
               },
             ],
           },

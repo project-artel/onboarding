@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { StateBadge } from '../components/StateBadge'
 import { SelfHostingBlocks } from '../components/SelfHostingBlocks'
 import {
   selfHostingHubPath,
@@ -24,6 +25,7 @@ export function SelfHostingMethodPage({ method }: { method: SelfHostingMethodId 
               {page.method.back}
             </Link>
             <h1 className="hero__title page-hero__title">{content.title}</h1>
+            {content.state ? <StateBadge state={content.state} /> : null}
             <p className="hero__lead">{content.chooseWhen}</p>
           </div>
         </div>
@@ -56,6 +58,7 @@ export function SelfHostingMethodPage({ method }: { method: SelfHostingMethodId 
                 <Link className="method-card" to={href(selfHostingMethodPath(card.id))}>
                   <span className="method-card__name">{card.name}</span>
                   <span className="method-card__audience">{card.audience}</span>
+                  {card.state ? <StateBadge state={card.state} /> : null}
                 </Link>
               </li>
             ))}

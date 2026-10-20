@@ -45,3 +45,8 @@ export const requiredChatModels = [
 ]
 
 export const embeddingModel = 'openai/text-embedding-3-large'
+
+// `@alpha` for the same reason as the CLI page: the `latest` tag points at an outdated build.
+export const desktopCliCommands = 'npm install -g @project-artel/cli@alpha\nartel server start'
+
+export const desktopServerCommands = 'artel server status\nartel server logs\nartel server stop'
