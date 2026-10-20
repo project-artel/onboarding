@@ -151,9 +151,9 @@ const ko: Copy = {
   problem: {
     title: '해결하려는 문제',
     items: [
-      '빌드가 나올 때마다 같은 회귀 테스트를 사람이 처음부터 다시 진행해야 합니다.',
-      '재현 절차가 글로만 남아 있어서, 닫았던 이슈가 다시 열리는 경우가 생깁니다.',
-      '검증할 시나리오가 늘어날수록 QA 인력이 부족해집니다.',
+      '빌드마다 사람이 처음부터 다시 하는 회귀 테스트',
+      '글로만 남은 재현 절차, 다시 열리는 이슈',
+      '늘어나는 시나리오, 모자란 QA 인력',
     ],
   },
   steps: {
@@ -645,9 +645,9 @@ const en: Copy = {
   problem: {
     title: 'The problem',
     items: [
-      'Every new build means a person runs the same regression tests again from the start.',
-      'Reproduction steps are kept only as text, so closed issues sometimes reopen.',
-      'As the number of scenarios grows, there are not enough QA staff to cover them.',
+      'The same regression tests, by hand, on every build',
+      'Repro steps kept only as text, and issues that reopen',
+      'More scenarios than QA staff',
     ],
   },
   steps: {
