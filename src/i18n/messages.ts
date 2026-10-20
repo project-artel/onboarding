@@ -27,7 +27,7 @@ export type SelfHostingBlock =
   | { kind: 'list'; items: string[] }
   | { kind: 'code'; code: SelfHostingCodeKey }
 
-export type SelfHostingSection = { title: string; blocks: SelfHostingBlock[] }
+export type SelfHostingSection = { title: string; state?: Availability; blocks: SelfHostingBlock[] }
 
 export type SelfHostingMethodPage = {
   title: string
@@ -244,7 +244,7 @@ const ko: Copy = {
       },
       {
         q: '데이터는 어디에 저장되나요?',
-        a: '실행 로그와 증거는 ARTEL 서버에 저장됩니다. 직접 설치하면 내 컴퓨터에 저장됩니다.',
+        a: '실행 로그와 증거는 ARTEL 서버에 저장됩니다. 직접 설치하면 내 컴퓨터에 저장됩니다. 다만 admin 이 동의한 경우에만 하루 한 번 집계된 사용 보고서를 ARTEL 서버로 보냅니다. 이 보고서는 선택 사항이고 기본값은 꺼짐입니다.',
       },
       {
         q: '지금 어디까지 동작하나요?',
@@ -539,6 +539,58 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'paragraph',
             text: 'ARTEL_GITHUB_SIGNUP_OPEN=false (기본값) 이면 admin 이 같은 이메일로 만든 사용자만 GitHub 로 로그인합니다.',
+          },
+        ],
+      },
+      {
+        title: 'telemetry (선택, 기본 꺼짐)',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: '직접 설치한 ARTEL 은 admin 이 동의하기 전에는 아무것도 보내지 않습니다. 동의하면 UTC 하루에 한 번, 집계된 사용 보고서 하나를 ARTEL 서버로 보냅니다.',
+          },
+          {
+            kind: 'paragraph',
+            text: '켜는 방법은 세 가지입니다.',
+          },
+          {
+            kind: 'list',
+            items: [
+              '설치할 때 --telemetry 플래그를 줍니다. 환경 변수 ARTEL_TELEMETRY=on 도 같습니다. 새로 만드는 docker-compose.yml 에만 적용됩니다.',
+              '첫 admin 가입 화면의 체크박스를 켭니다. 처음에는 해제되어 있습니다.',
+              '/admin/settings 의 telemetry 항목에서 켭니다. 다음 보고서에 들어갈 JSON 을 그대로 미리 볼 수 있습니다.',
+            ],
+          },
+          {
+            kind: 'paragraph',
+            text: '보내는 내용입니다.',
+          },
+          {
+            kind: 'list',
+            items: [
+              'QA agent 구조별: 시도 횟수, step 과 test case 의 전체 수와 통과 수, 실행 시간의 합과 최댓값, ARTEL 에 내장된 tool 의 이름별 호출 횟수',
+              'LLM 사용량: model 별 호출 수, token 수, 비용',
+              '오류: 오류 종류(예외 class 이름)와 코드 위치 최대 10개. 오류 메시지는 보내지 않습니다.',
+              '설치를 구분하는 무작위 install id, ARTEL 버전, 보고 날짜',
+            ],
+          },
+          {
+            kind: 'paragraph',
+            text: '보내지 않는 내용입니다.',
+          },
+          {
+            kind: 'list',
+            items: [
+              'QA run 의 원본 기록: 로그 메시지, agent 의 추론, action, screen capture, game state',
+              'content map, knowledge 문서, scenario, test case 본문, 프로젝트 이름과 게임 이름',
+              'email, 이름, user id, IP 주소. 받는 서버는 보낸 쪽 IP 주소를 저장하지 않습니다.',
+              '게임이 등록한 함수의 이름. 내장 목록에 없는 tool 은 other 로 합쳐서 셉니다.',
+            ],
+          },
+          {
+            kind: 'paragraph',
+            text: '/admin/settings 에서 끌 때 이미 보낸 데이터를 삭제하도록 요청할 수 있습니다. ARTEL_TELEMETRY_URL 을 비우면 보내는 기능 자체가 꺼집니다.',
           },
         ],
       },
@@ -858,7 +910,7 @@ const en: Copy = {
       },
       {
         q: 'Where does the data live?',
-        a: 'Run logs and evidence are stored on ARTEL servers. If you self-host, they stay on your machine.',
+        a: 'Run logs and evidence are stored on ARTEL servers. If you self-host, they stay on your machine. The one exception is an optional daily aggregated usage report, which is sent to ARTEL only if the admin agrees. It is off by default.',
       },
       {
         q: 'What works today?',
@@ -1157,6 +1209,58 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'paragraph',
             text: 'With ARTEL_GITHUB_SIGNUP_OPEN=false (the default), a GitHub account signs in only when an admin already created a user with the same email.',
+          },
+        ],
+      },
+      {
+        title: 'Telemetry (optional, off by default)',
+        state: 'planned',
+        blocks: [
+          {
+            kind: 'paragraph',
+            text: 'A self-hosted ARTEL sends nothing until the admin agrees. After that it sends one aggregated usage report to ARTEL per UTC day.',
+          },
+          {
+            kind: 'paragraph',
+            text: 'There are three ways to turn it on.',
+          },
+          {
+            kind: 'list',
+            items: [
+              'Pass the --telemetry flag when you install. The environment variable ARTEL_TELEMETRY=on does the same. It applies only to a docker-compose.yml that is being created.',
+              'Tick the checkbox on the first admin signup screen. It starts unticked.',
+              'Turn it on in the telemetry section of /admin/settings. It shows the exact JSON that the next report will contain.',
+            ],
+          },
+          {
+            kind: 'paragraph',
+            text: 'What is sent:',
+          },
+          {
+            kind: 'list',
+            items: [
+              'Per QA agent structure: number of tries, total and passed steps and test cases, the sum and the maximum of run duration, and call counts by the name of each tool built into ARTEL',
+              'LLM usage: calls, tokens and cost per model',
+              'Errors: the error type (exception class name) and up to 10 code locations. Error messages are never sent.',
+              'A random install id that tells installs apart, the ARTEL version and the report date',
+            ],
+          },
+          {
+            kind: 'paragraph',
+            text: 'What is never sent:',
+          },
+          {
+            kind: 'list',
+            items: [
+              'Raw QA run records: log messages, agent reasoning, actions, screen captures, game state',
+              'Content maps, knowledge documents, scenarios, test case text, project names and game names',
+              'Emails, names, user ids and IP addresses. The receiving server does not store the sender IP address.',
+              'Names of functions a game registered. A tool that is not in the built-in list is counted under other.',
+            ],
+          },
+          {
+            kind: 'paragraph',
+            text: 'When you turn it off in /admin/settings, you can ask for the data already sent to be deleted. Leaving ARTEL_TELEMETRY_URL blank turns the feature off completely.',
           },
         ],
       },
