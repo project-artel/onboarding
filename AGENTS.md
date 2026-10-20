@@ -13,6 +13,13 @@ agent-status interfaces, read `.agents/docs/DESIGN.md` and follow its semantic
 tokens, layouts, components, states, and accessibility rules unless the task
 explicitly requires otherwise.
 
+Before writing or changing any text a visitor reads — `src/i18n/messages.ts`,
+page and component text, `index.html` meta, `public/llms.txt` — read
+[`.agents/docs/user-copy.md`](.agents/docs/user-copy.md) and follow it. It decides
+what may be written at all, how headings and Korean sentences are formed, and
+what to check before handoff. Ask the owner before adding copy that was not
+requested.
+
 ## Project Workflow
 
 For non-trivial work, follow:
