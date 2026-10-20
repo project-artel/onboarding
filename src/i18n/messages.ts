@@ -179,11 +179,11 @@ const ko: Copy = {
     items: [
       {
         q: '어떤 게임에 쓸 수 있나요?',
-        a: 'Unity 게임. 지금은 싱글 플레이부터 지원',
+        a: 'Unity 게임에 쓸 수 있습니다. 지금은 싱글 플레이 게임부터 지원합니다.',
       },
       {
         q: '데이터는 어디에 저장되나요?',
-        a: 'ARTEL 서버. 셀프 호스팅하면 그 컴퓨터. 사용 통계는 admin 이 동의한 경우에만 하루 한 번 전송하고, 게임 내용과 개인 정보는 보내지 않음',
+        a: 'ARTEL 서버에 저장됩니다. 셀프 호스팅하면 설치한 컴퓨터에 저장됩니다. 사용 통계는 admin 이 동의한 경우에만 하루 한 번 보내며, 게임 내용과 개인 정보는 보내지 않습니다.',
       },
     ],
   },
@@ -528,13 +528,13 @@ artel qa run --test-run <id> --instance <id>`,
       back: '← 셀프 호스팅',
       othersTitle: '다른 설치 방법',
     },
-    remoteFile: { loading: '불러오는 중', failed: '불러오지 못함', openOnGitHub: 'GitHub에서 보기' },
+    remoteFile: { loading: '불러오는 중', failed: '불러오지 못했습니다.', openOnGitHub: 'GitHub에서 보기' },
     deployReadmeLabel: 'deploy/README.md',
     licenseLabel: 'LICENSE (AGPL-3.0)',
   },
   notFound: {
     title: '없는 페이지',
-    body: '주소 확인 필요',
+    body: '주소를 다시 확인해 주세요.',
     back: '홈으로',
   },
 }
@@ -606,11 +606,11 @@ const en: Copy = {
     items: [
       {
         q: 'Which games does it work with?',
-        a: 'Unity games. Single-player comes first.',
+        a: 'Unity games. Single-player games are supported first.',
       },
       {
         q: 'Where does the data live?',
-        a: 'On ARTEL servers. If you self-host, on that machine, and usage statistics go out once a day only if the admin agrees. Game content and personal information are never sent.',
+        a: 'On ARTEL servers, or on your own machine if you self-host. Usage statistics are sent once a day only if the admin agrees, and game content and personal information are never sent.',
       },
     ],
   },
