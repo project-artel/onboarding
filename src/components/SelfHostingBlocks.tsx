@@ -18,8 +18,6 @@ const codeByKey: Record<SelfHostingCodeKey, string> = {
   signupOpen: commands.signupOpenLine,
   models: [...commands.requiredChatModels, commands.embeddingModel].join('\n'),
   githubEnvironment: commands.githubEnvironmentLines,
-  desktopCli: commands.desktopCliCommands,
-  desktopServerCommands: commands.desktopServerCommands,
 }
 
 function Block({ block }: { block: SelfHostingBlock }) {

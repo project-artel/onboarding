@@ -24,8 +24,6 @@ export type SelfHostingCodeKey =
   | 'signupOpen'
   | 'models'
   | 'githubEnvironment'
-  | 'desktopCli'
-  | 'desktopServerCommands'
 
 export type SelfHostingBlock =
   | { kind: 'paragraph'; text: string }
@@ -776,36 +774,6 @@ artel qa run --test-run <id> --instance <id>`,
               },
             ],
           },
-          {
-            title: '처음 실행',
-            blocks: [
-              {
-                kind: 'paragraph',
-                text: '앱 창에서 가입합니다. 가장 먼저 가입한 계정이 admin 이 되고, 이후 계정은 admin 이 만듭니다. OpenRouter 키는 다른 설치 방법과 같이 콘솔의 관리 설정에서 입력합니다.',
-              },
-            ],
-          },
-          {
-            title: 'Docker 없이 터미널에서',
-            blocks: [
-              {
-                kind: 'paragraph',
-                text: '앱 없이 터미널에서 실행하려면 Node 22.12 이상이 필요합니다. 처음 시작할 때 runtime 을 내려받으며 약 300 MB 입니다.',
-              },
-              {
-                kind: 'code',
-                code: 'desktopCli',
-              },
-              {
-                kind: 'paragraph',
-                text: '상태 확인, 로그 보기, 중지는 아래 명령입니다.',
-              },
-              {
-                kind: 'code',
-                code: 'desktopServerCommands',
-              },
-            ],
-          },
         ],
       },
     },
@@ -1463,36 +1431,6 @@ artel qa run --test-run <id> --instance <id>`,
                   'Linux x64 and arm64 (AppImage, deb)',
                   'Linux needs glibc 2.36 or later (Ubuntu 24.04, Debian 12 or newer).',
                 ],
-              },
-            ],
-          },
-          {
-            title: 'First launch',
-            blocks: [
-              {
-                kind: 'paragraph',
-                text: 'Sign up in the app window. The first account becomes the admin, and the admin creates later accounts. Enter the OpenRouter key in the console admin settings, the same as with the other methods.',
-              },
-            ],
-          },
-          {
-            title: 'Without Docker, from a terminal',
-            blocks: [
-              {
-                kind: 'paragraph',
-                text: 'To run it from a terminal without the app, you need Node 22.12 or later. The first start downloads the runtime, about 300 MB.',
-              },
-              {
-                kind: 'code',
-                code: 'desktopCli',
-              },
-              {
-                kind: 'paragraph',
-                text: 'Check the status, read the logs and stop it with these commands.',
-              },
-              {
-                kind: 'code',
-                code: 'desktopServerCommands',
               },
             ],
           },
