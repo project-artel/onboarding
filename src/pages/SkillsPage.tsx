@@ -27,7 +27,7 @@ export function SkillsPage() {
         </a>
       </RailSection>
 
-      <RailSection num="INSTALL" title={t.skills.install.title}>
+      <RailSection num="MANUAL" title={t.skills.install.title}>
         <p className="step__body">{t.skills.install.body}</p>
         <CodeBlock code={t.skills.install.command} />
         <p className="step__body">{t.skills.install.optionsNote}</p>

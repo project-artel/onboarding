@@ -269,9 +269,9 @@ summary::-webkit-details-marker { display: none; }
 .flow { margin: 0; padding: 0; list-style: none; display: grid; max-width: 760px; }
 .flow > li { display: grid; grid-template-columns: 44px 1fr; gap: 18px; align-items: start; padding: 16px 0; border-bottom: 1px solid var(--rule); }
 .flow__marker { position: relative; display: flex; align-items: center; justify-content: center; height: 24px; }
-.flow__marker::before { content: ''; position: absolute; left: 50%; top: 22px; bottom: -34px; width: 1px; background: var(--rule); }
+.flow__marker::before { content: ''; position: absolute; left: 50%; top: 24px; bottom: -34px; width: 1px; background: var(--rule); }
 .flow > li:last-child .flow__marker::before { display: none; }
-.flow__dot { position: relative; width: 9px; height: 9px; border-radius: var(--r-pill); background: var(--flare); }
+.flow__dot { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: var(--r-pill); background: var(--flare); color: var(--paper); font-family: var(--font-mono); font-size: 12px; font-weight: 600; }
 .flow__text { font-size: 16px; line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
 
 /* ── FAQ ──────────────────────────────────────────────── */
@@ -421,3 +421,15 @@ main > .section:last-child { border-bottom: none; }
 .remote-file { display: grid; gap: 12px; justify-items: start; min-width: 0; }
 .remote-file__details { margin-top: 0; width: 100%; min-width: 0; max-width: 100%; overflow: hidden; }
 .remote-file__details .code { margin-top: 16px; max-height: 480px; overflow: auto; }
+
+.cli__reference { margin-top: 24px; }
+
+/* 아키텍처 그림. 좁은 화면에서는 줄이지 않고 가로로 스크롤한다. */
+.arch { overflow-x: auto; margin-bottom: 32px; max-width: 900px; }
+.arch__svg { display: block; width: 100%; min-width: 640px; height: auto; }
+.arch__box { fill: var(--paper); stroke: var(--rule); stroke-width: 1; }
+.arch__box--accent { stroke: var(--flare); stroke-width: 1.5; }
+.arch__label { fill: var(--ink); font-family: var(--font-display); font-size: 16px; font-weight: 600; }
+.arch__edge { fill: none; stroke: var(--ink-3); stroke-width: 1.5; }
+.arch__head { fill: var(--ink-3); }
+.arch__num { fill: var(--flare); font-family: var(--font-mono); font-size: 13px; font-weight: 600; }

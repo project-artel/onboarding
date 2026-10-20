@@ -1,3 +1,4 @@
+import { ArchitectureDiagram } from '../components/ArchitectureDiagram'
 import { RailSection } from '../components/RailSection'
 import { useCopy } from '../i18n/useCopy'
 
@@ -18,13 +19,12 @@ export function HowItWorksPage() {
       </section>
 
       <RailSection num="§ 01" title={t.how.flowTitle}>
-        {/* 다이어그램을 이미지로 만들면 문구를 로케일마다 다시 그려야 하고
-            대체 텍스트도 따로 관리해야 한다. 실제 텍스트로 그린다. */}
-        <ol className="flow" aria-label={t.how.flowAlt}>
-          {t.how.flow.map((line) => (
+        <ArchitectureDiagram labels={t.how.diagram} title={t.how.flowAlt} />
+        <ol className="flow">
+          {t.how.flow.map((line, index) => (
             <li key={line}>
               <span className="flow__marker" aria-hidden="true">
-                <span className="flow__dot" />
+                <span className="flow__dot">{index + 1}</span>
               </span>
               <span className="flow__text">{line}</span>
             </li>

@@ -1,9 +1,9 @@
-import { CodeBlock } from '../components/CodeBlock'
-import { RailSection } from '../components/RailSection'
-import { useCopy } from '../i18n/useCopy'
+import { CodeBlock } from "../components/CodeBlock";
+import { RailSection } from "../components/RailSection";
+import { useCopy } from "../i18n/useCopy";
 
 export function CliPage() {
-  const { t } = useCopy()
+  const { t } = useCopy();
 
   return (
     <>
@@ -27,35 +27,23 @@ export function CliPage() {
         </a>
       </RailSection>
 
-      <section className="section section--alt">
-        <div className="shell section__full">
-          <ol className="install">
-            {t.cli.steps.map((step, index) => (
-              <li key={step.title}>
-                <div className="install__num" aria-hidden="true">
-                  {String(index + 1).padStart(2, '0')}
-                </div>
-                <div className="install__body">
-                  <h2 className="install__title">{step.title}</h2>
-                  {step.body ? <p className="step__body">{step.body}</p> : null}
-                  {step.code ? <CodeBlock code={step.code} /> : null}
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      <RailSection num="NOTES" title={t.cli.notesTitle}>
-        <ul className="marks marks--tight">
-          {t.cli.notes.map((item) => (
-            <li key={item}>
-              <span>{item}</span>
+      <RailSection alt num="MANUAL" title={t.cli.manualTitle}>
+        <ol className="install">
+          {t.cli.steps.map((step, index) => (
+            <li key={step.title}>
+              <div className="install__num" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </div>
+              <div className="install__body">
+                <h2 className="install__title">{step.title}</h2>
+                {step.body ? <p className="step__body">{step.body}</p> : null}
+                {step.code ? <CodeBlock code={step.code} /> : null}
+              </div>
             </li>
           ))}
-        </ul>
+        </ol>
         <a
-          className="btn btn--ghost"
+          className="btn btn--ghost cli__reference"
           href="https://github.com/project-artel/artel-cli#readme"
           target="_blank"
           rel="noreferrer"
@@ -64,5 +52,5 @@ export function CliPage() {
         </a>
       </RailSection>
     </>
-  )
+  );
 }

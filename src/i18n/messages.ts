@@ -1,4 +1,5 @@
 import type { Locale } from './locale'
+import type { ArchitectureLabels } from '../components/ArchitectureDiagram'
 import type { SelfHostingMethodId } from './selfHostingRoutes'
 
 // Download page of the desktop app. Plain text, so `npm run check` can load this file without a bundler.
@@ -76,9 +77,8 @@ type Copy = {
   cli: {
     title: string
     lead: string
+    manualTitle: string
     steps: { title: string; body?: string; code?: string }[]
-    notesTitle: string
-    notes: string[]
     referenceCta: string
     agent: { title: string; body: string; prompt: string; instructionsCta: string }
   }
@@ -95,13 +95,13 @@ type Copy = {
     title: string
     flowTitle: string
     flowAlt: string
+    diagram: ArchitectureLabels
     flow: string[]
     lifecycleTitle: string
     lifecycle: { title: string; body: string }[]
   }
   selfHosting: {
     title: string
-    lead: string
     overview: { title: string; items: string[] }
     chooser: {
       title: string
@@ -246,6 +246,7 @@ const ko: Copy = {
   cli: {
     title: 'CLI',
     lead: '터미널과 CI에서 QA 실행',
+    manualTitle: '직접 설치',
     steps: [
       {
         title: 'CLI 설치',
@@ -258,7 +259,7 @@ const ko: Copy = {
       },
       {
         title: 'CI에서는 CLI token 사용',
-        body: '콘솔의 계정 설정에서 CLI token 발급 후 ARTEL_TOKEN에 설정',
+        body: '콘솔의 계정 설정에서 CLI token 발급 후 ARTEL_TOKEN에 설정. QA가 실패하면 CI 작업도 실패로 끝남',
         code: 'export ARTEL_TOKEN=<발급받은 token>',
       },
       {
@@ -269,10 +270,6 @@ artel game start --build ./Build/Game.exe --project <id>
 artel game list --project <id>
 artel qa run --test-run <id> --instance <id>`,
       },
-    ],
-    notesTitle: '알아 두면 좋은 점',
-    notes: [
-      'artel qa run의 exit code: 통과했을 때만 0, CI 통과 조건으로 사용',
     ],
     referenceCta: '전체 레퍼런스 보기',
     agent: {
@@ -312,9 +309,17 @@ artel qa run --test-run <id> --instance <id>`,
     flowTitle: '데이터 흐름',
     flowAlt:
       '게임 안의 SDK가 씬 상태를 Orchestration 서버로 보고하고, Agent 서버가 다음 액션을 정해 다시 SDK로 내려보내며, 실행 결과가 대시보드에 기록되는 흐름',
+    diagram: {
+      game: 'Unity 게임 + SDK',
+      orchestration: 'Orchestration 서버',
+      agent: 'Agent 서버',
+      model: 'LLM',
+      console: '콘솔 · CLI',
+      storage: 'PostgreSQL · 파일',
+    },
     flow: [
       'SDK가 씬 상태 보고',
-      'Agent 서버가 시나리오와 상태를 비교해 다음 액션 결정',
+      'Agent 서버가 케이스와 화면 상태를 비교해 다음 액션 결정',
       'Orchestration 서버가 액션을 게임 인스턴스로 전달',
       'SDK가 입력을 주입하고 결과 반환',
       '실행 로그와 이슈를 기록하고 콘솔에서 조회',
@@ -345,10 +350,9 @@ artel qa run --test-run <id> --instance <id>`,
   },
   selfHosting: {
     title: '직접 설치',
-    lead: '한 대의 컴퓨터에서 ARTEL 전체 실행',
     overview: {
-      title: '필요한 것',
-      items: ['RAM 8 GB 이상', 'OpenRouter 계정'],
+      title: '요구 사항',
+      items: ['RAM 8 GB 이상', 'OpenRouter API 키 (필수)', 'AWS Bedrock, Claude API 키 (선택)'],
     },
     chooser: {
       title: '설치 방법 고르기',
@@ -375,13 +379,13 @@ artel qa run --test-run <id> --instance <id>`,
     },
     afterInstall: [
       {
-        title: '처음 할 일',
+        title: '초기 설정',
         blocks: [
           {
             kind: 'list',
             items: [
               '처음 가입한 계정이 admin, 다른 계정은 admin 이 /admin/users 에서 생성',
-              'OpenRouter 키 입력: admin 으로 /admin/settings',
+              'API 키 입력: admin 으로 /admin/settings',
             ],
           },
         ],
@@ -441,7 +445,7 @@ artel qa run --test-run <id> --instance <id>`,
         title: 'Docker Compose',
         steps: [
           {
-            title: '필요한 것',
+            title: '요구 사항',
             blocks: [
               {
                 kind: 'paragraph',
@@ -717,6 +721,7 @@ const en: Copy = {
   cli: {
     title: 'CLI',
     lead: 'Run QA from a terminal or CI.',
+    manualTitle: 'Install it yourself',
     steps: [
       {
         title: 'Install the CLI',
@@ -729,7 +734,7 @@ const en: Copy = {
       },
       {
         title: 'Use a CLI token in CI',
-        body: 'Issue a CLI token in the console account settings and put it in ARTEL_TOKEN.',
+        body: 'Issue a CLI token in the console account settings and put it in ARTEL_TOKEN. A failed QA run fails the CI job.',
         code: 'export ARTEL_TOKEN=<your issued token>',
       },
       {
@@ -740,10 +745,6 @@ artel game start --build ./Build/Game.exe --project <id>
 artel game list --project <id>
 artel qa run --test-run <id> --instance <id>`,
       },
-    ],
-    notesTitle: 'Good to know',
-    notes: [
-      'artel qa run exit code: 0 only when the run passed, usable as a CI gate',
     ],
     referenceCta: 'Read the full reference',
     agent: {
@@ -783,9 +784,17 @@ artel qa run --test-run <id> --instance <id>`,
     flowTitle: 'Data flow',
     flowAlt:
       'The SDK inside the game reports scene state to the orchestration server, the agent server decides the next action and sends it back down to the SDK, and run results are recorded for the dashboard',
+    diagram: {
+      game: 'Unity game + SDK',
+      orchestration: 'Orchestration server',
+      agent: 'Agent server',
+      model: 'LLM',
+      console: 'Console · CLI',
+      storage: 'PostgreSQL · files',
+    },
     flow: [
       'The SDK reports scene state.',
-      'The agent server compares scenario and state to pick the next action.',
+      'The agent server compares the case and the screen state to pick the next action.',
       'The orchestration server dispatches the action to that game instance.',
       'The SDK injects the input and returns the result.',
       'Run logs and issues are recorded and read from the dashboard.',
@@ -816,10 +825,9 @@ artel qa run --test-run <id> --instance <id>`,
   },
   selfHosting: {
     title: 'Self-hosting',
-    lead: 'Run all of ARTEL on one machine.',
     overview: {
-      title: 'What you need',
-      items: ['8 GB of RAM or more', 'An OpenRouter account'],
+      title: 'Requirements',
+      items: ['8 GB of RAM or more', 'OpenRouter API key (required)', 'AWS Bedrock, Claude API keys (optional)'],
     },
     chooser: {
       title: 'Choose a method',
@@ -846,13 +854,13 @@ artel qa run --test-run <id> --instance <id>`,
     },
     afterInstall: [
       {
-        title: 'First steps',
+        title: 'Initial setup',
         blocks: [
           {
             kind: 'list',
             items: [
               'First account to sign up: the admin, who creates other accounts at /admin/users',
-              'OpenRouter key: entered by the admin at /admin/settings',
+              'API keys: entered by the admin at /admin/settings',
             ],
           },
         ],
@@ -912,7 +920,7 @@ artel qa run --test-run <id> --instance <id>`,
         title: 'Docker Compose',
         steps: [
           {
-            title: 'What you need',
+            title: 'Requirements',
             blocks: [
               {
                 kind: 'paragraph',
