@@ -7,8 +7,6 @@ export const installCommand =
 
 export const installWithFlagsCommand = `${installCommand} -s -- --dir /opt/artel --port 8088`
 
-export const installAfterCommand = 'cd $HOME/artel\ndocker compose ps'
-
 export const generateSecretCommand = 'openssl rand -hex 32'
 
 export const composeUpCommands = 'docker compose up -d\ndocker compose ps'

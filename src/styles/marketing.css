@@ -342,18 +342,6 @@ summary::-webkit-details-marker { display: none; }
 .hero__inner--page { padding: 80px 0 72px; }
 .hero__copy--narrow { max-width: 680px; }
 
-/* CTA 밴드. 히어로와 같은 점 그리드를 쓰지만 크롭마크는 없다. */
-.cta__title {
-  margin: 0 0 14px;
-  font-family: var(--font-display);
-  font-size: clamp(28px, 3.4vw, 38px);
-  line-height: 1.2;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  text-wrap: balance;
-}
-.hero__actions--cta { margin-top: 28px; }
-
 /* 작동 원리 수명주기 스텝은 랜딩 스텝보다 한 단계 작다. */
 .steps--sm { gap: 32px; }
 .steps--sm .step__num { font-size: 30px; }

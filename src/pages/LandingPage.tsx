@@ -21,9 +21,6 @@ export function LandingPage() {
               <Link className="btn btn--primary" to={href('/sdk')}>
                 {t.hero.primaryCta}
               </Link>
-              <Link className="btn btn--ghost" to={href('/sdk')}>
-                {t.hero.secondaryCta}
-              </Link>
             </div>
           </div>
         </div>
@@ -99,23 +96,6 @@ export function LandingPage() {
           ))}
         </ul>
       </RailSection>
-
-      {/* 히어로와 같은 점 그리드. 크롭마크는 히어로 전용이라 여기엔 없다. */}
-      <section className="section hero">
-        <div className="shell hero__inner">
-          <div className="hero__copy hero__copy--narrow">
-            <h2 className="cta__title">{t.cta.title}</h2>
-            <div className="hero__actions hero__actions--cta">
-              <Link className="btn btn--primary" to={href('/sdk')}>
-                {t.hero.primaryCta}
-              </Link>
-              <a className="btn btn--ghost" href="mailto:contact@artel.dev">
-                {t.footer.contact}
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <RailSection num="§ 05" title={t.faq.title}>
         <div className="faq">

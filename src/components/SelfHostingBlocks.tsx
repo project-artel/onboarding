@@ -6,7 +6,6 @@ import { CodeBlock } from './CodeBlock'
 const codeByKey: Record<SelfHostingCodeKey, string> = {
   install: commands.installCommand,
   installWithFlags: commands.installWithFlagsCommand,
-  installAfter: commands.installAfterCommand,
   composeFile: composeFile,
   generateSecret: commands.generateSecretCommand,
   composeUp: commands.composeUpCommands,

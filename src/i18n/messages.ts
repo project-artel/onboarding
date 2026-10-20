@@ -12,7 +12,6 @@ const desktopReleasesUrl = 'https://github.com/project-artel/artel-desktop/relea
 export type SelfHostingCodeKey =
   | 'install'
   | 'installWithFlags'
-  | 'installAfter'
   | 'composeFile'
   | 'generateSecret'
   | 'composeUp'
@@ -55,7 +54,6 @@ type Copy = {
     status: string
     title: string
     primaryCta: string
-    secondaryCta: string
   }
   problem: { title: string; items: string[] }
   steps: {
@@ -67,7 +65,6 @@ type Copy = {
     items: { title: string; body: string; state: Availability }[]
   }
   requirements: { title: string; items: string[] }
-  cta: { title: string }
   faq: { title: string; items: { q: string; a: string }[] }
   footer: { contact: string; repository: string; language: string }
   sdk: {
@@ -148,7 +145,6 @@ const ko: Copy = {
     status: '개발 중',
     title: '에이전트가 플레이하는 게임 QA 도구',
     primaryCta: 'SDK 다운로드',
-    secondaryCta: '설치 문서 보기',
   },
   problem: {
     title: '해결하려는 문제',
@@ -203,9 +199,6 @@ const ko: Copy = {
       '게임에서 ARTEL 서버로 나가는 네트워크',
       'ARTEL 계정',
     ],
-  },
-  cta: {
-    title: 'SDK 설치 안내',
   },
   faq: {
     title: '자주 묻는 질문',
@@ -467,10 +460,6 @@ artel qa run --test-run <id> --instance <id>`,
                 kind: 'paragraph',
                 text: 'http://localhost:8088/ 을 엽니다.',
               },
-              {
-                kind: 'code',
-                code: 'installAfter',
-              },
             ],
           },
         ],
@@ -644,7 +633,6 @@ const en: Copy = {
     status: 'In development',
     title: 'A game QA tool where an agent plays the game',
     primaryCta: 'Download SDK',
-    secondaryCta: 'Read install guide',
   },
   problem: {
     title: 'The problem',
@@ -699,9 +687,6 @@ const en: Copy = {
       'Outbound network from the game to the ARTEL server',
       'An ARTEL account',
     ],
-  },
-  cta: {
-    title: 'Installing the SDK',
   },
   faq: {
     title: 'Questions',
@@ -962,10 +947,6 @@ artel qa run --test-run <id> --instance <id>`,
               {
                 kind: 'paragraph',
                 text: 'Open http://localhost:8088/.',
-              },
-              {
-                kind: 'code',
-                code: 'installAfter',
               },
             ],
           },
