@@ -69,7 +69,7 @@ export function LandingPage() {
             <p className="section__num">§ 03</p>
             <h2 className="section__title">{t.features.title}</h2>
           </div>
-          <ul className="cards">
+          <ul className="cards cards--3">
             {t.features.items.map((feature) => (
               <li key={feature.title}>
                 <h3 className="card__title">{feature.title}</h3>

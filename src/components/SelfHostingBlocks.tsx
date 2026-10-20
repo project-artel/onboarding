@@ -9,11 +9,6 @@ const codeByKey: Record<SelfHostingCodeKey, string> = {
   composeDownload: commands.composeDownloadCommand,
   generateSecret: commands.generateSecretCommand,
   composeUp: commands.composeUpCommands,
-  composeLogs: commands.composeLogsCommand,
-  composeUpgrade: commands.composeUpgradeCommands,
-  backup: commands.backupCommand,
-  restore: commands.restoreCommand,
-  composeDown: commands.composeDownCommand,
 }
 
 function Block({ block }: { block: SelfHostingBlock }) {

@@ -12,11 +12,6 @@ export type SelfHostingCodeKey =
   | 'composeDownload'
   | 'generateSecret'
   | 'composeUp'
-  | 'composeLogs'
-  | 'composeUpgrade'
-  | 'backup'
-  | 'restore'
-  | 'composeDown'
 
 export type SelfHostingBlock =
   | { kind: 'paragraph'; text: string }
@@ -119,9 +114,9 @@ type Copy = {
 
 const ko: Copy = {
   meta: {
-    title: 'ARTEL | 에이전트가 플레이하는 게임 QA',
+    title: 'ARTEL | 기획서만 주면, 테스트는 에이전트가',
     description:
-      'Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 시나리오를 검증하고 실패 순간의 증거를 남기는 게임 QA 도구',
+      'Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테스트 케이스를 검증하고 실패 순간의 증거를 남기는 게임 QA 도구',
   },
   nav: {
     install: '설치',
@@ -129,14 +124,14 @@ const ko: Copy = {
     sdk: 'SDK',
     cli: 'CLI',
     skills: 'Skill',
-    selfHosting: '직접 설치',
+    selfHosting: '셀프 호스팅',
     how: '아키텍처',
     skipToContent: '본문으로 건너뛰기',
     home: '홈',
   },
   theme: { toLight: '라이트 모드로 전환', toDark: '다크 모드로 전환' },
   hero: {
-    title: '에이전트가 플레이하는 게임 QA 도구',
+    title: '기획서만 주면, 테스트는 에이전트가',
     appCta: '데스크톱 앱 다운로드',
     sdkCta: 'Unity SDK 설치',
   },
@@ -145,7 +140,7 @@ const ko: Copy = {
     items: [
       '빌드마다 사람이 처음부터 다시 하는 회귀 테스트',
       '글로만 남은 재현 절차, 다시 열리는 이슈',
-      '늘어나는 시나리오, 모자란 QA 인력',
+      '늘어나는 테스트 케이스, 모자란 QA 인력',
     ],
   },
   steps: {
@@ -188,7 +183,7 @@ const ko: Copy = {
       },
       {
         q: '데이터는 어디에 저장되나요?',
-        a: 'ARTEL 서버. 직접 설치하면 그 컴퓨터. 사용 통계는 admin 이 동의한 경우에만 하루 한 번 전송하고, 게임 내용과 개인 정보는 보내지 않음',
+        a: 'ARTEL 서버. 셀프 호스팅하면 그 컴퓨터. 사용 통계는 admin 이 동의한 경우에만 하루 한 번 전송하고, 게임 내용과 개인 정보는 보내지 않음',
       },
     ],
   },
@@ -246,7 +241,7 @@ const ko: Copy = {
   cli: {
     title: 'CLI',
     lead: '터미널과 CI에서 QA 실행',
-    manualTitle: '직접 설치',
+    manualTitle: '수동 설치',
     steps: [
       {
         title: 'CLI 설치',
@@ -289,7 +284,7 @@ artel qa run --test-run <id> --instance <id>`,
       instructionsCta: '에이전트용 안내 보기',
     },
     install: {
-      title: '직접 설치',
+      title: '수동 설치',
       body: '현재 프로젝트에 설치',
       command: 'npx skills add project-artel/artel-skills',
       optionsNote: '모든 프로젝트에 설치하려면 -g 추가',
@@ -349,7 +344,7 @@ artel qa run --test-run <id> --instance <id>`,
     ],
   },
   selfHosting: {
-    title: '직접 설치',
+    title: '셀프 호스팅',
     overview: {
       title: '요구 사항',
       items: ['RAM 8 GB 이상', 'OpenRouter API 키 (필수)', 'AWS Bedrock, Claude API 키 (선택)'],
@@ -422,7 +417,7 @@ artel qa run --test-run <id> --instance <id>`,
             ],
           },
           {
-            title: '백업',
+            title: '비밀값 보관',
             blocks: [
               {
                 kind: 'paragraph',
@@ -449,7 +444,7 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'Docker Compose 2.23.1 이상.',
+                text: 'Docker Compose 2.23.1 이상',
               },
             ],
           },
@@ -497,54 +492,6 @@ artel qa run --test-run <id> --instance <id>`,
               },
             ],
           },
-          {
-            title: '로그',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'composeLogs',
-              },
-            ],
-          },
-          {
-            title: '업그레이드',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'composeUpgrade',
-              },
-            ],
-          },
-          {
-            title: '백업과 복원',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'backup',
-              },
-              {
-                kind: 'paragraph',
-                text: '복원은 빈 데이터베이스에',
-              },
-              {
-                kind: 'code',
-                code: 'restore',
-              },
-              {
-                kind: 'paragraph',
-                text: 'artel_minio-data 볼륨과 docker-compose.yml 도 함께 백업',
-              },
-            ],
-          },
-          {
-            title: '중지',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'composeDown',
-              },
-            ],
-          },
         ],
       },
       'desktop-app': {
@@ -569,7 +516,7 @@ artel qa run --test-run <id> --instance <id>`,
                   'Windows x64, arm64',
                   'macOS Apple silicon, Intel',
                   'Linux x64, arm64 (AppImage, deb)',
-                  'Linux 는 Ubuntu 24.04, Debian 12 이상',
+                  'Linux: Ubuntu 24.04, Debian 12 이상',
                 ],
               },
             ],
@@ -578,7 +525,7 @@ artel qa run --test-run <id> --instance <id>`,
       },
     },
     method: {
-      back: '← 직접 설치로 돌아가기',
+      back: '← 셀프 호스팅',
       othersTitle: '다른 설치 방법',
     },
     remoteFile: { loading: '불러오는 중', failed: '불러오지 못함', openOnGitHub: 'GitHub에서 보기' },
@@ -594,9 +541,9 @@ artel qa run --test-run <id> --instance <id>`,
 
 const en: Copy = {
   meta: {
-    title: 'ARTEL | Game QA played by an agent',
+    title: 'ARTEL | The agent tests your game',
     description:
-      'Add the SDK to your Unity game and an agent plays it, runs test scenarios, and records evidence when a step fails.',
+      'Add the SDK to your Unity game and an agent plays it, checks your test cases, and keeps evidence when a step fails.',
   },
   nav: {
     install: 'Install',
@@ -611,7 +558,7 @@ const en: Copy = {
   },
   theme: { toLight: 'Switch to light mode', toDark: 'Switch to dark mode' },
   hero: {
-    title: 'A game QA tool where an agent plays the game',
+    title: 'Give it the planning doc. The agent tests the game.',
     appCta: 'Download the desktop app',
     sdkCta: 'Install the Unity SDK',
   },
@@ -620,7 +567,7 @@ const en: Copy = {
     items: [
       'The same regression tests, by hand, on every build',
       'Repro steps kept only as text, and issues that reopen',
-      'More scenarios than QA staff',
+      'More test cases than QA staff',
     ],
   },
   steps: {
@@ -721,7 +668,7 @@ const en: Copy = {
   cli: {
     title: 'CLI',
     lead: 'Run QA from a terminal or CI.',
-    manualTitle: 'Install it yourself',
+    manualTitle: 'Install manually',
     steps: [
       {
         title: 'Install the CLI',
@@ -764,7 +711,7 @@ artel qa run --test-run <id> --instance <id>`,
       instructionsCta: 'View the agent instructions',
     },
     install: {
-      title: 'Install it yourself',
+      title: 'Install manually',
       body: 'Installs into the current project.',
       command: 'npx skills add project-artel/artel-skills',
       optionsNote: 'Add -g to install for every project.',
@@ -897,7 +844,7 @@ artel qa run --test-run <id> --instance <id>`,
             ],
           },
           {
-            title: 'Backup',
+            title: 'Keep the secrets',
             blocks: [
               {
                 kind: 'paragraph',
@@ -924,7 +871,7 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'Docker Compose 2.23.1 or later.',
+                text: 'Docker Compose 2.23.1 or later',
               },
             ],
           },
@@ -972,54 +919,6 @@ artel qa run --test-run <id> --instance <id>`,
               },
             ],
           },
-          {
-            title: 'Logs',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'composeLogs',
-              },
-            ],
-          },
-          {
-            title: 'Upgrade',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'composeUpgrade',
-              },
-            ],
-          },
-          {
-            title: 'Backup and restore',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'backup',
-              },
-              {
-                kind: 'paragraph',
-                text: 'Restore into an empty database.',
-              },
-              {
-                kind: 'code',
-                code: 'restore',
-              },
-              {
-                kind: 'paragraph',
-                text: 'Back up the artel_minio-data volume and docker-compose.yml too.',
-              },
-            ],
-          },
-          {
-            title: 'Stop',
-            blocks: [
-              {
-                kind: 'code',
-                code: 'composeDown',
-              },
-            ],
-          },
         ],
       },
       'desktop-app': {
@@ -1053,7 +952,7 @@ artel qa run --test-run <id> --instance <id>`,
       },
     },
     method: {
-      back: '← Back to self-hosting',
+      back: '← Self-hosting',
       othersTitle: 'Other methods',
     },
     remoteFile: { loading: 'Loading', failed: 'Could not load it.', openOnGitHub: 'Open on GitHub' },

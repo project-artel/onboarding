@@ -433,3 +433,6 @@ main > .section:last-child { border-bottom: none; }
 .arch__edge { fill: none; stroke: var(--ink-3); stroke-width: 1.5; }
 .arch__head { fill: var(--ink-3); }
 .arch__num { fill: var(--flare); font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+
+/* 기능 카드 6개가 빈 칸 없이 두 줄에 맞도록 넓은 화면에서는 3열로 고정한다. */
+@media (min-width: 900px) { .cards--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }

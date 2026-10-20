@@ -1,8 +1,8 @@
 # ARTEL
 
-> ARTEL is a game QA tool. Add the SDK to a Unity game and an AI agent plays it directly, runs scenarios, and keeps evidence (screenshots, logs, the step timeline) at the moment a failure happens. You can use the hosted service or self-host it.
+> ARTEL is a game QA tool. Add the SDK to a Unity game and an AI agent plays it directly, checks test cases, and keeps evidence (screenshots, logs, the step timeline) at the moment a failure happens. You can use the hosted service or self-host it.
 
-ARTEL은 게임 QA 도구입니다. Unity 게임에 SDK를 연결하면 에이전트가 직접 조작하며 시나리오를 검증하고, 실패한 순간의 증거를 남깁니다.
+Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테스트 케이스를 검증하고 실패 순간의 증거를 남기는 게임 QA 도구
 
 ## Pages
 
