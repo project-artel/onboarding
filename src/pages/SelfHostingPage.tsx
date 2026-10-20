@@ -19,7 +19,6 @@ export function SelfHostingPage() {
           <div className="hero__copy hero__copy--narrow">
             <p className="page-hero__kicker">SELF-HOST</p>
             <h1 className="hero__title page-hero__title">{page.title}</h1>
-            <p className="hero__lead">{page.lead}</p>
           </div>
         </div>
       </section>

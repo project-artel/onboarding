@@ -1,8 +1,8 @@
 # ARTEL
 
-> ARTEL is a game QA tool. Add the SDK to a Unity game and an AI agent plays it directly, runs scenarios, and keeps evidence (screenshots, logs, the step timeline) at the moment a failure happens. You can use the hosted service or self-host it with Docker.
+> ARTEL is a game QA tool. Add the SDK to a Unity game and an AI agent plays it directly, checks test cases, and keeps evidence (screenshots, logs, the step timeline) at the moment a failure happens. You can use the hosted service or self-host it.
 
-ARTEL은 게임 QA 도구입니다. Unity 게임에 SDK를 연결하면 에이전트가 직접 조작하며 시나리오를 검증하고, 실패한 순간의 증거를 남깁니다.
+Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테스트 케이스를 검증하고 실패 순간의 증거를 남기는 게임 QA 도구
 
 ## Pages
 
@@ -12,10 +12,11 @@ ARTEL은 게임 QA 도구입니다. Unity 게임에 SDK를 연결하면 에이�
 - [CLI install instructions for AI agents](https://artel.kr/cli.md): plain-text guide an AI coding agent follows to install the ARTEL CLI
 - [Agent skills](https://artel.kr/en/skills): skills that teach an AI coding agent to use ARTEL (Unity SDK setup, CLI, local MCP server, game cheats and behaviors). Install with `npx skills add project-artel/artel-skills`
 - [Skills install instructions for AI agents](https://artel.kr/skills.md): plain-text guide an AI coding agent follows to install the ARTEL skills
-- [Self-hosting](https://artel.kr/en/self-hosting): run ARTEL on your own server with Docker
+- [Self-hosting](https://artel.kr/en/self-hosting): run ARTEL on your own machine
 - [Self-hosting: Install script](https://artel.kr/en/self-hosting/install-script): install ARTEL with one command
 - [Self-hosting: Docker Compose](https://artel.kr/en/self-hosting/docker-compose): run ARTEL with Docker Compose
-- [How it works](https://artel.kr/en/how-it-works): how the agent plays, judges, and records a run
+- [Self-hosting: Desktop app](https://artel.kr/en/self-hosting/desktop-app): install ARTEL as a desktop app (planned)
+- [Architecture](https://artel.kr/en/how-it-works): the SDK, servers and console, and the QA run lifecycle
 
 ## 한국어
 
@@ -26,7 +27,8 @@ ARTEL은 게임 QA 도구입니다. Unity 게임에 SDK를 연결하면 에이�
 - [셀프 호스팅](https://artel.kr/self-hosting)
 - [셀프 호스팅: 설치 스크립트](https://artel.kr/self-hosting/install-script)
 - [셀프 호스팅: Docker Compose](https://artel.kr/self-hosting/docker-compose)
-- [동작 방식](https://artel.kr/how-it-works)
+- [셀프 호스팅: 데스크톱 앱](https://artel.kr/self-hosting/desktop-app)
+- [아키텍처](https://artel.kr/how-it-works)
 
 ## Source
 
@@ -36,6 +38,3 @@ ARTEL은 게임 QA 도구입니다. Unity 게임에 SDK를 연결하면 에이�
 - [ARTEL CLI](https://github.com/project-artel/artel-cli)
 - [ARTEL agent skills](https://github.com/project-artel/artel-skills)
 
-## Contact
-
-contact@artel.dev

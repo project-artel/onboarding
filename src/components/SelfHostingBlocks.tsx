@@ -1,23 +1,14 @@
 import type { SelfHostingBlock, SelfHostingCodeKey } from '../i18n/messages'
 import * as commands from '../pages/selfHostingCommands'
-import { composeFile } from '../pages/composeFile.generated'
 import { CodeBlock } from './CodeBlock'
+import { RemoteFile } from './RemoteFile'
 
 const codeByKey: Record<SelfHostingCodeKey, string> = {
   install: commands.installCommand,
   installWithFlags: commands.installWithFlagsCommand,
-  installAfter: commands.installAfterCommand,
-  composeFile: composeFile,
+  composeDownload: commands.composeDownloadCommand,
   generateSecret: commands.generateSecretCommand,
   composeUp: commands.composeUpCommands,
-  composeLogs: commands.composeLogsCommand,
-  composeUpgrade: commands.composeUpgradeCommands,
-  backup: commands.backupCommand,
-  restore: commands.restoreCommand,
-  composeDown: commands.composeDownCommand,
-  signupOpen: commands.signupOpenLine,
-  models: [...commands.requiredChatModels, commands.embeddingModel].join('\n'),
-  githubEnvironment: commands.githubEnvironmentLines,
 }
 
 function Block({ block }: { block: SelfHostingBlock }) {
@@ -36,6 +27,23 @@ function Block({ block }: { block: SelfHostingBlock }) {
       )
     case 'code':
       return <CodeBlock code={codeByKey[block.code]} />
+    case 'composeFile':
+      return (
+        <RemoteFile
+          copyLabel={block.copy}
+          showLabel={block.show}
+          url={commands.composeRawUrl}
+          viewUrl={commands.composeViewUrl}
+        />
+      )
+    case 'link':
+      return (
+        <p className="step__body">
+          <a className="btn btn--primary" href={block.href} rel="noreferrer noopener" target="_blank">
+            {block.label}
+          </a>
+        </p>
+      )
   }
 }
 
