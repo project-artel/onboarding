@@ -15,9 +15,6 @@ const codeByKey: Record<SelfHostingCodeKey, string> = {
   backup: commands.backupCommand,
   restore: commands.restoreCommand,
   composeDown: commands.composeDownCommand,
-  signupOpen: commands.signupOpenLine,
-  models: [...commands.requiredChatModels, commands.embeddingModel].join('\n'),
-  githubEnvironment: commands.githubEnvironmentLines,
 }
 
 function Block({ block }: { block: SelfHostingBlock }) {
