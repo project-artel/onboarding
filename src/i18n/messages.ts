@@ -136,7 +136,7 @@ const ko: Copy = {
     sdkCta: 'Unity SDK 설치',
   },
   problem: {
-    title: '해결하려는 문제',
+    title: '지금의 게임 QA',
     items: [
       '빌드마다 사람이 처음부터 다시 하는 회귀 테스트',
       '글로만 남은 재현 절차, 다시 열리는 이슈',
@@ -563,7 +563,7 @@ const en: Copy = {
     sdkCta: 'Install the Unity SDK',
   },
   problem: {
-    title: 'The problem',
+    title: 'Game QA today',
     items: [
       'The same regression tests, by hand, on every build',
       'Repro steps kept only as text, and issues that reopen',
