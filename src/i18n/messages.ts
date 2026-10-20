@@ -472,11 +472,11 @@ artel qa run --test-run <id> --instance <id>`,
             ],
           },
           {
-            title: '맨 위 설정',
+            title: '비밀값 설정',
             blocks: [
               {
                 kind: 'paragraph',
-                text: '맨 위의 CHANGE_ME 를 모두 아래 명령의 결과로 교체',
+                text: 'docker-compose.yml 의 CHANGE_ME 5개를 각각 아래 명령의 결과로 교체',
               },
               {
                 kind: 'code',
@@ -947,11 +947,11 @@ artel qa run --test-run <id> --instance <id>`,
             ],
           },
           {
-            title: 'Settings at the top',
+            title: 'Secrets',
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'Replace every CHANGE_ME at the top with the output of this command.',
+                text: 'Replace each of the five CHANGE_ME values in docker-compose.yml with the output of this command.',
               },
               {
                 kind: 'code',
