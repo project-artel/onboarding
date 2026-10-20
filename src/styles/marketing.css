@@ -358,8 +358,6 @@ summary::-webkit-details-marker { display: none; }
 .install__shot { display: block; width: 100%; height: auto; margin-top: 20px; border: 1px solid var(--rule); border-radius: var(--r-md); }
 .install__shot--narrow { width: 280px; }
 
-/* 작동 원리 §04 본문 문단. 본문 기준보다 한 단계 크고 행간이 넓다. */
-
 /* 마지막 섹션의 규칙선은 푸터 border-top과 겹쳐 2px로 보인다. */
 main > .section:last-child { border-bottom: none; }
 
@@ -433,7 +431,7 @@ main > .section:last-child { border-bottom: none; }
 }
 
 /* Self-hosting page: stack paragraphs and code blocks with even spacing. */
-.selfhost__blocks { display: grid; gap: 16px; margin-top: 16px; }
+.selfhost__blocks { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 16px; }
 .selfhost__blocks .step__body { margin: 0; color: var(--ink-2); font-size: 16px; line-height: 1.75; text-wrap: pretty; }
 .selfhost__blocks .marks--tight { margin-bottom: 0; }
 .selfhost__links { display: flex; flex-wrap: wrap; gap: 16px; }
@@ -447,3 +445,8 @@ main > .section:last-child { border-bottom: none; }
 .method-card__cta { font-family: var(--font-mono); font-size: 13px; color: var(--flare); }
 .selfhost__back { display: inline-block; margin-bottom: 16px; font-family: var(--font-mono); font-size: 13px; color: var(--ink-2); text-decoration: none; }
 .selfhost__back:hover { color: var(--flare); }
+
+/* compose 파일 보기와 복사. 접이식은 SDK 페이지의 .advanced 를 쓰고, 위쪽 여백만 줄인다. */
+.remote-file { display: grid; gap: 12px; justify-items: start; min-width: 0; }
+.remote-file__details { margin-top: 0; width: 100%; min-width: 0; max-width: 100%; overflow: hidden; }
+.remote-file__details .code { margin-top: 16px; max-height: 480px; overflow: auto; }

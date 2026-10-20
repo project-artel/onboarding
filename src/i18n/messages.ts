@@ -12,7 +12,7 @@ const desktopReleasesUrl = 'https://github.com/project-artel/artel-desktop/relea
 export type SelfHostingCodeKey =
   | 'install'
   | 'installWithFlags'
-  | 'composeFile'
+  | 'composeDownload'
   | 'generateSecret'
   | 'composeUp'
   | 'composeLogs'
@@ -26,6 +26,7 @@ export type SelfHostingBlock =
   | { kind: 'list'; items: string[] }
   | { kind: 'code'; code: SelfHostingCodeKey }
   | { kind: 'link'; label: string; href: string }
+  | { kind: 'composeFile'; show: string; copy: string }
 
 export type SelfHostingSection = { title: string; blocks: SelfHostingBlock[] }
 
@@ -116,6 +117,7 @@ type Copy = {
     afterInstall: SelfHostingSection[]
     methods: Record<SelfHostingMethodId, SelfHostingMethodPage>
     method: { back: string; othersTitle: string }
+    remoteFile: { loading: string; failed: string; openOnGitHub: string }
     deployReadmeLabel: string
     licenseLabel: string
   }
@@ -481,11 +483,16 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: '빈 디렉터리에 이 파일 하나를 docker-compose.yml 로 저장합니다.',
+                text: '빈 디렉터리에서 실행합니다.',
               },
               {
                 kind: 'code',
-                code: 'composeFile',
+                code: 'composeDownload',
+              },
+              {
+                kind: 'composeFile',
+                show: 'docker-compose.yml 보기',
+                copy: 'docker-compose.yml 복사',
               },
             ],
           },
@@ -600,6 +607,7 @@ artel qa run --test-run <id> --instance <id>`,
       back: '← 직접 설치로 돌아가기',
       othersTitle: '다른 설치 방법',
     },
+    remoteFile: { loading: '불러오는 중', failed: '불러오지 못했습니다.', openOnGitHub: 'GitHub에서 보기' },
     deployReadmeLabel: 'deploy/README.md',
     licenseLabel: 'LICENSE (AGPL-3.0)',
   },
@@ -969,11 +977,16 @@ artel qa run --test-run <id> --instance <id>`,
             blocks: [
               {
                 kind: 'paragraph',
-                text: 'Save this one file as docker-compose.yml in an empty directory.',
+                text: 'Run this in an empty directory.',
               },
               {
                 kind: 'code',
-                code: 'composeFile',
+                code: 'composeDownload',
+              },
+              {
+                kind: 'composeFile',
+                show: 'Show docker-compose.yml',
+                copy: 'Copy docker-compose.yml',
               },
             ],
           },
@@ -1088,6 +1101,7 @@ artel qa run --test-run <id> --instance <id>`,
       back: '← Back to self-hosting',
       othersTitle: 'Other methods',
     },
+    remoteFile: { loading: 'Loading', failed: 'Could not load it.', openOnGitHub: 'Open on GitHub' },
     deployReadmeLabel: 'deploy/README.md',
     licenseLabel: 'LICENSE (AGPL-3.0)',
   },

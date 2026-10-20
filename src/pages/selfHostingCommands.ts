@@ -7,6 +7,14 @@ export const installCommand =
 
 export const installWithFlagsCommand = `${installCommand} -s -- --dir /opt/artel --port 8088`
 
+// The file itself is never copied into this site: the command, the viewer and the copy button all read it from
+// the artel repository.
+export const composeRawUrl = 'https://raw.githubusercontent.com/project-artel/artel/main/deploy/docker-compose.yml'
+
+export const composeViewUrl = 'https://github.com/project-artel/artel/blob/main/deploy/docker-compose.yml'
+
+export const composeDownloadCommand = `curl -fsSL ${composeRawUrl} -o docker-compose.yml`
+
 export const generateSecretCommand = 'openssl rand -hex 32'
 
 export const composeUpCommands = 'docker compose up -d\ndocker compose ps'

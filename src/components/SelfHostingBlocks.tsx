@@ -1,12 +1,12 @@
 import type { SelfHostingBlock, SelfHostingCodeKey } from '../i18n/messages'
 import * as commands from '../pages/selfHostingCommands'
-import { composeFile } from '../pages/composeFile.generated'
 import { CodeBlock } from './CodeBlock'
+import { RemoteFile } from './RemoteFile'
 
 const codeByKey: Record<SelfHostingCodeKey, string> = {
   install: commands.installCommand,
   installWithFlags: commands.installWithFlagsCommand,
-  composeFile: composeFile,
+  composeDownload: commands.composeDownloadCommand,
   generateSecret: commands.generateSecretCommand,
   composeUp: commands.composeUpCommands,
   composeLogs: commands.composeLogsCommand,
@@ -32,6 +32,15 @@ function Block({ block }: { block: SelfHostingBlock }) {
       )
     case 'code':
       return <CodeBlock code={codeByKey[block.code]} />
+    case 'composeFile':
+      return (
+        <RemoteFile
+          copyLabel={block.copy}
+          showLabel={block.show}
+          url={commands.composeRawUrl}
+          viewUrl={commands.composeViewUrl}
+        />
+      )
     case 'link':
       return (
         <p className="step__body">
