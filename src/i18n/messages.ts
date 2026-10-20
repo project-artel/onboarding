@@ -393,7 +393,7 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'list',
             items: [
-              'API 키는 관리자가 관리 > 설정에서 입력',
+              '관리 > 설정에서 API 키 입력',
             ],
           },
         ],
@@ -834,7 +834,7 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'list',
             items: [
-              'API keys are entered by the admin in Admin > Settings',
+              'Enter API keys in Admin > Settings',
             ],
           },
         ],
