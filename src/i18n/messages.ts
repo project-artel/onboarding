@@ -393,6 +393,7 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'list',
             items: [
+              '첫 회원가입으로 관리자 계정 생성',
               '관리 > 설정에서 API 키 입력',
             ],
           },
@@ -834,6 +835,7 @@ artel qa run --test-run <id> --instance <id>`,
           {
             kind: 'list',
             items: [
+              'Create the admin account with the first sign-up',
               'Enter API keys in Admin > Settings',
             ],
           },
