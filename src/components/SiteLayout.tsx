@@ -1,30 +1,35 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useCopy } from '../i18n/useCopy'
-import { locales } from '../i18n/locale'
+import { locales, pathWithLocale } from '../i18n/locale'
 import { BrandMark } from './BrandMark'
 import { InstallMenu, InstallTabs } from './InstallNav'
 import { applyTheme, currentTheme } from '../theme'
+import { macroContent, macroPages, macroPath } from '../macro/content'
 
 const siteOrigin = 'https://artel.kr'
 
 export function SiteLayout() {
   const { locale, t, href, swapTo } = useCopy()
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   const [theme, setTheme] = useState(currentTheme)
 
   // 데스크톱 앱 페이지에서는 헤더 CTA를 생략한다. 이미 그 페이지가 목적지다.
   const onAppPage =
     pathname === '/self-hosting/desktop-app' || pathname === '/en/self-hosting/desktop-app'
+  const macroId = macroPages.find(id => macroPath(id) === pathWithLocale(pathname, 'ko').replace(/\/$/, ''))
+  const macro = macroId ? macroContent(locale)[macroId] : undefined
+  const title = macro ? `${macro.title} · Macro Language Reference · ARTEL` : t.meta.title
+  const description = macro?.description ?? t.meta.description
 
   // 정적 `index.html`은 한국어를 실어 내보낸다. 로케일이 정해지면 스크린리더와
   // 검색엔진이 보는 값도 같이 맞춘다.
   useEffect(() => {
     document.documentElement.lang = locale
-    document.title = t.meta.title
+    document.title = title
     document
       .querySelector('meta[name="description"]')
-      ?.setAttribute('content', t.meta.description)
+      ?.setAttribute('content', description)
 
     // 같은 문서를 경로마다 다시 쓰므로 canonical 과 공유 미리보기 값도 경로를 따라간다.
     const url = siteOrigin + (pathname === '/' ? '/' : pathname.replace(/\/$/, ''))
@@ -32,18 +37,24 @@ export function SiteLayout() {
       document.querySelector(selector)?.setAttribute(attribute, value)
     set('link[rel="canonical"]', 'href', url)
     set('meta[property="og:url"]', 'content', url)
-    set('meta[property="og:title"]', 'content', t.meta.title)
-    set('meta[property="og:description"]', 'content', t.meta.description)
+    set('meta[property="og:title"]', 'content', title)
+    set('meta[property="og:description"]', 'content', description)
     set('meta[property="og:locale"]', 'content', locale === 'ko' ? 'ko_KR' : 'en_US')
     set('meta[property="og:locale:alternate"]', 'content', locale === 'ko' ? 'en_US' : 'ko_KR')
-    set('meta[name="twitter:title"]', 'content', t.meta.title)
-    set('meta[name="twitter:description"]', 'content', t.meta.description)
-  }, [locale, t, pathname])
+    set('meta[name="twitter:title"]', 'content', title)
+    set('meta[name="twitter:description"]', 'content', description)
+    for (const lang of locales) set(`link[rel="alternate"][hreflang="${lang}"]`, 'href', siteOrigin + pathWithLocale(pathname, lang))
+    set('link[rel="alternate"][hreflang="x-default"]', 'href', siteOrigin + pathWithLocale(pathname, 'ko'))
+  }, [locale, title, description, pathname])
 
   // 경로가 바뀌면 위에서부터 읽는다. 라우터 기본값은 스크롤 위치를 유지한다.
   useEffect(() => {
+    if (hash) {
+      const frame = window.requestAnimationFrame(() => document.getElementById(hash.slice(1))?.scrollIntoView())
+      return () => window.cancelAnimationFrame(frame)
+    }
     window.scrollTo(0, 0)
-  }, [pathname])
+  }, [pathname, hash])
 
   return (
     <>
@@ -58,6 +69,7 @@ export function SiteLayout() {
           </Link>
           <nav className="site-nav" aria-label={t.nav.home}>
             <InstallMenu />
+            <NavLink to={href('/macro')}>Macro</NavLink>
             <NavLink to={href('/how-it-works')}>{t.nav.how}</NavLink>
           </nav>
           <div className="locale" role="group" aria-label={t.footer.language}>

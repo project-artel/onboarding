@@ -5,6 +5,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "sync:macro": "python scripts/sync-macro-reference.py",
+    "check:macro": "python scripts/sync-macro-reference.py --check",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

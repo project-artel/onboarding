@@ -405,6 +405,10 @@ main > .section:last-child { border-bottom: none; }
 /* 320px에서 헤더 워드마크까지 남기면 내비가 밀린다. 심볼과 링크
    aria-label이 이름을 대신한다. 푸터는 폭이 남으므로 그대로 둔다. */
 @media (max-width: 480px) {
+  .site-header__inner { gap: 8px; }
+  .site-nav { gap: 10px; }
+  .site-header .locale { gap: 2px; }
+  .site-header .locale a { padding-inline: 4px; }
   .site-header .brand__word { display: none; }
 }
 
