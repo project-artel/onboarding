@@ -92,3 +92,10 @@ a pitch deck, a terse log line, or a translated manual, rewrite it.
 - Rebuild, open every changed page in a browser at 1280 px and 360 px, light and dark, and read it as a visitor.
 - Check that no element scrolls or overflows unless it is meant to.
 - Apply the same rules to English strings.
+
+## Writing Style
+
+Follow [writing-style.md](writing-style.md) when adding or editing text covered
+by this document. Its wording and title rules supersede older tone examples;
+preserve project-specific workflows, templates, terminology, and localization.
+For UI copy, retain the sentence forms defined in this document.
