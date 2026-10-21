@@ -1,0 +1,27 @@
+.auth-controls { display: flex; align-items: center; gap: 8px; min-height: 44px; font-size: 13px; }
+.auth-controls .btn { display: inline-flex; white-space: nowrap; min-height: 44px; }
+.auth-dialog { width: min(440px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 32px; border: 1px solid var(--rule); border-radius: var(--r-lg); background: var(--paper); color: var(--ink); }
+.auth-dialog::backdrop { background: rgb(0 0 0 / 60%); }
+.auth-dialog h2 { margin: 0 44px 12px 0; }
+.auth-dialog p { color: var(--ink-2); line-height: 1.6; }
+.auth-close { position: absolute; top: 12px; right: 12px; width: 44px; height: 44px; border: 0; background: transparent; color: var(--ink); font-size: 26px; }
+.auth-modes { display: flex; gap: 8px; margin: 24px 0; }
+.auth-modes button { flex: 1; min-height: 44px; border: 1px solid var(--rule); border-radius: var(--r-md); color: var(--ink); background: var(--paper-2); }
+.auth-modes button[aria-pressed="true"] { border-color: var(--ink); font-weight: 700; }
+.auth-dialog fieldset { display: grid; gap: 16px; margin: 20px 0; padding: 0; border: 0; min-width: 0; }
+.auth-dialog label { display: grid; gap: 8px; font-size: 14px; }
+.auth-dialog input { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid var(--rule); border-radius: var(--r-md); background: var(--paper-2); color: var(--ink); }
+.auth-dialog small { color: var(--ink-2); }
+.auth-dialog .btn { min-height: 44px; justify-content: center; }
+.auth-github { width: 100%; }
+.auth-dialog .auth-error { border-left: 3px solid var(--flare); padding: 8px 12px; color: var(--ink); background: var(--paper-2); }
+.auth-dialog :disabled { opacity: .6; cursor: wait; }
+.auth-dialog :focus-visible, .auth-controls :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+@media (max-width: 1100px) {
+  .site-header__inner { flex-wrap: wrap; padding-block: 12px; gap: 12px; }
+  .site-nav { gap: 14px; }
+}
+@media (max-width: 600px) {
+  .auth-controls { margin-left: auto; }
+  .auth-dialog { padding: 24px; }
+}

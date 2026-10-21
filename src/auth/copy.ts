@@ -1,0 +1,35 @@
+export const authCopy = {
+  ko: {
+    login: '로그인', signup: '회원가입', console: 'Console로 이동', checking: '로그인 확인 중…',
+    close: '닫기', email: '이메일', password: '비밀번호', name: '이름', github: 'GitHub로 계속하기',
+    busy: '처리 중…', intro: 'ARTEL 계정으로 로그인하고 Console에서 프로젝트를 관리하세요.',
+    passwordHint: '8자 이상, UTF-8 기준 72바이트 이하', closed: '현재 신규 회원가입을 받지 않습니다.',
+    errors: {
+      unavailable: '인증 서버에 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.',
+      invalid_credentials: '이메일 또는 비밀번호를 확인해 주세요.',
+      email_taken: '이미 가입된 이메일입니다. 로그인해 주세요.',
+      signup_closed: '현재 신규 회원가입을 받지 않습니다.',
+      account_disabled: '사용이 중지된 계정입니다.', disabled: '사용이 중지된 계정입니다.',
+      invalid_password: '비밀번호는 8자 이상, UTF-8 기준 72바이트 이하여야 합니다.',
+      invalid_email: '올바른 이메일을 입력해 주세요.', invalid_name: '이름을 확인해 주세요.',
+      too_many_attempts: '시도 횟수가 많습니다. 잠시 후 다시 시도해 주세요.',
+      oauth: 'GitHub 로그인을 완료하지 못했습니다. 다시 시도해 주세요.', server: '로그인 처리에 실패했습니다. 다시 시도해 주세요.',
+    },
+  },
+  en: {
+    login: 'Log in', signup: 'Sign up', console: 'Go to Console', checking: 'Checking session…',
+    close: 'Close', email: 'Email', password: 'Password', name: 'Name', github: 'Continue with GitHub',
+    busy: 'Please wait…', intro: 'Sign in to ARTEL to manage your projects in Console.',
+    passwordHint: 'At least 8 characters, at most 72 UTF-8 bytes', closed: 'New account registration is currently closed.',
+    errors: {
+      unavailable: 'Unable to reach the authentication server. Please try again.',
+      invalid_credentials: 'Check your email and password.', email_taken: 'This email is already registered. Please log in.',
+      signup_closed: 'New account registration is currently closed.',
+      account_disabled: 'This account is disabled.', disabled: 'This account is disabled.',
+      invalid_password: 'Use at least 8 characters and at most 72 UTF-8 bytes.',
+      invalid_email: 'Enter a valid email.', invalid_name: 'Check your name.',
+      too_many_attempts: 'Too many attempts. Please try again later.',
+      oauth: 'GitHub sign-in could not be completed. Please try again.', server: 'Sign-in failed. Please try again.',
+    },
+  },
+}

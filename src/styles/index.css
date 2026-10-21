@@ -1,5 +1,6 @@
 @import './tokens.css';
 @import './marketing.css';
+@import './auth.css';
 
 /* 색·타이포·배경·`color-scheme`은 tokens.css와 marketing.css가 소유한다.
    여기는 리셋과 그 둘이 다루지 않는 브라우저 기본값만 남긴다. */
