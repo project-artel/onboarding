@@ -2,17 +2,21 @@
 
 import argparse
 import json
+import os
 import sys
 import types
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT.parent / "artel-agent-server"))
+AGENT_ROOT = Path(os.environ.get("ARTEL_AGENT_SERVER", ROOT.parent / "artel-agent-server")).resolve()
+if not (AGENT_ROOT / "app/agents/qa/macro/parser.py").is_file():
+    raise SystemExit("Set ARTEL_AGENT_SERVER to an artel-agent-server checkout")
+sys.path.insert(0, str(AGENT_ROOT))
 
 # parser에는 agent 시작 코드와 LLM dependency가 필요하지 않다.
 for package in ("app", "app.agents", "app.agents.qa", "app.agents.qa.macro"):
     module = types.ModuleType(package)
-    module.__path__ = [str(ROOT.parent / "artel-agent-server" / package.replace(".", "/"))]
+    module.__path__ = [str(AGENT_ROOT / package.replace(".", "/"))]
     sys.modules[package] = module
 
 from app.agents.qa.macro import grammar as g

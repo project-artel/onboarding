@@ -36,7 +36,6 @@ export function MacroReferencePage({ pageId }: { pageId: MacroPageId }) {
             {macroPages.map((id, i) => <NavLink end key={id} to={href(macroPath(id))}><span aria-hidden="true">0{i + 1}</span>{pages[id].title}</NavLink>)}
           </nav>
         )}
-        <p className="macro-docs__rail-note">{locale === 'ko' ? '실제 parser로 검증한 예제와 구현에서 생성한 signature.' : 'Parser-validated examples. Signatures generated from implementation.'}</p>
       </aside>
 
       <article className="macro-docs__article">
@@ -55,7 +54,7 @@ export function MacroReferencePage({ pageId }: { pageId: MacroPageId }) {
             {section.rows && <div className="macro-docs__table" tabIndex={0} role="region" aria-label={section.title}>
               <table><thead><tr><th>{locale === 'ko' ? '문법 / 항목' : 'Syntax / item'}</th><th>{locale === 'ko' ? '설명 / 값' : 'Description / value'}</th></tr></thead><tbody>{section.rows.map(([name, value]) => <tr key={name}><th scope="row"><code>{name}</code></th><td>{value}</td></tr>)}</tbody></table>
             </div>}
-            {section.code && <div className="macro-docs__example"><div className="macro-docs__code-label">MACRO <span>{locale === 'ko' ? '문법 검증 예제' : 'Syntax-checked example'}</span></div><CodeBlock code={section.code} /></div>}
+            {section.code && <div className="macro-docs__example"><div className="macro-docs__code-label">MACRO <span>{locale === 'ko' ? '예제' : 'Example'}</span></div><CodeBlock code={section.code} /></div>}
           </section>
         ))}
         <nav className="macro-docs__pager" aria-label={locale === 'ko' ? '이전·다음 문서' : 'Previous and next pages'}>
@@ -67,7 +66,6 @@ export function MacroReferencePage({ pageId }: { pageId: MacroPageId }) {
       <aside className="macro-docs__toc">
         <p className="macro-docs__label">{locale === 'ko' ? '이 페이지에서' : 'ON THIS PAGE'}</p>
         <nav aria-label={locale === 'ko' ? '본문 목차' : 'Article contents'}>{page.sections.map(s => <a key={s.id} href={`#${s.id}`}>{s.title}</a>)}</nav>
-        <div className="macro-docs__source"><span>REFERENCE SOURCE</span><code>grammar.py</code><code>parser.py</code><code>runner.py</code></div>
       </aside>
     </div>
   )

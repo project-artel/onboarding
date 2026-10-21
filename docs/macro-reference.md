@@ -15,7 +15,8 @@ signature, operator, 실행 상한을 가져온다.
 import 예제의 dependency는 JSON에서 먼저 선언한다. 게임에 연결하거나 action을 실행하지는 않는다.
 
 Python 3.11 이상과 Pydantic 2가 설치된 환경에서 다음을 실행한다.
-agent-server의 Python 환경을 사용해도 된다. 일반 frontend 빌드는 Python을 요구하지 않는다.
+agent-server의 Python 환경을 사용해도 된다. 별도 checkout에서는
+`ARTEL_AGENT_SERVER` 환경 변수에 agent-server의 절대 경로를 지정한다. 일반 frontend 빌드는 Python을 요구하지 않는다.
 
 ```sh
 npm run sync:macro
