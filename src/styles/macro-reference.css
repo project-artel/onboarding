@@ -29,11 +29,9 @@
 .macro-docs__rail nav a span { font: 10px var(--font-mono); }
 .macro-docs__rail nav a[aria-current="page"] { border-left-color: var(--doc-accent); color: var(--doc-text); font-weight: 600; background: var(--doc-raised); }
 .macro-docs__rail nav a:hover, .macro-docs__results a:hover { background: var(--doc-raised); color: var(--doc-text); }
-.macro-docs__rail-note { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--doc-border); font-size: 12px; color: var(--doc-secondary); }
 .macro-docs__article { min-width: 0; padding: 48px 48px 64px; }
 .macro-docs__heading { border-bottom: 1px solid var(--doc-border); padding-bottom: 28px; margin-bottom: 32px; }
 .macro-docs__heading h1 { font-family: var(--font-display); margin: 12px 0; font-size: clamp(28px, 3vw, 36px); line-height: 1.25; letter-spacing: -.03em; }
-.macro-docs__heading > p:last-child { font-size: 16px; color: var(--doc-secondary); }
 .macro-docs__section { scroll-margin-top: 110px; margin: 40px 0; }
 .macro-docs__section h2 { font-size: 20px; line-height: 1.5; margin-bottom: 16px; }
 .macro-docs__section h2 span { color: var(--doc-text); opacity: 0; }
@@ -57,8 +55,6 @@
 .macro-docs__toc nav { border-left: 1px solid var(--doc-border); margin-top: 20px; }
 .macro-docs__toc a { display: block; min-height: 32px; padding: 6px 14px; font-size: 12px; color: var(--doc-secondary); }
 .macro-docs__toc a:hover { color: var(--doc-text); }
-.macro-docs__source { display: grid; gap: 6px; margin-top: 40px; border-top: 1px solid var(--doc-border); padding-top: 20px; color: var(--doc-secondary); }
-.macro-docs__source span { font-size: 10px; letter-spacing: .06em; }
 .macro-docs__pager { display: flex; justify-content: space-between; gap: 20px; border-top: 1px solid var(--doc-border); padding-top: 24px; }
 .macro-docs__pager a { min-height: 44px; color: var(--doc-text); }
 .macro-docs__pager small, .macro-docs__results small { display: block; color: var(--doc-secondary); font-size: 11px; }

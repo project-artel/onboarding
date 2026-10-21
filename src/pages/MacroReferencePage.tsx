@@ -40,9 +40,7 @@ export function MacroReferencePage({ pageId }: { pageId: MacroPageId }) {
 
       <article className="macro-docs__article">
         <header className="macro-docs__heading">
-          <p className="macro-docs__label">ARTEL / MACRO LANGUAGE</p>
           <h1>{page.title}</h1>
-          <p>{page.description}</p>
         </header>
         <nav className="macro-docs__mobile-toc" aria-label={locale === 'ko' ? '이 페이지의 목차' : 'On this page'}>
           {page.sections.map(s => <a key={s.id} href={`#${s.id}`}>{s.title}</a>)}
