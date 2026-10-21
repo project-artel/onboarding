@@ -1,0 +1,159 @@
+{
+  "types": [
+    "int",
+    "float",
+    "string",
+    "bool",
+    "object"
+  ],
+  "actions": [
+    {
+      "name": "click",
+      "signature": "click(target: object, button: int = 0)"
+    },
+    {
+      "name": "double_click",
+      "signature": "double_click(target: object, button: int = 0)"
+    },
+    {
+      "name": "drag",
+      "signature": "drag(from_target: object, to_target: object, button: int = 0)"
+    },
+    {
+      "name": "move_pointer",
+      "signature": "move_pointer(target: object)"
+    },
+    {
+      "name": "press_key",
+      "signature": "press_key(key_code: string, duration_seconds: float)"
+    },
+    {
+      "name": "enter_text",
+      "signature": "enter_text(target: object, value: string)"
+    },
+    {
+      "name": "hold_mouse_button",
+      "signature": "hold_mouse_button(button: int = 0)"
+    },
+    {
+      "name": "release_mouse_button",
+      "signature": "release_mouse_button(button: int = 0)"
+    },
+    {
+      "name": "hold_key",
+      "signature": "hold_key(key_code: string)"
+    },
+    {
+      "name": "release_key",
+      "signature": "release_key(key_code: string)"
+    },
+    {
+      "name": "set_input_axis",
+      "signature": "set_input_axis(axis_name: string, value: float)"
+    },
+    {
+      "name": "set_input_button",
+      "signature": "set_input_button(axis_name: string, pressed: bool)"
+    },
+    {
+      "name": "pause_game_time",
+      "signature": "pause_game_time()"
+    },
+    {
+      "name": "resume_game_time",
+      "signature": "resume_game_time()"
+    }
+  ],
+  "readers": [
+    {
+      "name": "scene",
+      "signature": "scene() → string"
+    },
+    {
+      "name": "observable",
+      "signature": "observable(key: string) → runtime value"
+    },
+    {
+      "name": "static",
+      "signature": "static(key: string) → runtime value"
+    },
+    {
+      "name": "member",
+      "signature": "member(target: object, key: string) → runtime value"
+    },
+    {
+      "name": "actionable",
+      "signature": "actionable(target: object) → bool"
+    },
+    {
+      "name": "text",
+      "signature": "text(target: object) → string"
+    },
+    {
+      "name": "exists",
+      "signature": "exists(target: object) → bool"
+    },
+    {
+      "name": "absent",
+      "signature": "absent(target: object) → bool"
+    }
+  ],
+  "operators": [
+    {
+      "shape": "number",
+      "operators": [
+        "==",
+        "!=",
+        ">",
+        "<",
+        ">=",
+        "<="
+      ]
+    },
+    {
+      "shape": "string",
+      "operators": [
+        "==",
+        "!="
+      ]
+    },
+    {
+      "shape": "bool",
+      "operators": [
+        "==",
+        "!="
+      ]
+    },
+    {
+      "shape": "vector2",
+      "operators": []
+    },
+    {
+      "shape": "vector3",
+      "operators": []
+    },
+    {
+      "shape": "object",
+      "operators": [
+        "==",
+        "!="
+      ]
+    },
+    {
+      "shape": "other",
+      "operators": []
+    }
+  ],
+  "limits": {
+    "MAX_STATEMENTS": 128,
+    "MAX_CALL_DEPTH": 9,
+    "MAX_LOOP_PASSES": 50,
+    "MAX_EXECUTED_STATEMENTS": 1000,
+    "MAX_WAIT_PER_STATEMENT_SECONDS": 30,
+    "MAX_WAIT_PER_CALL_SECONDS": 60,
+    "MIN_MATCH_CASES": 2,
+    "ASK_TRUE_AT": 0.5,
+    "MAX_CONTEXT_VALUE_CHARS": 80,
+    "MAX_DECIDE_STATE_CHARS": 6000
+  }
+}

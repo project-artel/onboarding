@@ -108,4 +108,64 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/how-it-works" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/how-it-works" />
   </url>
+  <url>
+    <loc>https://artel.kr/macro</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/macro" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/macro" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/macro</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/macro" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/macro" />
+  </url>
+  <url>
+    <loc>https://artel.kr/macro/language</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro/language" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/macro/language" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/macro/language" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/macro/language</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro/language" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/macro/language" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/macro/language" />
+  </url>
+  <url>
+    <loc>https://artel.kr/macro/built-ins</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro/built-ins" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/macro/built-ins" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/macro/built-ins" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/macro/built-ins</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro/built-ins" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/macro/built-ins" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/macro/built-ins" />
+  </url>
+  <url>
+    <loc>https://artel.kr/macro/execution</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro/execution" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/macro/execution" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/macro/execution" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/macro/execution</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro/execution" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/macro/execution" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/macro/execution" />
+  </url>
+  <url>
+    <loc>https://artel.kr/macro/limits</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro/limits" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/macro/limits" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/macro/limits" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/macro/limits</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro/limits" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/macro/limits" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/macro/limits" />
+  </url>
 </urlset>
