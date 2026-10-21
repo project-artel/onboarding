@@ -18,6 +18,12 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테�
 - [Self-hosting: Desktop app](https://artel.kr/en/self-hosting/desktop-app): install ARTEL as a desktop app (planned)
 - [Architecture](https://artel.kr/en/how-it-works): the SDK, servers and console, and the QA run lifecycle
 
+- [Macro quick start: write, register and run a macro](https://artel.kr/en/macro)
+- [Macro language: types, conditions, loops and imports](https://artel.kr/en/macro/language)
+- [Macro built-ins: lookup, reader and action signatures](https://artel.kr/en/macro/built-ins)
+- [Macro execution: checks, waits, checkpoints and model decisions](https://artel.kr/en/macro/execution)
+- [Macro limits and errors: budgets and troubleshooting](https://artel.kr/en/macro/limits)
+
 ## 한국어
 
 - [홈](https://artel.kr/)
@@ -29,6 +35,12 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테�
 - [셀프 호스팅: Docker Compose](https://artel.kr/self-hosting/docker-compose)
 - [셀프 호스팅: 데스크톱 앱](https://artel.kr/self-hosting/desktop-app)
 - [아키텍처](https://artel.kr/how-it-works)
+
+- [Macro 시작: 작성·등록·실행](https://artel.kr/macro)
+- [Macro 문법: 타입·조건·반복·import](https://artel.kr/macro/language)
+- [Macro built-ins: 객체 탐색·reader·action](https://artel.kr/macro/built-ins)
+- [Macro 실행: 검증·대기·checkpoint·모델 판단](https://artel.kr/macro/execution)
+- [Macro 제한과 오류: 실행 상한과 해결 방법](https://artel.kr/macro/limits)
 
 ## Source
 

@@ -9,6 +9,8 @@ import { SkillsPage } from './pages/SkillsPage'
 import { SelfHostingMethodPage } from './pages/SelfHostingMethodPage'
 import { SelfHostingPage } from './pages/SelfHostingPage'
 import { selfHostingMethodIds } from './i18n/selfHostingRoutes'
+import { MacroReferencePage } from './pages/MacroReferencePage'
+import { macroPages, macroPath } from './macro/content'
 
 // 로케일별 경로를 같은 트리로 두 번 등록한다. 옵셔널 세그먼트 하나로 줄일 수는
 // 있지만, 그러면 `/enterprise` 같은 미래 경로가 영어 프리픽스로 오인된다.
@@ -19,6 +21,7 @@ function localeRoutes() {
       <Route path="sdk" element={<SdkPage />} />
       <Route path="cli" element={<CliPage />} />
       <Route path="skills" element={<SkillsPage />} />
+      {macroPages.map(id => <Route key={id} path={macroPath(id).slice(1)} element={<MacroReferencePage pageId={id} />} />)}
       <Route path="self-hosting" element={<SelfHostingPage />} />
       {selfHostingMethodIds.map((id) => (
         <Route key={id} path={`self-hosting/${id}`} element={<SelfHostingMethodPage method={id} />} />
