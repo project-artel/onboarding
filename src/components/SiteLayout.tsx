@@ -5,6 +5,7 @@ import { locales, pathWithLocale } from '../i18n/locale'
 import { BrandMark } from './BrandMark'
 import { InstallMenu, InstallTabs } from './InstallNav'
 import { applyTheme, currentTheme } from '../theme'
+import { AuthControls } from '../auth/AuthControls'
 import { macroContent, macroPages, macroPath } from '../macro/content'
 
 const siteOrigin = 'https://artel.kr'
@@ -14,9 +15,6 @@ export function SiteLayout() {
   const { pathname, hash } = useLocation()
   const [theme, setTheme] = useState(currentTheme)
 
-  // 데스크톱 앱 페이지에서는 헤더 CTA를 생략한다. 이미 그 페이지가 목적지다.
-  const onAppPage =
-    pathname === '/self-hosting/desktop-app' || pathname === '/en/self-hosting/desktop-app'
   const macroId = macroPages.find(id => macroPath(id) === pathWithLocale(pathname, 'ko').replace(/\/$/, ''))
   const macro = macroId ? macroContent(locale)[macroId] : undefined
   const title = macro ? `${macro.title} · Macro Language Reference · ARTEL` : t.meta.title
@@ -102,11 +100,7 @@ export function SiteLayout() {
           >
             <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
           </button>
-          {!onAppPage && (
-            <Link className="btn btn--sm btn--primary" to={href('/self-hosting/desktop-app')}>
-              {t.hero.appCta}
-            </Link>
-          )}
+          <AuthControls />
         </div>
       </header>
       <InstallTabs />
