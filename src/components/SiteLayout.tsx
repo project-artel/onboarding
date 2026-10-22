@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useCopy } from '../i18n/useCopy'
 import { locales, pathWithLocale } from '../i18n/locale'
 import { BrandMark } from './BrandMark'
@@ -67,7 +67,6 @@ export function SiteLayout() {
           <nav className="site-nav" aria-label={t.nav.home}>
             <InstallMenu />
             <Link to={href('/docs')} aria-current={doc ? 'page' : undefined}>{locale === 'ko' ? '개발자 문서' : 'Developer docs'}</Link>
-            <NavLink to={href('/how-it-works')}>{t.nav.how}</NavLink>
           </nav>
           <div className="locale" role="group" aria-label={t.footer.language}>
             {locales.map((next, i) => (

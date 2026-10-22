@@ -37,6 +37,8 @@
 .docs-links { padding: 0; list-style: none; display: grid; gap: 8px; }
 .docs-links a { display: inline-block; padding: 6px 0; text-decoration: underline; text-underline-offset: 4px; }
 .docs-links a:hover { color: var(--doc-accent); }
+.docs-sequence { padding-left: 24px; color: var(--doc-secondary); }
+.docs-sequence li { padding: 6px 0; overflow-wrap: anywhere; }
 .docs-navigation__toggle { display: none; }
 .macro-docs__section { scroll-margin-top: 110px; margin: 40px 0; }
 .macro-docs__section h2 { font-size: 20px; line-height: 1.5; margin-bottom: 16px; }

@@ -42,7 +42,7 @@ export function LandingPage() {
         num="§ 02"
         title={t.steps.title}
         aside={
-          <Link className="section__link" to={href('/how-it-works')}>
+          <Link className="section__link" to={href('/docs/architecture')}>
             {t.nav.how} →
           </Link>
         }

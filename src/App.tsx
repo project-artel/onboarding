@@ -1,7 +1,7 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { SiteLayout } from './components/SiteLayout'
 import { CliPage } from './pages/CliPage'
-import { HowItWorksPage } from './pages/HowItWorksPage'
+import { useCopy } from './i18n/useCopy'
 import { LandingPage } from './pages/LandingPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { SdkPage } from './pages/SdkPage'
@@ -12,6 +12,12 @@ import { selfHostingMethodIds } from './i18n/selfHostingRoutes'
 import { DeveloperDocsPage } from './pages/DeveloperDocsPage'
 import { macroPages, macroPath } from './macro/content'
 import { guideIds, guidePath } from './docs/content'
+
+function ArchitectureRedirect() {
+  const { href } = useCopy()
+  const { search, hash } = useLocation()
+  return <Navigate replace to={href('/docs/architecture') + search + hash} />
+}
 
 // 로케일별 경로를 같은 트리로 두 번 등록한다. 옵셔널 세그먼트 하나로 줄일 수는
 // 있지만, 그러면 `/enterprise` 같은 미래 경로가 영어 프리픽스로 오인된다.
@@ -28,7 +34,7 @@ function localeRoutes() {
       {selfHostingMethodIds.map((id) => (
         <Route key={id} path={`self-hosting/${id}`} element={<SelfHostingMethodPage method={id} />} />
       ))}
-      <Route path="how-it-works" element={<HowItWorksPage />} />
+      <Route path="how-it-works" element={<ArchitectureRedirect />} />
     </>
   )
 }

@@ -8,7 +8,11 @@ try {
   const { selfHostingPaths } = await server.ssrLoadModule('/src/i18n/selfHostingRoutes.ts')
   const ko = documentation('ko'), en = documentation('en')
   assert.deepEqual(ko.map(p => p.path), en.map(p => p.path))
-  const routes = ['/', '/sdk', '/cli', '/skills', '/how-it-works', ...selfHostingPaths, ...ko.map(p => p.path)]
+  const routes = ['/', '/sdk', '/cli', '/skills', ...selfHostingPaths, ...ko.map(p => p.path)]
+  const { redirects } = JSON.parse(readFileSync('vercel.json', 'utf8'))
+  for (const prefix of ['', '/en']) {
+    assert.ok(redirects.some(r => r.source === prefix + '/how-it-works' && r.destination === prefix + '/docs/architecture' && r.permanent))
+  }
   assert.equal(new Set(routes).size, routes.length)
   const sitemap = readFileSync('public/sitemap.xml', 'utf8')
   const llms = readFileSync('public/llms.txt', 'utf8')

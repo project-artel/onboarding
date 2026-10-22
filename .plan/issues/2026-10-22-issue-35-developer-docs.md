@@ -45,3 +45,9 @@ origin/main의 macro와 로그인 UI를 유지한다. 기존 checkout의 미완�
 - pair-review 지적 수정: when의 빈 문자열 허용, instance Behavior의 component 부착·Inspector 참조 연결.
 - 브라우저: 두 페이지 1280px/360px 및 light/dark, ko/en, CheatRange 검색 확인. 모바일 전체 가로 overflow 없음.
 - `npm run build`, `npm run lint`, `npm run check`, `npm run check:docs` (15 pages/locale), `git diff --check` 통과.
+## 아키텍처 문서 이동
+- 기존 페이지의 diagram, 번호별 데이터 흐름과 QA lifecycle을 `/docs/architecture`에 통합.
+- header의 별도 아키텍처 메뉴 제거, landing 링크를 개발자 문서로 변경.
+- ko/en `/how-it-works`는 Vercel permanent redirect 및 React fallback으로 이전 URL 유지. sitemap·llms에는 목적지만 포함.
+- build/lint/locale/docs 검사와 pair-review PASS. 브라우저에서 ko/en 이전 URL의 query/hash 보존, 1280px/360px light/dark 확인.
+- 모바일 diagram은 내부 가로 스크롤, 문서 전체 overflow 없음. Vercel의 실제 HTTP redirect는 배포 환경에서 별도 확인 필요.

@@ -19,7 +19,6 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테�
 - [Self-hosting: Install script](https://artel.kr/en/self-hosting/install-script): install ARTEL with one command
 - [Self-hosting: Docker Compose](https://artel.kr/en/self-hosting/docker-compose): run ARTEL with Docker Compose
 - [Self-hosting: Desktop app](https://artel.kr/en/self-hosting/desktop-app): install ARTEL as a desktop app (planned)
-- [Architecture](https://artel.kr/en/how-it-works): the SDK, servers and console, and the QA run lifecycle
 
 - [Macro quick start: write, register and run a macro](https://artel.kr/en/macro)
 - [Macro language: types, conditions, loops and imports](https://artel.kr/en/macro/language)
@@ -49,7 +48,6 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테�
 - [셀프 호스팅: 설치 스크립트](https://artel.kr/self-hosting/install-script)
 - [셀프 호스팅: Docker Compose](https://artel.kr/self-hosting/docker-compose)
 - [셀프 호스팅: 데스크톱 앱](https://artel.kr/self-hosting/desktop-app)
-- [아키텍처](https://artel.kr/how-it-works)
 
 - [Macro 시작: 작성·등록·실행](https://artel.kr/macro)
 - [Macro 문법: 타입·조건·반복·import](https://artel.kr/macro/language)

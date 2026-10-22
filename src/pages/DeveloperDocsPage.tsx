@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { CodeBlock } from '../components/CodeBlock'
+import { ArchitectureDiagram } from '../components/ArchitectureDiagram'
 import { useCopy } from '../i18n/useCopy'
 import { documentation } from '../docs/content'
 import '../styles/macro-reference.css'
 
 export function DeveloperDocsPage({ path }: { path: string }) {
-  const { locale, href } = useCopy()
+  const { locale, href, t } = useCopy()
   const [query, setQuery] = useState('')
   const [navigationOpen, setNavigationOpen] = useState(false)
   const pages = documentation(locale)
@@ -15,7 +16,7 @@ export function DeveloperDocsPage({ path }: { path: string }) {
   const groups = [...new Set(pages.map(page => page.group))]
   const search = query.trim().toLowerCase()
   const results = search ? pages.flatMap(page => page.sections
-    .filter(section => [page.title, section.title, ...section.paragraphs, section.code ?? '', ...(section.rows?.flat() ?? [])].join(' ').toLowerCase().includes(search))
+    .filter(section => [page.title, section.title, ...section.paragraphs, ...(section.items ?? []), section.code ?? '', ...(section.rows?.flat() ?? [])].join(' ').toLowerCase().includes(search))
     .map(section => ({ page, section }))) : []
 
   return (
@@ -57,6 +58,8 @@ export function DeveloperDocsPage({ path }: { path: string }) {
           <section className="macro-docs__section" id={section.id} key={section.id}>
             <h2><a href={`#${section.id}`}>{section.title}<span aria-hidden="true"> #</span></a></h2>
             {section.paragraphs.map(p => <p key={p}>{p}</p>)}
+            {section.diagram === 'architecture' && <ArchitectureDiagram labels={t.how.diagram} title={t.how.flowAlt} />}
+            {section.items && <ol className="docs-sequence">{section.items.map(item => <li key={item}>{item}</li>)}</ol>}
             {section.rows && <div className="macro-docs__table" tabIndex={0} role="region" aria-label={section.title}>
               <table><thead><tr><th>{locale === 'ko' ? '항목' : 'Item'}</th><th>{locale === 'ko' ? '설명' : 'Description'}</th></tr></thead><tbody>{section.rows.map(([name, value]) => <tr key={name}><th scope="row"><code>{name}</code></th><td>{value}</td></tr>)}</tbody></table>
             </div>}
