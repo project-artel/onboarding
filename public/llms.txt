@@ -6,6 +6,9 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테�
 
 ## Pages
 
+- [Implement cheats](https://artel.kr/en/docs/cheats): C# registration, preconditions, parameters, invocation and troubleshooting
+- [Implement behaviors](https://artel.kr/en/docs/behaviors): ongoing game actions, lifecycle, progress and cleanup
+
 - [Home](https://artel.kr/en): what ARTEL does and who it is for
 - [SDK](https://artel.kr/en/sdk): install the Unity SDK and connect a game
 - [CLI](https://artel.kr/en/cli): install the ARTEL CLI and run QA from a terminal or CI
@@ -16,7 +19,6 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테�
 - [Self-hosting: Install script](https://artel.kr/en/self-hosting/install-script): install ARTEL with one command
 - [Self-hosting: Docker Compose](https://artel.kr/en/self-hosting/docker-compose): run ARTEL with Docker Compose
 - [Self-hosting: Desktop app](https://artel.kr/en/self-hosting/desktop-app): install ARTEL as a desktop app (planned)
-- [Architecture](https://artel.kr/en/how-it-works): the SDK, servers and console, and the QA run lifecycle
 
 - [Macro quick start: write, register and run a macro](https://artel.kr/en/macro)
 - [Macro language: types, conditions, loops and imports](https://artel.kr/en/macro/language)
@@ -24,7 +26,19 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테�
 - [Macro execution: checks, waits, checkpoints and model decisions](https://artel.kr/en/macro/execution)
 - [Macro limits and errors: budgets and troubleshooting](https://artel.kr/en/macro/limits)
 
+- [Developer documentation](https://artel.kr/en/docs): ARTEL developer guide
+- [Installation](https://artel.kr/en/docs/installation): ARTEL developer guide
+- [Authentication and CLI tokens](https://artel.kr/en/docs/authentication): ARTEL developer guide
+- [Models and LLM APIs](https://artel.kr/en/docs/models): ARTEL developer guide
+- [Run QA](https://artel.kr/en/docs/qa): ARTEL developer guide
+- [GitHub Actions](https://artel.kr/en/docs/github-actions): ARTEL developer guide
+- [Architecture](https://artel.kr/en/docs/architecture): ARTEL developer guide
+- [GitHub contribution](https://artel.kr/en/docs/contributing): ARTEL developer guide
+
 ## 한국어
+
+- [Cheat 구현](https://artel.kr/docs/cheats): C# 등록, 사전조건, parameter, 호출과 오류 확인
+- [Behavior 구현](https://artel.kr/docs/behaviors): 반복 동작, lifecycle, 진행 보고와 정리
 
 - [홈](https://artel.kr/)
 - [SDK](https://artel.kr/sdk)
@@ -34,13 +48,21 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테�
 - [셀프 호스팅: 설치 스크립트](https://artel.kr/self-hosting/install-script)
 - [셀프 호스팅: Docker Compose](https://artel.kr/self-hosting/docker-compose)
 - [셀프 호스팅: 데스크톱 앱](https://artel.kr/self-hosting/desktop-app)
-- [아키텍처](https://artel.kr/how-it-works)
 
 - [Macro 시작: 작성·등록·실행](https://artel.kr/macro)
 - [Macro 문법: 타입·조건·반복·import](https://artel.kr/macro/language)
 - [Macro built-ins: 객체 탐색·reader·action](https://artel.kr/macro/built-ins)
 - [Macro 실행: 검증·대기·checkpoint·모델 판단](https://artel.kr/macro/execution)
 - [Macro 제한과 오류: 실행 상한과 해결 방법](https://artel.kr/macro/limits)
+
+- [개발자 문서](https://artel.kr/docs): ARTEL 개발자 안내
+- [설치](https://artel.kr/docs/installation): ARTEL 개발자 안내
+- [로그인과 CLI token](https://artel.kr/docs/authentication): ARTEL 개발자 안내
+- [모델과 LLM API](https://artel.kr/docs/models): ARTEL 개발자 안내
+- [QA 실행](https://artel.kr/docs/qa): ARTEL 개발자 안내
+- [GitHub Actions](https://artel.kr/docs/github-actions): ARTEL 개발자 안내
+- [아키텍처](https://artel.kr/docs/architecture): ARTEL 개발자 안내
+- [GitHub contribution](https://artel.kr/docs/contributing): ARTEL 개발자 안내
 
 ## Source
 

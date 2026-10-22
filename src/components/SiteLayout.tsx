@@ -1,12 +1,12 @@
 import { Fragment, useEffect, useState } from 'react'
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useCopy } from '../i18n/useCopy'
 import { locales, pathWithLocale } from '../i18n/locale'
 import { BrandMark } from './BrandMark'
 import { InstallMenu, InstallTabs } from './InstallNav'
 import { applyTheme, currentTheme } from '../theme'
 import { AuthControls } from '../auth/AuthControls'
-import { macroContent, macroPages, macroPath } from '../macro/content'
+import { documentation } from '../docs/content'
 
 const siteOrigin = 'https://artel.kr'
 
@@ -15,10 +15,9 @@ export function SiteLayout() {
   const { pathname, hash } = useLocation()
   const [theme, setTheme] = useState(currentTheme)
 
-  const macroId = macroPages.find(id => macroPath(id) === pathWithLocale(pathname, 'ko').replace(/\/$/, ''))
-  const macro = macroId ? macroContent(locale)[macroId] : undefined
-  const title = macro ? `${macro.title} · Macro Language Reference · ARTEL` : t.meta.title
-  const description = macro?.description ?? t.meta.description
+  const doc = documentation(locale).find(page => page.path === pathWithLocale(pathname, 'ko').replace(/\/$/, ''))
+  const title = doc ? `${doc.title} · ARTEL Developer Docs` : t.meta.title
+  const description = doc?.description ?? t.meta.description
 
   // 정적 `index.html`은 한국어를 실어 내보낸다. 로케일이 정해지면 스크린리더와
   // 검색엔진이 보는 값도 같이 맞춘다.
@@ -67,8 +66,7 @@ export function SiteLayout() {
           </Link>
           <nav className="site-nav" aria-label={t.nav.home}>
             <InstallMenu />
-            <NavLink to={href('/macro')}>Macro</NavLink>
-            <NavLink to={href('/how-it-works')}>{t.nav.how}</NavLink>
+            <Link to={href('/docs')} aria-current={doc ? 'page' : undefined}>{locale === 'ko' ? '개발자 문서' : 'Developer docs'}</Link>
           </nav>
           <div className="locale" role="group" aria-label={t.footer.language}>
             {locales.map((next, i) => (

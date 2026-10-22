@@ -96,18 +96,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/self-hosting/desktop-app" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/self-hosting/desktop-app" />
   </url>
-  <url>
-    <loc>https://artel.kr/how-it-works</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/how-it-works" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/how-it-works" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/how-it-works" />
-  </url>
-  <url>
-    <loc>https://artel.kr/en/how-it-works</loc>
-    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/how-it-works" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/how-it-works" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/how-it-works" />
-  </url>
+
   <url>
     <loc>https://artel.kr/macro</loc>
     <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro" />
@@ -167,5 +156,125 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/macro/limits" />
     <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/macro/limits" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/macro/limits" />
+  </url>
+  <url>
+    <loc>https://artel.kr/docs</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/docs</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs" />
+  </url>
+  <url>
+    <loc>https://artel.kr/docs/installation</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/installation" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/installation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/installation" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/docs/installation</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/installation" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/installation" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/installation" />
+  </url>
+  <url>
+    <loc>https://artel.kr/docs/authentication</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/authentication" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/authentication" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/authentication" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/docs/authentication</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/authentication" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/authentication" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/authentication" />
+  </url>
+  <url>
+    <loc>https://artel.kr/docs/models</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/models" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/models" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/models" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/docs/models</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/models" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/models" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/models" />
+  </url>
+  <url>
+    <loc>https://artel.kr/docs/qa</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/qa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/qa" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/qa" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/docs/qa</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/qa" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/qa" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/qa" />
+  </url>
+  <url>
+    <loc>https://artel.kr/docs/github-actions</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/github-actions" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/github-actions" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/github-actions" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/docs/github-actions</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/github-actions" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/github-actions" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/github-actions" />
+  </url>
+  <url>
+    <loc>https://artel.kr/docs/architecture</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/architecture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/architecture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/architecture" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/docs/architecture</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/architecture" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/architecture" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/architecture" />
+  </url>
+  <url>
+    <loc>https://artel.kr/docs/contributing</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/contributing" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/contributing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/contributing" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/docs/contributing</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/contributing" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/contributing" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/contributing" />
+  </url>
+  <url>
+    <loc>https://artel.kr/docs/cheats</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/cheats" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/cheats" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/cheats" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/docs/cheats</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/cheats" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/cheats" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/cheats" />
+  </url>
+  <url>
+    <loc>https://artel.kr/docs/behaviors</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/behaviors" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/behaviors" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/behaviors" />
+  </url>
+  <url>
+    <loc>https://artel.kr/en/docs/behaviors</loc>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://artel.kr/docs/behaviors" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://artel.kr/en/docs/behaviors" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://artel.kr/docs/behaviors" />
   </url>
 </urlset>

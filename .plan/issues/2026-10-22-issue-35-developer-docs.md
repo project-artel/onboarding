@@ -1,0 +1,53 @@
+# 2026-10-22 — ARTEL 개발자 문서 통합
+
+- Date: 2026-10-22
+- GitHub Issue: #35
+- Status: Implemented; draft review pending
+
+## Goal
+설치부터 CI와 contribution까지 안내하는 ko/en 개발자 문서와 macro reference 통합.
+
+## Non-goals
+서버 배포, Action release, API 변경.
+
+## Context / Constraints
+origin/main의 macro와 로그인 UI를 유지한다. 기존 checkout의 미완료 변경은 별도 worktree로 보호한다.
+
+## Approach (Checklist)
+- [x] **Step 0: Recon** — CLI, console, agent, Action 구현 확인
+- [x] **Step 1: Implementation** — /docs, 공통 탐색·검색, sitemap·llms
+- [x] **Step 2: Tests** — build/lint/locale, route 검사, desktop/mobile light/dark
+- [ ] **Step 3: Rollout / Rollback** — main 대상 draft PR, commit revert
+
+## Validation
+- **Commands to run:** npm run build, npm run lint, npm run check
+- **Expected output:** 성공, 링크와 locale 일치, overflow 없음
+
+## Risks & Rollback
+- **Risks:** Action release와 모델 catalog 변동. 기본 release와 고급 commit 예시 구분.
+- **Rollback steps:** 변경 commit revert.
+
+## Open Questions
+없음. 아키텍처와 API 설정은 사용자 요청 범위에 포함.
+
+## Results
+- `npm run build`, `npm run lint`, `npm run check`, `npm run check:docs`, `git diff --check`: PASS.
+- `actionlint` (shellcheck disabled): PASS. Linux QA job를 placeholder build job과 합쳐 문법 확인; 실제 CI 실행 검증은 아님.
+- 브라우저: 검색 결과/빈 결과, 결과 anchor 이동, ko/en 전환, 기존 Macro URL, light/dark, 모바일 목차 열기와 이동 후 닫기 확인.
+- 360px/1024px에서 문서 전체의 가로 overflow 없음. 1440px desktop 화면 확인.
+- 코드 복사 버튼의 완료 피드백 확인. IAB clipboard read가 빈 문자열을 반환해 clipboard 내용 일치 검증은 미완료.
+- `pair-review`: Node.js 최소 버전 지적을 양쪽 언어에서 22.12로 수정.
+- 화면: `.plan/assets/developer-docs/` (실제 로컬 사이트). API 인증, 모델 호출, TC 실행의 end-to-end 증거는 아님.
+## Cheat·Behavior 추가
+- 사용자 요청에 따라 `/docs/cheats`, `/docs/behaviors` ko/en 안내를 추가. 기존 PR #36에 포함.
+- SDK `origin/develop` 954b540의 attributes, runner, context, runtime registration과 대조.
+- C# 예제의 Wallet/GameCombat은 실제 게임 API로 대체할 adapter이며 Unity compilation/게임 E2E 실행을 검증한 예제가 아님.
+- pair-review 지적 수정: when의 빈 문자열 허용, instance Behavior의 component 부착·Inspector 참조 연결.
+- 브라우저: 두 페이지 1280px/360px 및 light/dark, ko/en, CheatRange 검색 확인. 모바일 전체 가로 overflow 없음.
+- `npm run build`, `npm run lint`, `npm run check`, `npm run check:docs` (15 pages/locale), `git diff --check` 통과.
+## 아키텍처 문서 이동
+- 기존 페이지의 diagram, 번호별 데이터 흐름과 QA lifecycle을 `/docs/architecture`에 통합.
+- header의 별도 아키텍처 메뉴 제거, landing 링크를 개발자 문서로 변경.
+- ko/en `/how-it-works`는 Vercel permanent redirect 및 React fallback으로 이전 URL 유지. sitemap·llms에는 목적지만 포함.
+- build/lint/locale/docs 검사와 pair-review PASS. 브라우저에서 ko/en 이전 URL의 query/hash 보존, 1280px/360px light/dark 확인.
+- 모바일 diagram은 내부 가로 스크롤, 문서 전체 overflow 없음. Vercel의 실제 HTTP redirect는 배포 환경에서 별도 확인 필요.

@@ -1,5 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/how-it-works", "destination": "/docs/architecture", "permanent": true },
+    { "source": "/en/how-it-works", "destination": "/en/docs/architecture", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/console", "destination": "https://home.stage.artel.kr/console" },
     { "source": "/console/:path*", "destination": "https://home.stage.artel.kr/console/:path*" },
