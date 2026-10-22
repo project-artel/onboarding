@@ -24,6 +24,15 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테�
 - [Macro execution: checks, waits, checkpoints and model decisions](https://artel.kr/en/macro/execution)
 - [Macro limits and errors: budgets and troubleshooting](https://artel.kr/en/macro/limits)
 
+- [Developer documentation](https://artel.kr/en/docs): ARTEL developer guide
+- [Installation](https://artel.kr/en/docs/installation): ARTEL developer guide
+- [Authentication and CLI tokens](https://artel.kr/en/docs/authentication): ARTEL developer guide
+- [Models and LLM APIs](https://artel.kr/en/docs/models): ARTEL developer guide
+- [Run QA](https://artel.kr/en/docs/qa): ARTEL developer guide
+- [GitHub Actions](https://artel.kr/en/docs/github-actions): ARTEL developer guide
+- [Architecture](https://artel.kr/en/docs/architecture): ARTEL developer guide
+- [GitHub contribution](https://artel.kr/en/docs/contributing): ARTEL developer guide
+
 ## 한국어
 
 - [홈](https://artel.kr/)
@@ -41,6 +50,15 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테�
 - [Macro built-ins: 객체 탐색·reader·action](https://artel.kr/macro/built-ins)
 - [Macro 실행: 검증·대기·checkpoint·모델 판단](https://artel.kr/macro/execution)
 - [Macro 제한과 오류: 실행 상한과 해결 방법](https://artel.kr/macro/limits)
+
+- [개발자 문서](https://artel.kr/docs): ARTEL 개발자 안내
+- [설치](https://artel.kr/docs/installation): ARTEL 개발자 안내
+- [로그인과 CLI token](https://artel.kr/docs/authentication): ARTEL 개발자 안내
+- [모델과 LLM API](https://artel.kr/docs/models): ARTEL 개발자 안내
+- [QA 실행](https://artel.kr/docs/qa): ARTEL 개발자 안내
+- [GitHub Actions](https://artel.kr/docs/github-actions): ARTEL 개발자 안내
+- [아키텍처](https://artel.kr/docs/architecture): ARTEL 개발자 안내
+- [GitHub contribution](https://artel.kr/docs/contributing): ARTEL 개발자 안내
 
 ## Source
 

@@ -5,6 +5,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "check:docs": "node scripts/docs.check.mjs",
     "sync:macro": "python scripts/sync-macro-reference.py",
     "check:macro": "python scripts/sync-macro-reference.py --check",
     "dev": "vite",
