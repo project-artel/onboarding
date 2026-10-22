@@ -1,5 +1,5 @@
 const apiOrigin = (import.meta.env.VITE_ORCHESTRATION_URL ?? 'http://localhost:8080').replace(/\/$/, '')
-export const consoleUrl = import.meta.env.VITE_CONSOLE_URL ?? 'https://console.artel.kr'
+export const consoleUrl = import.meta.env.VITE_CONSOLE_URL ?? '/console'
 
 export type Providers = { password: boolean; github: boolean; signupOpen: boolean }
 export class AuthError extends Error {
