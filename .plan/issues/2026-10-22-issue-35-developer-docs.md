@@ -38,3 +38,10 @@ origin/main의 macro와 로그인 UI를 유지한다. 기존 checkout의 미완�
 - 코드 복사 버튼의 완료 피드백 확인. IAB clipboard read가 빈 문자열을 반환해 clipboard 내용 일치 검증은 미완료.
 - `pair-review`: Node.js 최소 버전 지적을 양쪽 언어에서 22.12로 수정.
 - 화면: `.plan/assets/developer-docs/` (실제 로컬 사이트). API 인증, 모델 호출, TC 실행의 end-to-end 증거는 아님.
+## Cheat·Behavior 추가
+- 사용자 요청에 따라 `/docs/cheats`, `/docs/behaviors` ko/en 안내를 추가. 기존 PR #36에 포함.
+- SDK `origin/develop` 954b540의 attributes, runner, context, runtime registration과 대조.
+- C# 예제의 Wallet/GameCombat은 실제 게임 API로 대체할 adapter이며 Unity compilation/게임 E2E 실행을 검증한 예제가 아님.
+- pair-review 지적 수정: when의 빈 문자열 허용, instance Behavior의 component 부착·Inspector 참조 연결.
+- 브라우저: 두 페이지 1280px/360px 및 light/dark, ko/en, CheatRange 검색 확인. 모바일 전체 가로 overflow 없음.
+- `npm run build`, `npm run lint`, `npm run check`, `npm run check:docs` (15 pages/locale), `git diff --check` 통과.

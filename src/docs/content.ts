@@ -1,8 +1,9 @@
 import type { Locale } from '../i18n/locale'
 import examples from './examples.json'
+import { gameFunctionDocs } from './game-functions'
 import { macroContent, macroPages, macroPath, type Section } from '../macro/content'
 
-export const guideIds = ['overview', 'installation', 'authentication', 'models', 'qa', 'github-actions', 'architecture', 'contributing'] as const
+export const guideIds = ['overview', 'installation', 'authentication', 'models', 'qa', 'github-actions', 'cheats', 'behaviors', 'architecture', 'contributing'] as const
 export type GuideId = typeof guideIds[number]
 export const guidePath = (id: GuideId) => id === 'overview' ? '/docs' : '/docs/' + id
 export type DocSection = Section & { links?: { label: string; to: string }[]; language?: string }
@@ -20,7 +21,7 @@ export function documentation(locale: Locale): DocPage[] {
   const guides = [
     page('overview', tr('개발자 문서', 'Developer documentation'), tr('ARTEL 설치부터 테스트 자동화와 코드 기여까지', 'Install ARTEL, automate testing, and contribute code.'), start, [
       { id: 'start', title: tr('첫 QA 실행', 'Your first QA run'), paragraphs: [tr('ARTEL은 Unity 게임을 직접 조작하며 테스트 케이스를 검증합니다. SDK가 연결된 게임, 검증할 테스트 케이스와 시나리오, 사용할 모델을 준비하세요.', 'ARTEL operates a Unity game to verify test cases. Prepare a game connected through the SDK, test cases and scenarios, and a model to run them.')], links: [link(tr('1. SDK와 CLI 설치', '1. Install the SDK and CLI'), '/docs/installation'), link(tr('2. 로그인과 CLI token 발급', '2. Sign in and issue a CLI token'), '/docs/authentication'), link(tr('3. 모델과 API key 설정', '3. Configure models and API keys'), '/docs/models'), link(tr('4. QA 실행과 결과 확인', '4. Run QA and inspect results'), '/docs/qa')] },
-      { id: 'workflow', title: tr('테스트 자동화', 'Test automation'), paragraphs: [tr('터미널에서 확인한 빌드를 GitHub Actions로 실행하고, 반복 조작은 Macro로 작성합니다. CI에서는 게임 빌드와 ARTEL 검증을 별도 job으로 연결할 수 있습니다.', 'Run a build from GitHub Actions after checking it locally. Use macros for repeatable interactions, and connect game building and ARTEL verification as separate CI jobs.')], links: [link('GitHub Actions', '/docs/github-actions'), link('Macro reference', '/macro')] },
+      { id: 'workflow', title: tr('테스트 자동화', 'Test automation'), paragraphs: [tr('터미널에서 확인한 빌드를 GitHub Actions로 실행하고, 반복 조작은 Macro로 작성합니다. CI에서는 게임 빌드와 ARTEL 검증을 별도 job으로 연결할 수 있습니다.', 'Run a build from GitHub Actions after checking it locally. Use macros for repeatable interactions, and connect game building and ARTEL verification as separate CI jobs.')], links: [link('GitHub Actions', '/docs/github-actions'), link(tr('Cheat 구현', 'Implement cheats'), '/docs/cheats'), link(tr('Behavior 구현', 'Implement behaviors'), '/docs/behaviors'), link('Macro reference', '/macro')] },
       { id: 'extend', title: tr('서비스 구조와 기여', 'Architecture and contribution'), paragraphs: [tr('SDK, orchestration, agent가 맡는 역할과 요청 흐름을 확인하고, 변경할 저장소에서 issue와 PR을 시작하세요.', 'Learn how the SDK, orchestration server, and agent cooperate, then open an issue and PR in the repository you want to change.')], links: [link(tr('아키텍처', 'Architecture'), '/docs/architecture'), link('GitHub contribution', '/docs/contributing')] },
     ]),
     page('installation', tr('설치', 'Installation'), tr('Unity SDK, CLI, 서비스 실행 환경 준비', 'Prepare the Unity SDK, CLI, and service environment.'), start, [
@@ -66,5 +67,5 @@ export function documentation(locale: Locale): DocPage[] {
     ]),
   ]
   const macros = macroContent(locale)
-  return [...guides.slice(0, 6), ...macroPages.map(id => ({ ...macros[id], path: macroPath(id), group: 'Macro reference' })), ...guides.slice(6)]
+  return [...guides.slice(0, 6), ...gameFunctionDocs(locale), ...macroPages.map(id => ({ ...macros[id], path: macroPath(id), group: 'Macro reference' })), ...guides.slice(6)]
 }
