@@ -279,7 +279,6 @@ const ko: Copy = {
     buildNotes: [
       'Development Build로 빌드해야 SDK가 게임에 붙음',
       'Editor 폴더에 스크립트를 두고 -executeMethod로 호출',
-      'Development Build가 아니면 artel game start가 60초 뒤 game_registration_timeout으로 끝남',
     ],
     buildScriptLabel: 'Assets/Editor/ArtelBuild.cs',
     buildScript: `using System;
@@ -780,7 +779,6 @@ const en: Copy = {
     buildNotes: [
       'Build as a Development Build so the SDK attaches to the game',
       'Put the script in an Editor folder and call it with -executeMethod',
-      'Without a Development Build, artel game start ends with game_registration_timeout after 60 seconds',
     ],
     buildScriptLabel: 'Assets/Editor/ArtelBuild.cs',
     buildScript: `using System;
