@@ -447,3 +447,13 @@ main > .section:last-child { border-bottom: none; }
 
 /* 기능 카드 6개가 빈 칸 없이 두 줄에 맞도록 넓은 화면에서는 3열로 고정한다. */
 @media (min-width: 900px) { .cards--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* SDK 페이지의 지원 범위 표. 좁은 화면에서는 표 안에서만 가로로 스크롤한다. */
+.support { overflow-x: auto; border: 1px solid var(--rule); }
+.support__table { width: 100%; min-width: 760px; border-collapse: collapse; text-align: left; font-size: 15px; line-height: 1.6; }
+.support__table th,
+.support__table td { padding: 14px 16px; vertical-align: top; border-bottom: 1px solid var(--rule); color: var(--ink-2); }
+.support__table thead th { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--ink); background: var(--paper-2); }
+.support__table tbody th { font-weight: 600; color: var(--ink); white-space: nowrap; }
+.support__table tbody tr:last-child th,
+.support__table tbody tr:last-child td { border-bottom: 0; }

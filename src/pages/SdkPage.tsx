@@ -82,6 +82,47 @@ export function SdkPage() {
         </div>
       </section>
 
+      <RailSection num="SUPPORT" title={t.sdk.supportTitle}>
+        <div className="support">
+          <table className="support__table">
+            <thead>
+              <tr>
+                {t.sdk.supportColumns.map((column) => (
+                  <th key={column} scope="col">
+                    {column}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {t.sdk.supportRows.map((row) => (
+                <tr key={row.label}>
+                  <th scope="row">{row.label}</th>
+                  <td>{row.supported}</td>
+                  <td>{row.needsSetup}</td>
+                  <td>{row.unsupported}</td>
+                  <td>{row.unknown}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </RailSection>
+
+      <RailSection alt num="CI" title={t.sdk.buildTitle}>
+        <ul className="marks marks--tight">
+          {t.sdk.buildNotes.map((item) => (
+            <li key={item}>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <h3 className="advanced__label">{t.sdk.buildScriptLabel}</h3>
+        <CodeBlock code={t.sdk.buildScript} />
+        <h3 className="advanced__label">{t.sdk.buildCommandLabel}</h3>
+        <CodeBlock code={t.sdk.buildCommand} />
+      </RailSection>
+
       <RailSection num="HELP" title={t.sdk.helpTitle}>
         <ul className="marks marks--tight">
           {t.sdk.help.map((item) => (
