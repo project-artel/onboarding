@@ -65,6 +65,21 @@ type Copy = {
     advancedTitle: string
     advancedNote: string
     advanced: { label: string; code: string }[]
+    supportTitle: string
+    supportColumns: string[]
+    supportRows: {
+      label: string
+      supported: string
+      needsSetup: string
+      unsupported: string
+      unknown: string
+    }[]
+    buildTitle: string
+    buildNotes: string[]
+    buildScriptLabel: string
+    buildScript: string
+    buildCommandLabel: string
+    buildCommand: string
     copy: string
     copied: string
   }
@@ -249,6 +264,58 @@ const ko: Copy = {
         code: 'MyGame.exe -artel-server artel.example.com:443 -artel-secure true -artel-frontend https://home.artel.example.com',
       },
     ],
+    supportTitle: '지원 범위',
+    supportColumns: ['항목', '지원', '설정 필요', '미지원', '미확인'],
+    supportRows: [
+      { label: 'Unity 버전', supported: '2022.3, 6000.5', needsSetup: '—', unsupported: '2021 이하', unknown: '2023, 6000.0 ~ 6000.3' },
+      { label: '플랫폼', supported: '에디터, Windows', needsSetup: '—', unsupported: 'Android, iOS, WebGL, 콘솔', unknown: 'macOS, Linux' },
+      { label: '빌드 종류', supported: '에디터 play mode', needsSetup: 'Development Build', unsupported: '출시 빌드', unknown: '-nographics로 실행한 게임' },
+      { label: '입력 방식', supported: '구 Input Manager, uGUI 포인터, UI Toolkit 클릭, OnMouse 계열', needsSetup: '게임패드(Input Manager 축·버튼 이름 사용 시)', unsupported: '신 Input System, 터치', unknown: 'Active Input Handling이 Both인 프로젝트' },
+      { label: 'UI 종류', supported: 'uGUI, TextMeshPro, 스프라이트 + 콜라이더', needsSetup: '스프라이트 + IPointerClickHandler(씬에 Physics Raycaster 필요)', unsupported: 'UI Toolkit 요소 발견과 글자 읽기, IMGUI 글자 읽기', unknown: 'IMGUI 클릭' },
+      { label: '스크립팅 백엔드', supported: 'Mono, IL2CPP', needsSetup: 'Managed Stripping Level High(SDK 어셈블리 보존 확인)', unsupported: '—', unknown: '—' },
+      { label: '렌더 파이프라인', supported: 'Built-in', needsSetup: '—', unsupported: '—', unknown: 'URP, HDRP' },
+    ],
+    buildTitle: 'CI에서 빌드하기',
+    buildNotes: [
+      'Development Build로 빌드해야 SDK가 게임에 붙음',
+      'Editor 폴더에 스크립트를 두고 -executeMethod로 호출',
+      'Development Build가 아니면 artel game start가 60초 뒤 game_registration_timeout으로 끝남',
+    ],
+    buildScriptLabel: 'Assets/Editor/ArtelBuild.cs',
+    buildScript: `using System;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.Build.Reporting;
+
+public static class ArtelBuild
+{
+    // Assets/Editor/ArtelBuild.cs
+    public static void BuildWindows64()
+    {
+        var args = Environment.GetCommandLineArgs();
+        var output = args[Array.IndexOf(args, "-buildPath") + 1];
+
+        var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
+        {
+            scenes = EditorBuildSettings.scenes
+                .Where(scene => scene.enabled)
+                .Select(scene => scene.path)
+                .ToArray(),
+            locationPathName = output,
+            target = BuildTarget.StandaloneWindows64,
+            // Development 없이 빌드하면 SDK가 붙지 않음
+            options = BuildOptions.Development,
+        });
+
+        EditorApplication.Exit(report.summary.result == BuildResult.Succeeded ? 0 : 1);
+    }
+}`,
+    buildCommandLabel: '명령줄',
+    buildCommand: `Unity.exe -batchmode -quit -nographics \\
+  -projectPath <project> \\
+  -executeMethod ArtelBuild.BuildWindows64 \\
+  -buildPath Build\\Game.exe \\
+  -logFile build.log`,
     copy: '복사',
     copied: '복사됨',
   },
@@ -278,6 +345,11 @@ const ko: Copy = {
 artel game start --build ./Build/Game.exe --project <id>
 artel game list --project <id>
 artel qa run --test-run <id> --instance <id>`,
+      },
+      {
+        title: 'artel case create 파일 형식',
+        body: 'JSON 배열의 각 항목에 scene(씬 이름) 필수',
+        code: '[{ "scene": "TitleScene", "step": "새 게임 버튼을 누른다", "expectedValue": "스토리 씬이 로드된다" }]',
       },
     ],
     referenceCta: '전체 레퍼런스 보기',
@@ -693,6 +765,58 @@ const en: Copy = {
         code: 'MyGame.exe -artel-server artel.example.com:443 -artel-secure true -artel-frontend https://home.artel.example.com',
       },
     ],
+    supportTitle: 'Support',
+    supportColumns: ['Item', 'Supported', 'Needs setup', 'Not supported', 'Not verified'],
+    supportRows: [
+      { label: 'Unity version', supported: '2022.3, 6000.5', needsSetup: '—', unsupported: '2021 and older', unknown: '2023, 6000.0 to 6000.3' },
+      { label: 'Platform', supported: 'Editor, Windows', needsSetup: '—', unsupported: 'Android, iOS, WebGL, consoles', unknown: 'macOS, Linux' },
+      { label: 'Build type', supported: 'Editor play mode', needsSetup: 'Development Build', unsupported: 'Release build', unknown: 'Game run with -nographics' },
+      { label: 'Input', supported: 'Legacy Input Manager, uGUI pointer, UI Toolkit click, OnMouse methods', needsSetup: 'Gamepad (through Input Manager axis and button names)', unsupported: 'New Input System, touch', unknown: 'Projects with Active Input Handling set to Both' },
+      { label: 'UI', supported: 'uGUI, TextMeshPro, sprite + collider', needsSetup: 'Sprite + IPointerClickHandler (needs a Physics Raycaster in the scene)', unsupported: 'UI Toolkit element discovery and text reading, IMGUI text reading', unknown: 'IMGUI click' },
+      { label: 'Scripting backend', supported: 'Mono, IL2CPP', needsSetup: 'Managed Stripping Level High (check the SDK assemblies are kept)', unsupported: '—', unknown: '—' },
+      { label: 'Render pipeline', supported: 'Built-in', needsSetup: '—', unsupported: '—', unknown: 'URP, HDRP' },
+    ],
+    buildTitle: 'Build in CI',
+    buildNotes: [
+      'Build as a Development Build so the SDK attaches to the game',
+      'Put the script in an Editor folder and call it with -executeMethod',
+      'Without a Development Build, artel game start ends with game_registration_timeout after 60 seconds',
+    ],
+    buildScriptLabel: 'Assets/Editor/ArtelBuild.cs',
+    buildScript: `using System;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.Build.Reporting;
+
+public static class ArtelBuild
+{
+    // Assets/Editor/ArtelBuild.cs
+    public static void BuildWindows64()
+    {
+        var args = Environment.GetCommandLineArgs();
+        var output = args[Array.IndexOf(args, "-buildPath") + 1];
+
+        var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
+        {
+            scenes = EditorBuildSettings.scenes
+                .Where(scene => scene.enabled)
+                .Select(scene => scene.path)
+                .ToArray(),
+            locationPathName = output,
+            target = BuildTarget.StandaloneWindows64,
+            // Without Development, the SDK does not attach
+            options = BuildOptions.Development,
+        });
+
+        EditorApplication.Exit(report.summary.result == BuildResult.Succeeded ? 0 : 1);
+    }
+}`,
+    buildCommandLabel: 'Command line',
+    buildCommand: `Unity.exe -batchmode -quit -nographics \\
+  -projectPath <project> \\
+  -executeMethod ArtelBuild.BuildWindows64 \\
+  -buildPath Build\\Game.exe \\
+  -logFile build.log`,
     copy: 'Copy',
     copied: 'Copied',
   },
@@ -722,6 +846,11 @@ const en: Copy = {
 artel game start --build ./Build/Game.exe --project <id>
 artel game list --project <id>
 artel qa run --test-run <id> --instance <id>`,
+      },
+      {
+        title: 'artel case create file format',
+        body: 'Each item in the JSON array needs scene (the scene name).',
+        code: '[{ "scene": "TitleScene", "step": "Press the new game button", "expectedValue": "The story scene loads" }]',
       },
     ],
     referenceCta: 'Read the full reference',
