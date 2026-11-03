@@ -77,6 +77,10 @@ the name the code gave it.
 
 ## Writing Style
 
+Follow [`.agents/docs/product-terminology.md`](.agents/docs/product-terminology.md)
+before writing site copy, developer guides, metadata, or product terminology
+recommendations. Keep console names consistent in both locales.
+
 Follow [`.agents/docs/writing-style.md`](.agents/docs/writing-style.md) for chat
 replies, reviews, plans, handoffs, issues, commit titles and bodies, pull
 requests, release notes, source comments, and all frontend copy (including

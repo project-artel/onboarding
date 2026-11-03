@@ -135,7 +135,7 @@ const ko: Copy = {
   meta: {
     title: 'ARTEL | Unity 게임 QA Agent',
     description:
-      'Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 테스트 케이스를 검증하고 실패 순간의 증거를 남기는 게임 QA 도구',
+      'Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 Test Case를 검증하고 실패 순간의 증거를 남기는 게임 QA 도구',
   },
   nav: {
     install: '설치',
@@ -159,7 +159,7 @@ const ko: Copy = {
     items: [
       '빌드마다 사람이 처음부터 다시 하는 회귀 테스트',
       '글로만 남은 재현 절차, 다시 열리는 이슈',
-      '늘어나는 테스트 케이스, 모자란 QA 인력',
+      '늘어나는 Test Case, 모자란 QA 인력',
     ],
   },
   steps: {
@@ -188,20 +188,20 @@ const ko: Copy = {
       {
         key: 'scenario',
         title: '시나리오 생성',
-        body: '챗봇과 대화하며 테스트 케이스를 시나리오로 정리',
-        details: ['챗봇이 시나리오 초안과 케이스 순서 제안', '한 케이스를 여러 시나리오에서 공유', '시나리오를 test-run에 연결해 반복 실행'],
+        body: '챗봇과 대화하며 Test Case를 시나리오로 정리',
+        details: ['챗봇이 시나리오 초안과 Test Case 순서 제안', '한 Test Case를 여러 시나리오에서 공유', '시나리오를 test-run에 연결해 반복 실행'],
       },
       {
         key: 'qa',
         title: 'QA 실행',
-        body: '에이전트가 게임을 조작하며 테스트 케이스 검증',
+        body: '에이전트가 게임을 조작하며 Test Case 검증',
         details: ['콘솔, CLI, GitHub Actions에서 실행', 'agent와 planner_executer 구조 중 선택', '실패한 순간의 상태와 로그를 evidence로 기록'],
       },
       {
         key: 'cases',
-        title: '케이스 라이브러리',
-        body: '기획 문서에서 테스트 케이스 초안 생성',
-        details: ['동작과 기대 결과로 케이스 작성', '시나리오 사이에서 케이스 재사용'],
+        title: 'Test Cases',
+        body: '기획 문서에서 Test Case 초안 생성',
+        details: ['동작과 기대 결과로 Test Case 작성', '시나리오 사이에서 Test Case 재사용'],
       },
       {
         key: 'macro',
@@ -430,7 +430,7 @@ artel qa run --test-run <id> --instance <id>`,
     },
     flow: [
       'SDK가 씬 상태 보고',
-      'Agent 서버가 케이스와 화면 상태를 비교해 다음 액션 결정',
+      'Agent 서버가 Test Case와 화면 상태를 비교해 다음 액션 결정',
       'Orchestration 서버가 액션을 게임 인스턴스로 전달',
       'SDK가 입력을 주입하고 결과 반환',
       '실행 로그와 이슈를 기록하고 콘솔에서 조회',
@@ -442,12 +442,12 @@ artel qa run --test-run <id> --instance <id>`,
         body: '문서의 규칙과 용어를 지식 그래프로 정리',
       },
       {
-        title: '테스트 케이스 확정',
-        body: '케이스 라이브러리에서 초안을 다듬어 확정',
+        title: 'Test Case 확정',
+        body: 'Test Cases에서 초안을 다듬어 확정',
       },
       {
         title: '테스트 런 구성',
-        body: '확정한 케이스를 묶어 실행 단위 구성',
+        body: '확정한 Test Case를 묶어 실행 단위 구성',
       },
       {
         title: '게임 인스턴스 연결',
@@ -455,7 +455,7 @@ artel qa run --test-run <id> --instance <id>`,
       },
       {
         title: 'QA 실행과 이슈 조회',
-        body: '에이전트가 케이스를 실행하고 남긴 증거 확인',
+        body: '에이전트가 Test Case를 실행하고 남긴 증거 확인',
       },
     ],
   },
@@ -661,7 +661,7 @@ const en: Copy = {
   meta: {
     title: 'ARTEL | QA agent for Unity games',
     description:
-      'Add the SDK to your Unity game and an agent plays it, checks your test cases, and keeps evidence when a step fails.',
+      'Add the SDK to your Unity game and an agent plays it, checks your Test Cases, and keeps evidence when a step fails.',
   },
   nav: {
     install: 'Install',
@@ -685,7 +685,7 @@ const en: Copy = {
     items: [
       'The same regression tests, by hand, on every build',
       'Repro steps kept only as text, and issues that reopen',
-      'More test cases than QA staff',
+      'More Test Cases than QA staff',
     ],
   },
   steps: {
@@ -714,13 +714,13 @@ const en: Copy = {
       {
         key: 'scenario',
         title: 'Scenario authoring',
-        body: 'Chat with the assistant to organise test cases into scenarios',
-        details: ['The chatbot drafts scenarios and case order', 'Share one case across several scenarios', 'Attach scenarios to a test-run and run them again'],
+        body: 'Chat with the assistant to organise Test Cases into scenarios',
+        details: ['The chatbot drafts scenarios and Test Case order', 'Share one Test Case across several scenarios', 'Attach scenarios to a test-run and run them again'],
       },
       {
         key: 'qa',
         title: 'QA runs',
-        body: 'The agent operates the game to verify test cases',
+        body: 'The agent operates the game to verify Test Cases',
         details: [
           'Run from the console, the CLI, or GitHub Actions',
           'Choose the agent or planner_executer structure',
@@ -729,9 +729,9 @@ const en: Copy = {
       },
       {
         key: 'cases',
-        title: 'Case library',
-        body: 'Test case drafts from the planning document',
-        details: ['Write cases as actions and expected results', 'Reuse cases across scenarios'],
+        title: 'Test Cases',
+        body: 'Test Case drafts from the planning document',
+        details: ['Write Test Cases as actions and expected results', 'Reuse Test Cases across scenarios'],
       },
       {
         key: 'macro',
@@ -960,7 +960,7 @@ artel qa run --test-run <id> --instance <id>`,
     },
     flow: [
       'The SDK reports scene state.',
-      'The agent server compares the case and the screen state to pick the next action.',
+      'The agent server compares the Test Case and the screen state to pick the next action.',
       'The orchestration server dispatches the action to that game instance.',
       'The SDK injects the input and returns the result.',
       'Run logs and issues are recorded and read from the dashboard.',
@@ -972,12 +972,12 @@ artel qa run --test-run <id> --instance <id>`,
         body: 'Its rules and terms go into the knowledge graph.',
       },
       {
-        title: 'Settle test cases',
-        body: 'Refine the drafts in the case library and approve them.',
+        title: 'Settle Test Cases',
+        body: 'Refine the drafts in Test Cases and approve them.',
       },
       {
         title: 'Compose a test run',
-        body: 'Group approved cases into an executable unit.',
+        body: 'Group approved Test Cases into an executable unit.',
       },
       {
         title: 'Connect a game instance',
@@ -985,7 +985,7 @@ artel qa run --test-run <id> --instance <id>`,
       },
       {
         title: 'Run QA and read issues',
-        body: 'The agent runs the cases and you review the evidence it left.',
+        body: 'The agent runs the Test Cases and you review the evidence it left.',
       },
     ],
   },
