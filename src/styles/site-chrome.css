@@ -1,0 +1,232 @@
+/* 모든 페이지에 깔리는 상단바, 푸터, 상단바 가장자리 진행 표시.
+   marketing.css와 responsive.css의 기본 규칙을 덮어쓰므로 그 둘 다음에 불러온다. */
+
+:root {
+  /* 상단바와 설치 탭이 같은 좌우 선에 선다. */
+  --bar-x: max(var(--gutter), calc((100% - var(--shell)) / 2 + var(--gutter)));
+  --plate-shadow: color-mix(in srgb, var(--ink) 88%, var(--paper));
+}
+
+/* 랜딩이 아닌 페이지에서 앵커로 이동하면 뜬 상단바 아래에 제목이 온다. */
+:root:not([data-page='landing']) {
+  scroll-padding-top: calc(var(--header-h, 64px) + 16px);
+}
+
+/* ── 상단바: 지도 위에 뜨는 뷰파인더 ─────────────────────
+   공유 SiteLayout 마크업은 그대로 두고 CSS로만 다시 입힌다. 안쪽 바 하나가 종이 판으로
+   떠 있고, 모서리 표시 네 개가 바를 화면 프레임으로 만든다. header는 문서 흐름 안에 있어서
+   랜딩이 아닌 페이지의 본문은 그 아래에서 시작한다. 랜딩만 지도가 header 밑까지 올라온다. */
+
+.site-header {
+  padding-block: 8px;
+  background: var(--paper);
+  border-bottom: 0;
+  pointer-events: none;
+}
+/* 랜딩에서는 바깥 띠가 투명해 바가 지도 위에 뜬다. */
+:root[data-page='landing'] .site-header { background: transparent; }
+.site-header::before,
+.site-header::after,
+.site-header__inner::before,
+.site-header__inner::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 0 solid var(--ink-3);
+  pointer-events: none;
+}
+.site-header__inner::before { left: -8px; top: -8px; border-width: 1.5px 0 0 1.5px; }
+.site-header__inner::after { right: -8px; bottom: -8px; border-width: 0 1.5px 1.5px 0; }
+.site-header::before { top: 0; right: calc(var(--bar-x) - 8px); border-width: 1.5px 1.5px 0 0; }
+.site-header::after { bottom: 0; left: calc(var(--bar-x) - 8px); border-width: 0 0 1.5px 1.5px; }
+
+.site-header__inner {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 48px;
+  margin-inline: var(--bar-x);
+  max-width: none;
+  padding: 0 8px 0 0;
+  gap: 0 18px;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--plate-shadow);
+  pointer-events: auto;
+}
+
+.site-header .brand {
+  align-self: stretch;
+  gap: 10px;
+  padding: 0 18px 0 14px;
+  border-right: 1.5px solid var(--ink);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.site-nav {
+  gap: 20px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+.site-nav a,
+.nav-menu__button {
+  padding: 5px 2px;
+  color: var(--ink-2);
+}
+.site-nav a:hover,
+.nav-menu__button:hover { color: var(--ink); box-shadow: inset 0 -1.5px 0 var(--ink-3); }
+.site-nav a[aria-current="page"],
+.nav-menu__button[data-active="true"] { color: var(--flare); font-weight: 500; box-shadow: inset 0 -2px 0 var(--flare); }
+
+.nav-menu__list {
+  top: calc(100% + 17px);
+  left: -12px;
+  min-width: 180px;
+  padding: 4px;
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--plate-shadow);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+}
+.nav-menu__list a {
+  padding: 9px 12px;
+  border-radius: 0;
+  color: var(--ink);
+  text-decoration: none;
+}
+/* responsive.css가 좁은 화면에서 현재 페이지 링크에 밑줄을 긋는다. 펼친 메뉴 안에서는 긋지 않는다. */
+.site-nav .nav-menu__list a { text-decoration: none; }
+.nav-menu__list a:hover { background: var(--paper-2); box-shadow: inset 2px 0 0 var(--flare); color: var(--ink); }
+
+.site-header .locale {
+  align-self: stretch;
+  padding: 0 4px 0 18px;
+  border-left: 1px solid var(--rule);
+}
+.site-header .locale a { border-radius: 0; }
+
+/* `.site-header`까지 붙여 marketing.css의 `.theme-toggle:hover` 테두리색을 이긴다. 테두리는
+   바 프레임의 일부라 hover에도 그대로 두고 글자색만 바뀐다. */
+.site-header .theme-toggle {
+  width: 30px;
+  height: 30px;
+  border-radius: 0;
+  border-color: var(--rule);
+}
+
+.site-header .auth-controls { min-height: 0; font-family: var(--font-mono); font-size: 12px; }
+.site-header .auth-controls .btn {
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* 포커스는 사각 고리 대신 바 안의 밑줄과 옅은 바탕으로 보인다. 상단바 안에서
+   고리가 남아 있으면 프레임의 일부처럼 읽혀서다. */
+.site-header :focus-visible {
+  outline: none;
+  box-shadow: inset 0 -2px 0 var(--flare);
+}
+.site-header :focus-visible:not(.btn) {
+  background-color: color-mix(in srgb, var(--flare) 12%, transparent);
+}
+.site-header .btn:focus-visible { box-shadow: inset 0 -3px 0 var(--ink); }
+
+@media (max-width: 1100px) {
+  .site-header__inner { padding: 0 8px 0 0; row-gap: 0; }
+  .site-header .brand { min-height: 48px; }
+  .site-header .site-nav {
+    padding: 0 14px;
+    border-top: 1px solid var(--rule);
+    gap: 0 20px;
+  }
+  .site-header .site-nav a,
+  .site-header .nav-menu__button { min-height: 40px; }
+  .site-header .theme-toggle { width: 32px; height: 32px; }
+  .site-header .locale a { min-height: 32px; }
+}
+
+@media (max-width: 720px) {
+  .site-header { position: relative; }
+  .site-header__inner { gap: 0 10px; }
+  .site-header .brand { padding: 0 12px 0 10px; }
+  .site-header .locale { padding-left: 10px; }
+  .site-header .site-nav { padding: 0 10px; }
+}
+
+
+/* ── 심볼 ─────────────────────────────────────────────
+   헤더·푸터 심볼은 owner의 PNG를 테마별로 쓴다. 라이트는 잉크, 다크는 반전본. */
+
+.brand::before {
+  content: '';
+  flex: none;
+  width: 24px;
+  height: 24px;
+  background: url('../assets/brand/logo-light.png') center / contain no-repeat;
+}
+.brand--footer::before { width: 18px; height: 18px; }
+[data-theme='dark'] .brand::before { background-image: url('../assets/brand/logo-dark.png'); }
+
+/* ── 푸터: 지도의 끝 ─────────────────────────────────── */
+
+.site-footer {
+  position: relative;
+  background: var(--paper-2);
+  border-top: 1.5px solid var(--ink);
+}
+.site-footer::before {
+  content: '';
+  position: absolute;
+  left: var(--bar-x);
+  top: -1.5px;
+  width: 56px;
+  height: 3px;
+  background: var(--flare);
+}
+.site-footer__inner { font-family: var(--font-mono); font-size: 12.5px; }
+.brand--footer { font-family: var(--font-display); font-size: 12px; letter-spacing: 0.14em; }
+.site-footer a:not(.brand) { box-shadow: inset 0 -1px 0 var(--rule); }
+.site-footer a:not(.brand):hover { box-shadow: inset 0 -2px 0 var(--flare); }
+.site-footer__copy { font-variant-numeric: tabular-nums; }
+
+/* ── 상단바 가장자리 경로 (route.tsx) ─────────────────────
+   바의 아래 테두리 위에 정거장 칸과 에이전트 점이 놓인다. 지난 칸은 코랄로 차고,
+   지금 칸은 코랄 테두리다. 좁은 화면에서는 상단바가 고정되지 않으므로 숨긴다. */
+
+.header-route {
+  position: fixed;
+  z-index: 25;
+  height: 16px;
+  pointer-events: none;
+}
+.header-route svg { display: block; overflow: visible; }
+.header-route__trail { stroke: var(--flare); stroke-width: 2; }
+.header-route__stop { fill: var(--paper); stroke: var(--ink-3); stroke-width: 1.5; transition: fill 0.25s ease, stroke 0.25s ease; }
+.header-route__stop.is-done { fill: var(--flare); stroke: var(--flare); }
+.header-route__stop.is-current { fill: var(--paper); stroke: var(--flare); stroke-width: 2; }
+.header-route__ring { fill: var(--paper); stroke: var(--flare); stroke-width: 1.5; }
+.header-route__dot { fill: var(--flare); }
+.header-route__hit {
+  position: absolute;
+  top: -3px;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.header-route__hit:hover { box-shadow: inset 0 0 0 1.5px var(--ink-3); }
+.header-route__hit:focus-visible { outline: 2px solid var(--flare); outline-offset: 0; }
+@media (max-width: 720px) {
+  .header-route { display: none; }
+}

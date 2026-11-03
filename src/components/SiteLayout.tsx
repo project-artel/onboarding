@@ -2,8 +2,8 @@ import { Fragment, useEffect, useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useCopy } from '../i18n/useCopy'
 import { locales, pathWithLocale } from '../i18n/locale'
-import { BrandMark } from './BrandMark'
 import { InstallMenu, InstallTabs } from './InstallNav'
+import { PageChrome } from './PageChrome'
 import { applyTheme, currentTheme } from '../theme'
 import { AuthControls } from '../auth/AuthControls'
 import { documentation } from '../docs/content'
@@ -14,6 +14,9 @@ export function SiteLayout() {
   const { locale, t, href, swapTo } = useCopy()
   const { pathname, hash } = useLocation()
   const [theme, setTheme] = useState(currentTheme)
+
+  // 랜딩은 진행 표시와 상단바 높이를 스스로 다룬다. 나머지 페이지에만 공용 장식을 붙인다.
+  const landing = (pathname.replace(/^\/en(?=\/|$)/, '') || '/') === '/'
 
   const doc = documentation(locale).find(page => page.path === pathWithLocale(pathname, 'ko').replace(/\/$/, ''))
   const title = doc ? `${doc.title} · ARTEL Developer Docs` : t.meta.title
@@ -61,7 +64,6 @@ export function SiteLayout() {
       <header className="site-header">
         <div className="shell site-header__inner">
           <Link aria-label="ARTEL" className="brand" to={href('/')}>
-            <BrandMark size={24} />
             <span className="brand__word">ARTEL</span>
           </Link>
           <nav className="site-nav" aria-label={t.nav.home}>
@@ -110,7 +112,6 @@ export function SiteLayout() {
       <footer className="site-footer">
         <div className="shell site-footer__inner">
           <span className="brand brand--footer">
-            <BrandMark size={18} />
             <span className="brand__word">ARTEL</span>
           </span>
           <a href="https://github.com/project-artel" rel="noreferrer noopener" target="_blank">
@@ -119,6 +120,7 @@ export function SiteLayout() {
           <span className="site-footer__copy">© 2026 ARTEL</span>
         </div>
       </footer>
+      {!landing && <PageChrome />}
     </>
   )
 }

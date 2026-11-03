@@ -27,6 +27,11 @@ export type SelfHostingMethodPage = {
   steps: SelfHostingSection[]
 }
 
+// Landing feature ids. The landing map places each feature's screen and picks its drawing by this id.
+export type FeatureKey = 'scenario' | 'qa' | 'cases' | 'macro' | 'mcp' | 'perf' | 'github'
+
+export type Feature = { key: FeatureKey; title: string; body: string; details: string[] }
+
 type Copy = {
   meta: { title: string; description: string }
   nav: {
@@ -53,7 +58,7 @@ type Copy = {
   }
   features: {
     title: string
-    items: { title: string; body: string }[]
+    items: Feature[]
   }
   faq: { title: string; items: { q: string; a: string }[] }
   footer: { repository: string; language: string }
@@ -180,12 +185,38 @@ const ko: Copy = {
   features: {
     title: '기능',
     items: [
-      { title: '화면 지도', body: '플레이하며 지나간 화면과 이동 경로를 지도로 기록' },
-      { title: '케이스 라이브러리', body: '기획 문서에서 테스트 케이스 초안 생성' },
-      { title: '지식 그래프', body: '기획 문서의 규칙과 용어를 에이전트의 판단 근거로 사용' },
-      { title: 'Macro', body: '성공한 조작을 저장해 다음 실행에서 재사용' },
-      { title: '성능', body: '빌드와 QA 실행별 프레임 시간, draw call, 메모리 할당' },
-      { title: 'GitHub 이슈 연동', body: '찾은 이슈를 GitHub 이슈로 내보내기' },
+      {
+        key: 'scenario',
+        title: '시나리오 생성',
+        body: '챗봇과 대화하며 테스트 케이스를 시나리오로 정리',
+        details: ['챗봇이 시나리오 초안과 케이스 순서 제안', '한 케이스를 여러 시나리오에서 공유', '시나리오를 test-run에 연결해 반복 실행'],
+      },
+      {
+        key: 'qa',
+        title: 'QA 실행',
+        body: '에이전트가 게임을 조작하며 테스트 케이스 검증',
+        details: ['콘솔, CLI, GitHub Actions에서 실행', 'agent와 planner_executer 구조 중 선택', '실패한 순간의 상태와 로그를 evidence로 기록'],
+      },
+      {
+        key: 'cases',
+        title: '케이스 라이브러리',
+        body: '기획 문서에서 테스트 케이스 초안 생성',
+        details: ['동작과 기대 결과로 케이스 작성', '시나리오 사이에서 케이스 재사용'],
+      },
+      {
+        key: 'macro',
+        title: 'Macro',
+        body: '성공한 조작을 저장해 다음 실행에서 재사용',
+        details: ['Python과 비슷한 제한된 DSL', '객체 탐색, 조작, 대기, 검증을 함수로 묶음'],
+      },
+      {
+        key: 'mcp',
+        title: 'MCP 지원',
+        body: '코딩 에이전트에서 Macro 작성, 검사, 등록',
+        details: ['Claude Code, Codex에서 연결', 'Artel 계정으로 로그인'],
+      },
+      { key: 'perf', title: '성능', body: '빌드와 QA 실행별 프레임 시간, draw call, 메모리 할당', details: [] },
+      { key: 'github', title: 'GitHub 이슈 연동', body: '찾은 이슈를 GitHub 이슈로 내보내기', details: [] },
     ],
   },
   faq: {
@@ -680,12 +711,42 @@ const en: Copy = {
   features: {
     title: 'Features',
     items: [
-      { title: 'Screen map', body: 'Screens and paths the agent walked through, drawn as a map' },
-      { title: 'Case library', body: 'Test case drafts from the planning document' },
-      { title: 'Knowledge graph', body: 'Rules and terms from the planning document that ground the agent' },
-      { title: 'Macros', body: 'Successful moves saved and replayed in later runs' },
-      { title: 'Performance', body: 'Frame time, draw calls and memory allocation per build and QA run' },
-      { title: 'GitHub issues', body: 'Found issues exported to GitHub issues' },
+      {
+        key: 'scenario',
+        title: 'Scenario authoring',
+        body: 'Chat with the assistant to organise test cases into scenarios',
+        details: ['The chatbot drafts scenarios and case order', 'Share one case across several scenarios', 'Attach scenarios to a test-run and run them again'],
+      },
+      {
+        key: 'qa',
+        title: 'QA runs',
+        body: 'The agent operates the game to verify test cases',
+        details: [
+          'Run from the console, the CLI, or GitHub Actions',
+          'Choose the agent or planner_executer structure',
+          'Keep the state and logs at the failing moment as evidence',
+        ],
+      },
+      {
+        key: 'cases',
+        title: 'Case library',
+        body: 'Test case drafts from the planning document',
+        details: ['Write cases as actions and expected results', 'Reuse cases across scenarios'],
+      },
+      {
+        key: 'macro',
+        title: 'Macros',
+        body: 'Successful moves saved and replayed in later runs',
+        details: ['A restricted Python-like DSL', 'Groups object lookup, interactions, waits and checks into functions'],
+      },
+      {
+        key: 'mcp',
+        title: 'MCP support',
+        body: 'Write, check and register macros from your coding agent',
+        details: ['Connect from Claude Code or Codex', 'Sign in with your Artel account'],
+      },
+      { key: 'perf', title: 'Performance', body: 'Frame time, draw calls and memory allocation per build and QA run', details: [] },
+      { key: 'github', title: 'GitHub issues', body: 'Found issues exported to GitHub issues', details: [] },
     ],
   },
   faq: {

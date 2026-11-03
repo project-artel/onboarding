@@ -1,0 +1,465 @@
+/* 설치 페이지와 개발자 문서.
+   설치 페이지는 조용한 지도 말투로: 단계는 세로 경로 위 정거장, 스크린샷과 코드는 상단 막대가
+   있는 화면 프레임, 방법 카드는 이어진 지도 노드. 문서는 구조를 그대로 두고 글꼴, 강조, 색만 바꾼다. */
+
+:root {
+  --code-bar: 30px;
+}
+
+/* ── 설치 탭: 상단바 아래 두 번째 HUD 막대 ─────────────── */
+
+.install-tabs {
+  padding: 0 0 10px;
+  background: var(--paper);
+  border-bottom: 0;
+}
+.install-tabs__inner {
+  gap: 0;
+  max-width: none;
+  margin-inline: var(--bar-x);
+  padding: 0;
+  margin-bottom: 0;
+  background: var(--paper-2);
+  border: 1.5px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--plate-shadow);
+}
+.install-tabs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  margin-bottom: 0;
+  padding: 0 16px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--ink-2);
+  border-bottom: 0;
+  border-right: 1px solid var(--rule);
+}
+.install-tabs a:hover { color: var(--ink); background: var(--paper); }
+.install-tabs a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 500;
+  background: var(--paper);
+  box-shadow: inset 0 -3px 0 var(--flare);
+}
+.install-tabs a:focus-visible { outline: none; box-shadow: inset 0 -3px 0 var(--flare); background: color-mix(in srgb, var(--flare) 12%, var(--paper)); }
+
+/* ── 페이지 히어로 ─────────────────────────────────────── */
+
+.hero .crop { border-color: var(--ink-3); }
+.hero__inner--page { padding-block: 72px 64px; }
+.hero__copy { background: none; padding: 0; }
+.page-hero__kicker {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px;
+  padding: 5px 10px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+}
+.page-hero__kicker::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  background: var(--flare);
+}
+/* 제목 줄마다 종이 띠가 받친다. 랜딩 제목과 같은 말투다. */
+.page-hero__title {
+  font-size: clamp(32px, 4.4vw, 54px);
+  font-weight: 800;
+  line-height: 1.22;
+  letter-spacing: -0.035em;
+}
+.hero .page-hero__title {
+  display: inline;
+  padding: 0.02em 0.16em 0.06em 0.1em;
+  background: var(--paper);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  box-shadow: inset 0 3px 0 var(--flare);
+}
+.hero .page-hero__title + .hero__lead { margin-top: 24px; }
+.hero__lead {
+  width: fit-content;
+  max-width: 600px;
+  padding: 10px 14px;
+  background: var(--paper);
+  border-left: 2px solid var(--ink);
+}
+.selfhost__back {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 5px 10px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+}
+.selfhost__back:hover { border-color: var(--flare); }
+
+/* ── 레일 섹션 라벨 ─────────────────────────────────────── */
+
+.section__num {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.06em;
+}
+.section__num::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--flare);
+}
+.section__title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+}
+
+/* ── 설치 단계: 세로 경로 위 정거장 ───────────────────── */
+
+.install {
+  gap: 32px;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+}
+.install > li {
+  position: relative;
+  grid-template-columns: 72px minmax(0, 1fr);
+  background: none;
+}
+/* 다음 정거장까지 내려가는 경로와, 정거장에서 화면으로 꺾이는 짧은 가지. */
+.install > li:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 48px;
+  bottom: -32px;
+  border-left: 2px solid var(--ink-3);
+}
+.install > li::after {
+  content: '';
+  position: absolute;
+  left: 48px;
+  top: 23px;
+  width: 24px;
+  border-top: 2px solid var(--ink-3);
+}
+.install__num {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  box-sizing: border-box;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--flare);
+}
+.install__body {
+  padding: 0 22px 24px;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--plate-shadow);
+}
+.install__title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  margin: 0 -22px 18px;
+  padding: 9px 76px 9px 22px;
+  box-sizing: border-box;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+/* 화면 프레임 상단 막대의 작은 칸 세 개 */
+.install__title::after,
+.install__body .code::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  background: var(--rule);
+  box-shadow: -10px 0 0 var(--rule), -20px 0 0 var(--rule);
+}
+.install__body .step__body { color: var(--ink-2); }
+
+/* 방법 페이지 아래 다른 방법 목록의 제목은 막대가 아니다. */
+.section__full > .install__title {
+  display: block;
+  min-height: 0;
+  margin: 0 0 20px;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+.section__full > .install__title::after { display: none; }
+
+/* ── 스크린샷: 상단 막대가 있는 화면 프레임 ─────────────── */
+
+.install__shot {
+  padding-top: 19px;
+  background: var(--rule);
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+  box-shadow: inset 0 18px 0 var(--paper-2), 4px 4px 0 var(--plate-shadow);
+}
+
+/* ── 코드 블록: mono 상단 막대를 단 프레임. 문서의 코드 예제는 아래에서 따로 다룬다. ── */
+
+.code:not(.macro-docs__example > .code) {
+  padding-top: var(--code-bar);
+  background: var(--paper-2);
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+}
+.code:not(.macro-docs__example > .code)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--code-bar);
+  box-sizing: border-box;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  box-shadow: inset 3px 0 0 var(--flare);
+}
+.install__body .code::after { top: calc(var(--code-bar) / 2); right: auto; left: 46px; }
+.code:not(.macro-docs__example > .code) pre { padding: 14px 18px 16px; }
+.code:not(.macro-docs__example > .code) .code__copy {
+  top: 3px;
+  right: 4px;
+  min-height: 0;
+  height: calc(var(--code-bar) - 7px);
+  padding: 0 10px;
+  border-radius: 0;
+  border-color: var(--ink-3);
+  font-size: 11px;
+}
+.code__copy:hover { color: var(--on-flare); background: var(--flare); border-color: var(--flare); }
+
+/* CLI·Skill 페이지의 에이전트 프롬프트는 에이전트 화면처럼 코랄 막대를 단다. `.section__body`까지
+   붙여 위의 `.code:not(...)` 프레임 규칙과 같은 구체성으로 맞추고, 뒤에 있어서 이긴다. */
+.section--agent .section__body .code {
+  border-color: var(--flare);
+  box-shadow: 4px 4px 0 var(--flare);
+}
+.section--agent .section__body .code::before {
+  background: color-mix(in srgb, var(--flare) 12%, var(--paper));
+  border-bottom-color: var(--flare);
+}
+/* 좁은 화면의 `.code:not(...) pre` 여백 규칙이 뒤에 있으므로 한 단계 더 구체적으로 둔다. */
+.section.section--agent .section__body .code pre { padding-block: 18px 20px; }
+.section--agent .section__body .code + .btn { margin-top: 24px; }
+
+/* ── 버튼 ─────────────────────────────────────────────── */
+
+main .btn {
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--plate-shadow);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease, color 0.16s ease;
+}
+main .btn--ghost { background: var(--paper); }
+main .btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--plate-shadow); }
+main .btn--sm { box-shadow: 3px 3px 0 var(--plate-shadow); }
+
+/* ── 지원 범위 표 ───────────────────────────────────────── */
+
+.support {
+  border: 1.5px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--plate-shadow);
+}
+.support__table thead th {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--paper-2);
+  border-bottom: 2px solid var(--ink);
+}
+.support__table tbody th { font-weight: 700; }
+.support__table tbody tr:hover > * { background: color-mix(in srgb, var(--flare) 6%, transparent); }
+
+/* ── 접힌 고급 설정과 compose 파일 보기: 닫힌 화면 프레임 ─── */
+
+.advanced {
+  padding: 0 18px;
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+}
+.advanced[open] { padding-bottom: 20px; border-color: var(--ink); box-shadow: 4px 4px 0 var(--plate-shadow); }
+.advanced summary {
+  margin: 0 -18px;
+  padding: 13px 18px;
+  font-size: 15px;
+  background: var(--paper-2);
+}
+.advanced[open] summary { border-bottom: 1px solid var(--rule); }
+.advanced summary::before { width: 12px; text-align: center; }
+.advanced__label { color: var(--ink-2); }
+.section__body > .advanced__label { margin-top: 28px; }
+.remote-file__details { box-sizing: border-box; }
+.remote-file__details .code { margin-bottom: 0; }
+
+/* ── 셀프 호스팅 방법 카드: 세로 경로에 이어진 지도 노드 ── */
+
+.method-cards {
+  position: relative;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  padding-left: 40px;
+}
+.method-cards::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 21px;
+  bottom: 21px;
+  border-left: 2px solid var(--ink-3);
+}
+.method-cards > li { position: relative; }
+.method-cards > li::before {
+  content: '';
+  position: absolute;
+  left: -39px;
+  top: 14px;
+  width: 14px;
+  height: 14px;
+  box-sizing: border-box;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+}
+.method-cards > li::after {
+  content: '';
+  position: absolute;
+  left: -25px;
+  top: 20px;
+  width: 25px;
+  border-top: 2px solid var(--ink-3);
+}
+.method-cards > li:has(.method-card:hover)::before,
+.method-cards > li:has(.method-card:focus-visible)::before { background: var(--flare); border-color: var(--flare); }
+.method-card {
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0 20px;
+  padding: 0;
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.method-card__name {
+  grid-column: 1 / -1;
+  padding: 9px 16px;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+  font-size: 16px;
+  font-weight: 700;
+}
+.method-card__audience { padding: 12px 16px 14px; font-size: 15px; }
+.method-card__cta { align-self: end; padding: 12px 16px 14px 0; font-size: 12.5px; white-space: nowrap; }
+.method-card:hover { border-color: var(--flare); transform: translate(-3px, -3px); box-shadow: 4px 4px 0 var(--plate-shadow); }
+.method-card:focus-visible { outline: 2px solid var(--flare); outline-offset: 3px; }
+
+/* ── 좁은 화면 ─────────────────────────────────────────── */
+
+@media (max-width: 720px) {
+  .hero__inner--page { padding-block: 48px 44px; }
+  .install { gap: 24px; }
+  .install > li { grid-template-columns: 44px minmax(0, 1fr); }
+  .install > li:not(:last-child)::before { left: 15px; top: 32px; bottom: -24px; }
+  .install > li::after { left: 32px; top: 15px; width: 12px; }
+  .install__num { width: 32px; height: 32px; padding: 0; font-size: 13px; white-space: nowrap; }
+  .install__body { padding: 0 16px 20px; }
+  .install__title { margin: 0 -16px 14px; padding: 9px 60px 9px 16px; font-size: 17px; }
+  .code:not(.macro-docs__example > .code) pre { padding: 12px 14px 14px; }
+  .install__body .code::after { display: none; }
+  .install__shot { box-shadow: inset 0 18px 0 var(--paper-2), 3px 3px 0 var(--plate-shadow); }
+  .method-card { grid-template-columns: minmax(0, 1fr); }
+  .method-card__cta { padding: 0 16px 14px; }
+  .install-tabs a { padding: 0 12px; }
+}
+
+/* ── 개발자 문서: 구조는 그대로, 글꼴과 강조와 색만 ─────── */
+
+.macro-docs { font-size: 14.5px; }
+.macro-docs__rail,
+.macro-docs__toc { top: calc(var(--header-h, 64px) + 24px); }
+
+.macro-docs__brand { font-family: var(--font-display); font-size: 16px; font-weight: 700; letter-spacing: 0.12em; }
+.macro-docs__brand span { font-weight: 500; letter-spacing: 0.04em; color: var(--flare); border-color: var(--flare); border-radius: 0; }
+.macro-docs__label { font-family: var(--font-mono); font-weight: 500; letter-spacing: 0.04em; color: var(--ink-3); }
+
+/* 왼쪽 목록의 현재 문서 */
+.macro-docs__rail nav a { transition: color 0.15s ease, background-color 0.15s ease; }
+.macro-docs__rail nav a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--flare) 9%, var(--paper));
+  border-left-color: var(--flare);
+  box-shadow: inset 1px 0 0 var(--flare);
+}
+
+/* 제목 */
+.macro-docs__heading h1 { font-weight: 800; letter-spacing: -0.035em; }
+.macro-docs__heading p { color: var(--ink-2); font-size: 16px; }
+.macro-docs__section h2 { font-family: var(--font-body); font-size: 21px; font-weight: 750; letter-spacing: -0.02em; }
+.macro-docs__section h2 a:hover { color: var(--ink); }
+.macro-docs__section h2 span { font-family: var(--font-mono); font-weight: 500; color: var(--flare); }
+.macro-docs__section p { color: var(--ink-2); }
+
+/* 링크와 인라인 코드 */
+.docs-links a { text-decoration-color: var(--flare); text-decoration-thickness: 1.5px; font-weight: 600; }
+.docs-links a:hover { color: var(--flare); }
+.macro-docs :is(p, li, td, th) code {
+  padding: 1px 5px;
+  color: var(--ink);
+  background: var(--paper-2);
+  box-shadow: inset 0 0 0 1px var(--rule);
+}
+.macro-docs tbody th code { color: var(--flare); font-weight: 500; }
+.docs-sequence li::marker { font-family: var(--font-mono); color: var(--flare); }
+
+/* 표 머리 */
+.macro-docs thead { font-family: var(--font-mono); color: var(--ink); background: var(--paper-2); }
+.macro-docs thead th { font-weight: 500; box-shadow: inset 0 -2px 0 var(--ink); }
+
+/* 코드 예제의 막대 색 */
+.macro-docs__code-label { color: var(--paper); background: var(--ink); border-bottom-color: var(--ink); }
+.macro-docs__code-label span { color: color-mix(in srgb, var(--paper) 72%, var(--ink)); }
+.macro-docs .code { background: var(--paper-2); }
+.macro-docs .code__copy { color: var(--ink); background: var(--paper); border-color: var(--rule); }
+.macro-docs .code__copy:hover { color: var(--on-flare); background: var(--flare); border-color: var(--flare); }
+
+/* 설명 문단과 검색 결과 상태는 조용한 강조로 */
+.macro-docs__results [role="status"] { font-family: var(--font-mono); color: var(--flare); }
+.macro-docs__search input:focus { border-color: var(--flare); }
+
+/* 오른쪽 목차의 현재 위치. pages.tsx가 읽는 중인 절에 aria-current를 붙인다. */
+.macro-docs__toc a { margin-left: -1px; border-left: 2px solid transparent; transition: color 0.15s ease, border-color 0.15s ease; }
+.macro-docs__toc a[aria-current="location"] { color: var(--ink); font-weight: 600; border-left-color: var(--flare); }
+.macro-docs__mobile-toc a[aria-current="location"] { color: var(--flare); }
+
+/* 이전·다음 */
+.macro-docs__pager small { font-family: var(--font-mono); color: var(--flare); }
+.macro-docs__pager a { font-weight: 600; }
+.macro-docs__pager a:hover { color: var(--flare); }
