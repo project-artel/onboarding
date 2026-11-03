@@ -1,0 +1,17 @@
+node_modules
+dist
+.git
+.github
+.plan
+.agents
+.claude
+.env*
+.jira.env*
+.notion.env*
+.mcp.json
+*.local
+*.swp
+*.swo
+*~
+*.log
+*.tsbuildinfo
