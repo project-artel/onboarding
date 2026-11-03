@@ -57,4 +57,10 @@ for (const id of selfHostingMethodIds) {
   assert.equal(messages.ko.selfHosting.methods[id].steps.length, messages.en.selfHosting.methods[id].steps.length)
 }
 
+// The landing map places features by key, so both locales list the same features in the same order.
+assert.deepEqual(
+  messages.ko.features.items.map((item) => item.key),
+  messages.en.features.items.map((item) => item.key),
+)
+
 console.log('locale checks passed')
