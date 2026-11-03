@@ -2,7 +2,7 @@
 
 - Date: 2026-11-03
 - GitHub Issue: None (Jira: ARTEL-1355)
-- Status: Implemented and validated; draft PR preparation
+- Status: Draft PR #43 opened; human review pending
 
 ## Goal
 
@@ -24,7 +24,7 @@
 - [x] **Step 0: Recon** — 최신 main과 실제 문구·사용 페이지 확인.
 - [x] **Step 1: Implementation** — 일반 Test Case 명칭 및 사전 조건 표현 정리. metadata 동기화. agent 지침 연결.
 - [x] **Step 2: Tests** — npm run check, npm run check:docs, npm run lint, npm run build 통과. 양쪽 언어·테마·1280px/360px 실제 페이지 56조합 및 기능 모달 확인.
-- [ ] **Step 3: Rollout / Rollback** — main 대상 draft PR, Jira 링크 및 검증 근거. revert로 복구.
+- [x] **Step 3: Rollout / Rollback** — main 대상 [draft PR #43](https://github.com/project-artel/onboarding/pull/43) 생성. Jira ARTEL-1355 검토 중. revert로 복구. 병합·배포 없음.
 
 ## Validation
 - **Commands to run:** npm run check, npm run check:docs, npm run lint, npm run build, git diff --check.
