@@ -19,7 +19,7 @@ export function CliPage() {
         </div>
       </section>
 
-      <RailSection num="AGENT" title={t.cli.agent.title}>
+      <RailSection className="section--agent" num="AGENT" title={t.cli.agent.title}>
         <p className="step__body">{t.cli.agent.body}</p>
         <CodeBlock code={t.cli.agent.prompt} />
         <a className="btn btn--ghost" href="/cli.md">

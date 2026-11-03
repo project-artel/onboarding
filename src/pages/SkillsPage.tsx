@@ -19,7 +19,7 @@ export function SkillsPage() {
         </div>
       </section>
 
-      <RailSection num="AGENT" title={t.skills.agent.title}>
+      <RailSection className="section--agent" num="AGENT" title={t.skills.agent.title}>
         <p className="step__body">{t.skills.agent.body}</p>
         <CodeBlock code={t.skills.agent.prompt} />
         <a className="btn btn--ghost" href="/skills.md">

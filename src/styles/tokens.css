@@ -19,8 +19,8 @@
   --on-flare: #ffffff;       /* flare 위 텍스트 */
 
   /* ── Type ────────────────────────────────────────────── */
-  --font-display: 'Space Grotesk', 'Pretendard Variable', Pretendard, sans-serif;
-  --font-body: 'Pretendard Variable', Pretendard, -apple-system, sans-serif;
+  --font-display: 'Unbounded', 'Wanted Sans Variable', sans-serif;  /* 라틴은 Unbounded, 한글은 Wanted Sans로 떨어진다 */
+  --font-body: 'Wanted Sans Variable', sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
   /* ── Layout ──────────────────────────────────────────── */
