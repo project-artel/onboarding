@@ -1,0 +1,96 @@
+name: Publish container
+
+on:
+  pull_request:
+  push:
+    branches: [develop, main]
+  workflow_dispatch:
+
+concurrency:
+  group: publish-container-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: project-artel/onboarding
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build for verification
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: onboarding:smoke
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Verify container
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'docker logs onboarding-smoke; docker rm -f onboarding-smoke' EXIT
+          docker run -d --name onboarding-smoke -p 127.0.0.1:8080:8080 \
+            -e VITE_ORCHESTRATION_URL=https://api.example.test \
+            -e VITE_CONSOLE_URL='https://console.example.test/console?one=1&two=2' \
+            onboarding:smoke
+          # nginx가 뜨기 전에는 docker port forward가 연결을 받고 바로 끊는다(curl 56).
+          # `--retry-connrefused`는 이 경우를 다시 시도하지 않으므로 모든 오류를 다시 시도한다.
+          curl --fail --retry 10 --retry-all-errors --retry-delay 1 http://localhost:8080/ -o /tmp/index.html
+          curl --fail http://localhost:8080/docs/getting-started -o /tmp/route.html
+          cmp /tmp/index.html /tmp/route.html
+          curl --fail -I http://localhost:8080/index.html | grep -i 'cache-control: no-cache'
+          asset=$(grep -oE '/assets/[^" ]+\.js' /tmp/index.html | head -n 1)
+          curl --fail "http://localhost:8080${asset}" -o /tmp/app.js
+          grep -F 'https://api.example.test' /tmp/app.js > /dev/null
+          grep -F 'https://console.example.test/console?one=1&two=2' /tmp/app.js > /dev/null
+          if grep -q '__ARTEL_.*_URL__' /tmp/app.js; then exit 1; fi
+          curl --fail -I "http://localhost:8080${asset}" | grep -i 'immutable'
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/assets/missing.js)" = 404
+          if docker run --rm onboarding:smoke nginx -t; then
+            echo '환경변수 없이 컨테이너가 시작되면 안 됩니다' >&2
+            exit 1
+          fi
+
+      - name: Log in to ghcr.io
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Resolve tags and labels
+        if: github.event_name != 'pull_request'
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=sha,format=long,prefix=
+
+      - name: Build and push
+        if: github.event_name != 'pull_request'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
