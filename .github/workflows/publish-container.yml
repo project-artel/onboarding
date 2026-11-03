@@ -48,7 +48,9 @@ jobs:
             -e VITE_ORCHESTRATION_URL=https://api.example.test \
             -e VITE_CONSOLE_URL='https://console.example.test/console?one=1&two=2' \
             onboarding:smoke
-          curl --fail --retry 10 --retry-connrefused --retry-delay 1 http://localhost:8080/ -o /tmp/index.html
+          # nginx가 뜨기 전에는 docker port forward가 연결을 받고 바로 끊는다(curl 56).
+          # `--retry-connrefused`는 이 경우를 다시 시도하지 않으므로 모든 오류를 다시 시도한다.
+          curl --fail --retry 10 --retry-all-errors --retry-delay 1 http://localhost:8080/ -o /tmp/index.html
           curl --fail http://localhost:8080/docs/getting-started -o /tmp/route.html
           cmp /tmp/index.html /tmp/route.html
           curl --fail -I http://localhost:8080/index.html | grep -i 'cache-control: no-cache'
