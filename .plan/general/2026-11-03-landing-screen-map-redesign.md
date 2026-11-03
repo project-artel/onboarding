@@ -40,7 +40,7 @@ owner가 시안 3종 중 고른 C(Screen Map)를 실제 사이트에 옮긴다.
 - [x] **Step 5: 문구** — `messages.ts`의 `features` 타입에 `details` 추가, ko·en 7개 항목으로 교체. `features.tsx`의 로컬 덮어쓰기 제거. `public/llms.txt`에 기능 목록이 있으면 같은 내용으로 맞춘다.
 - [x] **Step 6: 설치·문서 스타일** — `pages.css`를 `src/styles/pages.css`(가칭)로 옮기고 `data-mockup` 선택자를 걷어 낸다. 문서는 폰트·강조·색 규칙만 남았는지 확인한다.
 - [x] **Step 7: 문서** — `DESIGN.md`에 새 폰트, 상단바, 랜딩 동작(스냅, 진행 경로, 지도), reduced motion 규칙을 반영한다.
-- [ ] **Step 8: 검증** — 아래 명령과 Chrome 육안 확인. `typecheck`·`check`·`build`·`check:docs` 통과. `npm run lint`는 로컬에만 있는 `mockups/`의 오류로 실패하고, 그 밖(`src`, `scripts`)은 오류·경고 0. Chrome 육안 확인은 남음.
+- [x] **Step 8: 검증** — 아래 명령과 Chrome 육안 확인. `typecheck`·`check`·`build`·`check:docs` 통과. `npm run lint`는 로컬에만 있는 `mockups/`의 오류로 실패하고, 그 밖(`src`, `scripts`)은 오류·경고 0. Chrome 육안 확인은 남음.
 
 ## Validation
 - **Commands to run:** `npm run lint`, `npm run typecheck`, `npm run check`, `npm run build`, `npm run check:docs`
