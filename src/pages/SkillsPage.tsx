@@ -2,8 +2,17 @@ import { CodeBlock } from '../components/CodeBlock'
 import { RailSection } from '../components/RailSection'
 import { useCopy } from '../i18n/useCopy'
 
+const agents = [
+  { id: 'codex', name: 'Codex' },
+  { id: 'claude-code', name: 'Claude Code' },
+  { id: 'cursor', name: 'Cursor' },
+] as const
+
+const pluginRepository = 'https://github.com/project-artel/artel-plugins'
+
 export function SkillsPage() {
   const { t } = useCopy()
+  const copy = t.skills
 
   return (
     <>
@@ -12,45 +21,38 @@ export function SkillsPage() {
         <span className="crop crop--tr" aria-hidden="true" />
         <div className="shell hero__inner hero__inner--page">
           <div className="hero__copy hero__copy--narrow">
-            <p className="page-hero__kicker">INSTALL</p>
-            <h1 className="hero__title page-hero__title">{t.skills.title}</h1>
-            <p className="hero__lead">{t.skills.lead}</p>
+            <h1 className="hero__title page-hero__title">{copy.title}</h1>
+            <p className="hero__lead">{copy.lead}</p>
+            <nav aria-label={copy.agentNav} className="hero__actions">
+              {agents.map(({ id, name }) => (
+                <a className="btn btn--ghost" href={`#${id}`} key={id}>{name}</a>
+              ))}
+            </nav>
           </div>
         </div>
       </section>
 
-      <RailSection className="section--agent" num="AGENT" title={t.skills.agent.title}>
-        <p className="step__body">{t.skills.agent.body}</p>
-        <CodeBlock code={t.skills.agent.prompt} />
-        <a className="btn btn--ghost" href="/skills.md">
-          {t.skills.agent.instructionsCta}
-        </a>
+      <RailSection className="plugin-guide-section" id="codex" title="Codex">
+        <CodeBlock code="codex plugin marketplace add project-artel/artel-plugins" />
+        <p className="step__body">{copy.codex}</p>
       </RailSection>
 
-      <RailSection num="MANUAL" title={t.skills.install.title}>
-        <p className="step__body">{t.skills.install.body}</p>
-        <CodeBlock code={t.skills.install.command} />
-        <p className="step__body">{t.skills.install.optionsNote}</p>
+      <RailSection className="plugin-guide-section" id="claude-code" title="Claude Code">
+        <CodeBlock code={'claude plugin marketplace add project-artel/artel-plugins\nclaude plugin install artel@artel-plugins'} />
+        <p className="step__body">{copy.claudeCode}</p>
       </RailSection>
 
-      <RailSection num="SKILLS" title={t.skills.listTitle}>
-        <ul className="marks marks--tight">
-          {t.skills.items.map((item) => (
-            <li key={item.name}>
-              <span>
-                <code>{item.name}</code> {item.body}
-              </span>
-            </li>
-          ))}
-        </ul>
-        <a
-          className="btn btn--ghost"
-          href="https://github.com/project-artel/artel-skills"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {t.skills.repositoryCta}
+      <RailSection className="plugin-guide-section" id="cursor" title="Cursor">
+        <a className="btn btn--ghost" href={`${pluginRepository}/archive/refs/heads/main.zip`}>
+          {copy.download}
         </a>
+        <p className="step__body">{copy.cursorCopy}</p>
+        <p className="step__body">{copy.cursorConnect}</p>
+      </RailSection>
+
+      <RailSection className="plugin-guide-section" title={copy.signInTitle}>
+        <p className="step__body">{copy.signIn}</p>
+        <p className="step__body">{copy.verify}</p>
       </RailSection>
     </>
   )

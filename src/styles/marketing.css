@@ -172,6 +172,13 @@ summary::-webkit-details-marker { display: none; }
 }
 .section__body { padding: var(--section-y) 0 var(--section-y) 40px; max-width: 760px; }
 
+.plugin-guide-section { scroll-margin-top: 140px; }
+.plugin-guide-section .section__body > * + * { margin-top: 16px; }
+
+@media (max-width: 720px) {
+  .plugin-guide-section { scroll-margin-top: 16px; }
+}
+
 @media (max-width: 720px) {
   .section__split { grid-template-columns: minmax(0, 1fr); }
   .section__label { border-right: none; border-bottom: 1px solid var(--rule); padding: 40px 0 20px; }

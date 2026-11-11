@@ -99,11 +99,15 @@ type Copy = {
   skills: {
     title: string
     lead: string
-    agent: { title: string; body: string; prompt: string; instructionsCta: string }
-    install: { title: string; body: string; command: string; optionsNote: string }
-    listTitle: string
-    items: { name: string; body: string }[]
-    repositoryCta: string
+    agentNav: string
+    codex: string
+    claudeCode: string
+    download: string
+    cursorCopy: string
+    cursorConnect: string
+    signInTitle: string
+    signIn: string
+    verify: string
   }
   how: {
     title: string
@@ -142,7 +146,7 @@ const ko: Copy = {
     installMenu: '설치 방법',
     sdk: 'SDK',
     cli: 'CLI',
-    skills: 'Skill',
+    skills: '플러그인',
     selfHosting: '셀프 호스팅',
     how: '아키텍처',
     skipToContent: '본문으로 건너뛰기',
@@ -391,29 +395,17 @@ artel qa run --test-run <id> --instance <id>`,
     },
   },
   skills: {
-    title: 'Skill',
-    lead: 'AI 코딩 에이전트가 ARTEL SDK와 CLI를 쓰게 해 주는 skill',
-    agent: {
-      title: 'AI 에이전트에게 설치 맡기기',
-      body: 'AI 코딩 에이전트에 아래 프롬프트 붙여 넣기',
-      prompt: 'https://artel.kr/skills.md 의 안내를 따라 ARTEL skill 을 설치해 줘.',
-      instructionsCta: '에이전트용 안내 보기',
-    },
-    install: {
-      title: '수동 설치',
-      body: '현재 프로젝트에 설치',
-      command: 'npx skills add project-artel/artel-skills',
-      optionsNote: '모든 프로젝트에 설치하려면 -g 추가',
-    },
-    listTitle: '포함된 skill',
-    items: [
-      { name: 'artel-unity-sdk', body: 'Unity SDK 설치와 연결' },
-      { name: 'artel-cli', body: '터미널에서 QA 실행' },
-      { name: 'artel-mcp', body: '에이전트가 MCP로 게임 직접 조작 (프로토타입)' },
-      { name: 'artel-cheats', body: 'QA 에이전트가 쓸 치트([ArtelCheat]) 추가' },
-      { name: 'artel-behaviors', body: 'QA 에이전트가 켜 둘 behavior([ArtelBehavior]) 추가' },
-    ],
-    repositoryCta: 'artel-skills 저장소 보기',
+    title: 'ARTEL 플러그인 설치',
+    lead: '코딩 에이전트에 ARTEL 스킬과 스테이징 MCP를 함께 설치',
+    agentNav: '코딩 에이전트 선택',
+    codex: 'Codex 데스크톱 앱을 다시 열고 Plugins에서 ARTEL 마켓플레이스의 ARTEL 플러그인 설치. MCP 연결 화면에서 로그인 시작.',
+    claudeCode: 'Claude Code에서 /mcp를 열고 plugin:artel:artel-macro를 선택해 로그인 시작.',
+    download: '플러그인 ZIP 다운로드',
+    cursorCopy: '로컬 플러그인 가져오기가 허용된 Cursor에서 설치. ZIP을 풀고 plugins/artel 폴더를 ~/.cursor/plugins/local/artel로 복사. 복사한 폴더 바로 아래에 plugin.json이 있는지 확인.',
+    cursorConnect: 'Cursor를 다시 열거나 Developer: Reload Window 실행. Customize에서 artel-macro MCP 연결 시작.',
+    signInTitle: '스테이징 MCP 로그인',
+    signIn: '브라우저에서 스테이징 ARTEL에 로그인하고 연결 권한 승인. 이미 로그인되어 있으면 권한 승인 화면으로 바로 이동.',
+    verify: '에이전트에 ARTEL MCP의 list_projects 호출을 요청하고 스테이징 프로젝트 목록 확인.',
   },
   how: {
     title: '아키텍처',
@@ -668,7 +660,7 @@ const en: Copy = {
     installMenu: 'Ways to install',
     sdk: 'SDK',
     cli: 'CLI',
-    skills: 'Skills',
+    skills: 'Plugins',
     selfHosting: 'Self-hosting',
     how: 'Architecture',
     skipToContent: 'Skip to content',
@@ -921,29 +913,17 @@ artel qa run --test-run <id> --instance <id>`,
     },
   },
   skills: {
-    title: 'Skills',
-    lead: 'Skills that let an AI coding agent use the ARTEL SDK and CLI.',
-    agent: {
-      title: 'Let your AI agent install them',
-      body: 'Paste this prompt into an AI coding agent.',
-      prompt: 'Install the ARTEL skills by following https://artel.kr/skills.md',
-      instructionsCta: 'View the agent instructions',
-    },
-    install: {
-      title: 'Install manually',
-      body: 'Installs into the current project.',
-      command: 'npx skills add project-artel/artel-skills',
-      optionsNote: 'Add -g to install for every project.',
-    },
-    listTitle: 'Included skills',
-    items: [
-      { name: 'artel-unity-sdk', body: 'Installs and connects the Unity SDK.' },
-      { name: 'artel-cli', body: 'Runs QA from a terminal.' },
-      { name: 'artel-mcp', body: 'Lets an agent drive the game over MCP. A prototype.' },
-      { name: 'artel-cheats', body: 'Adds cheats ([ArtelCheat]) for the QA agent.' },
-      { name: 'artel-behaviors', body: 'Adds behaviors ([ArtelBehavior]) the QA agent can switch on.' },
-    ],
-    repositoryCta: 'View the artel-skills repository',
+    title: 'Install the ARTEL plugin',
+    lead: 'Install ARTEL skills and staging MCP in your coding agent.',
+    agentNav: 'Choose a coding agent',
+    codex: 'Reopen Codex desktop and install ARTEL from the ARTEL marketplace in Plugins. Start sign-in from the MCP connection screen.',
+    claudeCode: 'Open /mcp in Claude Code and select plugin:artel:artel-macro to start sign-in.',
+    download: 'Download the plugin ZIP',
+    cursorCopy: 'Allow local plugin imports in Cursor. Unzip the download and copy plugins/artel to ~/.cursor/plugins/local/artel. Check that plugin.json is directly inside the copied folder.',
+    cursorConnect: 'Restart Cursor or run Developer: Reload Window. In Customize, start the connection for artel-macro.',
+    signInTitle: 'Sign in to staging MCP',
+    signIn: 'Sign in to ARTEL staging in your browser and approve the connection. If you’re already signed in, the approval screen opens directly.',
+    verify: 'Ask your agent to call list_projects through ARTEL MCP and check that it shows your staging projects.',
   },
   how: {
     title: 'Architecture',

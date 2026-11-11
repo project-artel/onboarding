@@ -2,7 +2,8 @@ import type { ReactNode } from 'react'
 
 type RailSectionProps = {
   /** mono 섹션 넘버. `§ 01` 또는 `HELP` 같은 라벨. */
-  num: string
+  num?: string
+  id?: string
   title: string
   /** `--paper-2` 교차 배경. */
   alt?: boolean
@@ -14,13 +15,13 @@ type RailSectionProps = {
 }
 
 // 좌측 220px 라벨 레일 + 40px 들여쓴 본문. 세 페이지에서 여덟 번 나온다.
-export function RailSection({ num, title, alt, aside, className, children }: RailSectionProps) {
+export function RailSection({ num, id, title, alt, aside, className, children }: RailSectionProps) {
   const classes = ['section', alt && 'section--alt', className].filter(Boolean).join(' ')
   return (
-    <section className={classes}>
+    <section className={classes} id={id}>
       <div className="shell section__split">
         <div className="section__label">
-          <p className="section__num">{num}</p>
+          {num ? <p className="section__num">{num}</p> : null}
           <h2 className="section__title">{title}</h2>
           {aside}
         </div>
