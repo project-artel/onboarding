@@ -13,8 +13,8 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 Test 
 - [SDK](https://artel.kr/en/sdk): install the Unity SDK and connect a game
 - [CLI](https://artel.kr/en/cli): install the ARTEL CLI and run QA from a terminal or CI
 - [CLI install instructions for AI agents](https://artel.kr/cli.md): plain-text guide an AI coding agent follows to install the ARTEL CLI
-- [Agent skills](https://artel.kr/en/skills): skills that teach an AI coding agent to use ARTEL (Unity SDK setup, CLI, local MCP server, game cheats and behaviors). Install with `npx skills add project-artel/artel-skills`
-- [Skills install instructions for AI agents](https://artel.kr/skills.md): plain-text guide an AI coding agent follows to install the ARTEL skills
+- [ARTEL plugin](https://artel.kr/en/skills): select Codex, Claude Code, Cursor, VS Code, or copy an installation prompt for OpenCode and other coding agents.
+- [Plugin installation reference](https://artel.kr/skills.md): links to installation and staging sign-in instructions by coding agent.
 - [Self-hosting](https://artel.kr/en/self-hosting): run ARTEL on your own machine
 - [Self-hosting: Install script](https://artel.kr/en/self-hosting/install-script): install ARTEL with one command
 - [Self-hosting: Docker Compose](https://artel.kr/en/self-hosting/docker-compose): run ARTEL with Docker Compose
@@ -43,7 +43,7 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 Test 
 - [홈](https://artel.kr/)
 - [SDK](https://artel.kr/sdk)
 - [CLI](https://artel.kr/cli)
-- [Skill 설치](https://artel.kr/skills)
+- [ARTEL 플러그인 설치](https://artel.kr/skills)
 - [셀프 호스팅](https://artel.kr/self-hosting)
 - [셀프 호스팅: 설치 스크립트](https://artel.kr/self-hosting/install-script)
 - [셀프 호스팅: Docker Compose](https://artel.kr/self-hosting/docker-compose)

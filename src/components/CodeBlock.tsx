@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useCopy } from '../i18n/useCopy'
 
-export function CodeBlock({ code }: { code: string }) {
+export function CodeBlock({ code, wrap = false }: { code: string; wrap?: boolean }) {
   const { t } = useCopy()
   const [copied, setCopied] = useState(false)
 
@@ -17,7 +17,7 @@ export function CodeBlock({ code }: { code: string }) {
   }
 
   return (
-    <div className="code">
+    <div className={wrap ? 'code code--wrap' : 'code'}>
       <pre>
         <code>{code}</code>
       </pre>
