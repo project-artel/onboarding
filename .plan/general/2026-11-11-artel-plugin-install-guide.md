@@ -14,7 +14,7 @@ MCP 서버나 인증 설정, 플러그인 번들 변경은 이번 범위 밖입�
 
 ## Context / Constraints
 
-기존 /skills, /en/skills, /skills.md와 home의 ?guide=skills 링크를 유지합니다. Cursor는 공식 문서에 있는 로컬 플러그인 방식으로 안내합니다. 공통 OAuth 절차에는 스테이징 연결을 명시합니다.
+기존 /skills, /en/skills, /skills.md와 home의 ?guide=skills 링크를 유지합니다. ?agent= 하위 내비게이션에서 선택한 안내 하나만 표시하고 기존 해시 링크도 해석합니다. Cursor와 VS Code는 공식 문서의 로컬 플러그인 방식으로 안내합니다. OpenCode 등 기타 에이전트에는 원본 저장소에서 현재 에이전트의 스킬과 MCP 설정을 등록하는 프롬프트를 제공합니다. 공통 OAuth 절차에는 스테이징 연결을 명시합니다.
 
 ## Approach (Checklist)
 

@@ -12,7 +12,7 @@ const siteOrigin = 'https://artel.kr'
 
 export function SiteLayout() {
   const { locale, t, href, swapTo } = useCopy()
-  const { pathname, hash } = useLocation()
+  const { pathname, search, hash } = useLocation()
   const [theme, setTheme] = useState(currentTheme)
 
   // 랜딩은 진행 표시와 상단바 높이를 스스로 다룬다. 나머지 페이지에만 공용 장식을 붙인다.
@@ -79,7 +79,7 @@ export function SiteLayout() {
                   </span>
                 )}
                 <Link
-                  to={swapTo(next)}
+                  to={{ pathname: swapTo(next), search, hash }}
                   aria-current={next === locale ? 'true' : undefined}
                   hrefLang={next}
                 >
