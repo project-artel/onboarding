@@ -7,27 +7,14 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import { HeaderRoute } from '../../components/HeaderRoute'
-import type { Locale } from '../../i18n/locale'
-import type { messages } from '../../i18n/messages'
 import { useCopy } from '../../i18n/useCopy'
 import { enableSnap, type SnapController } from '../../lib/snap'
 import { FeatureBlock } from './features'
 import { elbow, fmt, pointAt, poly, toD, type Pt } from './geom'
-import {
-  confusionCells,
-  confusionCounts,
-  confusionLayout,
-  confusionRate,
-  confusionRates,
-  formatCount,
-  formatMetricValue,
-  formatRate,
-  metrics,
-  metricsStatus,
-} from './metrics'
 import { TILE_Y, type RegionName } from './sceneGeometry'
 import { sceneLoops } from './sceneLoops'
-import { FlowScenes, MetricsScenes, ProblemScenes, Region } from './scenes'
+import { FlowScenes, ProblemScenes, Region } from './scenes'
+import { VideoBlock } from './videoReel'
 import './landing.css'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
@@ -229,66 +216,6 @@ function FaqItem({ q, a, shifted }: { q: string; a: string; shifted: boolean }) 
   )
 }
 
-// § 04 혼동 행렬의 글자. 판 위 칸과 축 옆 기준점에 서는 표지판이다. 무대가 없을 때는 같은 항목이
-// 행렬 모양의 격자로 쌓이도록 칸마다 `gridArea`를 준다.
-type Axes = (typeof messages)['ko']['metrics']['axes']
-function ConfusionSigns({ axes, locale }: { axes: Axes; locale: Locale }) {
-  const axis = (key: string, area: string, side: 'top' | 'left' | 'corner', text: string, title = false) => (
-    <li key={key} className={`smc-sign smc-axis smc-axis--${side}${title ? ' smc-axis--title' : ''}`} data-sign={key} style={{ gridArea: area }}>
-      <span className="smc-axis__text">
-        <span className="smc-strip">{text}</span>
-      </span>
-    </li>
-  )
-  return (
-    <ul className="smc-signs smc-signs--matrix">
-      {axis('ax-verdict', 'verdict', 'top', axes.verdict, true)}
-      {axis('ax-c0', 'c0', 'top', axes.verdictDefect)}
-      {axis('ax-c1', 'c1', 'top', axes.verdictPass)}
-      {axis('ax-actual', 'actual', 'corner', axes.actual, true)}
-      {axis('ax-r0', 'r0', 'left', axes.actualDefect)}
-      {axis('ax-r1', 'r1', 'left', axes.actualClean)}
-      {confusionLayout.flat().map((key) => {
-        const cell = confusionCells[key]
-        return (
-          <li
-            key={key}
-            className={cell.error ? 'smc-sign smc-cell is-error' : 'smc-sign smc-cell'}
-            data-sign={`cell-${key}`}
-            style={{ gridArea: key }}
-          >
-            <span className="smc-cell__box">
-              <span className="smc-cell__name">
-                <span className="smc-strip">
-                  <span className="smc-cell__code">{cell.code}</span> {cell.label[locale]}
-                </span>
-              </span>
-              <span className={confusionCounts[key] === null ? 'smc-cell__count is-empty' : 'smc-cell__count'}>
-                <span className="smc-strip">{formatCount(confusionCounts[key], locale)}</span>
-              </span>
-            </span>
-          </li>
-        )
-      })}
-      {confusionRates.map((r) => {
-        const rate = confusionRate(r, confusionCounts)
-        return (
-          <li key={r.key} className="smc-sign smc-rate" data-sign={`rate-${r.key}`} style={{ gridArea: r.key }}>
-            <span className="smc-rate__box">
-              <span className="smc-sign__text">
-                <span className="smc-strip">{r.label[locale]}</span>
-              </span>
-              <span className={rate === null ? 'smc-sign__num is-empty' : 'smc-sign__num'}>
-                <span className="smc-strip">{formatRate(rate, locale)}</span>
-              </span>
-            </span>
-          </li>
-        )
-      })}
-    </ul>
-  )
-}
-
 /* ── 카메라 ───────────────────────────────────────────── */
 
 // f는 화면 폭에 맞춘 배율을 얼마나 따를지다. 영역은 세 장면이 한 화면에 들어오도록 따른다.
@@ -299,10 +226,10 @@ const CAM: Record<'hero' | 'mobile' | RegionName, Cam> = {
   problem: { x: 1300, y: TILE_Y.problem + 850, ox: 0, oy: 5, tilt: 47, rz: 0, s: 0.68, f: 1 },
   flow: { x: 1300, y: TILE_Y.flow + 830, ox: 0, oy: 5, tilt: 46, rz: 0, s: 0.64, f: 1 },
   features: { x: 1300, y: TILE_Y.features + 850, ox: 0, oy: 4, tilt: 44, rz: 0, s: 0.64, f: 1 },
-  // 막대가 추이 화면을 가리지 않는 배치에 맞춘 값이다. `sceneGeometry.ts`의 `M4`와 함께 바꾼다.
-  metrics: { x: 1300, y: TILE_Y.metrics + 850, ox: 0, oy: 4, tilt: 40, rz: 0, s: 0.6, f: 1 },
+  // 큰 화면과 필름 띠가 상단바와 섹션 제목에 닿지 않는 배치에 맞춘 값이다. `sceneGeometry.ts`의 `V4`와 함께 바꾼다.
+  videos: { x: 1300, y: TILE_Y.videos + 850, ox: 0, oy: 4, tilt: 44, rz: 0, s: 0.64, f: 1 },
 }
-const REGIONS: RegionName[] = ['problem', 'flow', 'features', 'metrics']
+const REGIONS: RegionName[] = ['problem', 'flow', 'features', 'videos']
 
 function camTransform(c: Cam, w: number, h: number, extra = { dx: 0, dy: 0, dt: 0, dr: 0, ds: 0, px: 0, py: 0 }) {
   const fit = 1 + (Math.min(1.2, Math.max(0.55, w / 1440)) - 1) * c.f
@@ -361,9 +288,6 @@ function setupMotion(root: HTMLElement, snapRef: { current: SnapController | nul
   let vw = window.innerWidth
   let vh = window.innerHeight
   let routeTl: gsap.core.Timeline | null = null
-  // 한 번만 재생하는 등장 애니메이션 중 이미 재생한 것. 미디어 조건이 바뀌어 아래 블록이 다시 돌아도
-  // 페이지를 다시 열기 전까지는 다시 재생하지 않는다.
-  const introsPlayed = new WeakSet<Element>()
 
   /* 상단바는 지도 위에 뜬다. 높이를 재서 히어로와 섹션 위 여백에 쓴다. */
   const syncHeader = () => root.style.setProperty('--header-h', `${header?.offsetHeight ?? 64}px`)
@@ -439,11 +363,7 @@ function setupMotion(root: HTMLElement, snapRef: { current: SnapController | nul
       if (!w || !h) return
       // 띠 하나에 영역의 장면이 다 들어오도록 폭에 맞춘다.
       const c = CAM[s.name]
-      const scale = Math.min(1.1, w / 2200)
-      s.rig.style.transform = camTransform({ ...c, s: scale, f: 0, oy: 6, tilt: c.tilt + 4 }, w, h)
-      // scale()은 판의 x, y만 줄이고 translateZ 높이는 그대로 둔다. 띠에서는 판이 무대보다 훨씬 작으므로
-      // 솟는 높이를 쓰는 장면(§ 04 막대)이 같은 비율로 줄일 수 있게 알려 준다.
-      s.region.style.setProperty('--zk', (scale / c.s).toFixed(3))
+      s.rig.style.transform = camTransform({ ...c, s: Math.min(1.1, w / 2200), f: 0, oy: 6, tilt: c.tilt + 4 }, w, h)
     })
   }
 
@@ -471,7 +391,6 @@ function setupMotion(root: HTMLElement, snapRef: { current: SnapController | nul
       live.shared = Boolean(desktop)
       if (desktop) {
         root.classList.add('is-staged')
-        sections.forEach((s) => s.region.style.removeProperty('--zk'))
         // 처음 기준점에 놓이기 전까지 표지판을 섹션 모서리에 그리지 않는다.
         sections.forEach((s) => s.signs.forEach(({ sign }) => (sign.style.visibility = 'hidden')))
       }
@@ -485,8 +404,7 @@ function setupMotion(root: HTMLElement, snapRef: { current: SnapController | nul
       })
 
       const loops = sceneLoops(root)
-      const intros = loops.filter((l) => l.prime)
-      const loopsOf = (el: Element) => loops.filter((l) => !l.prime && el.contains(l.el)).map((l) => l.tl)
+      const loopsOf = (el: Element) => loops.filter((l) => el.contains(l.el)).map((l) => l.tl)
 
       if (!desktop) {
         sections.forEach((s) => s.signs.forEach(({ sign }) => (sign.style.transform = '')))
@@ -505,26 +423,6 @@ function setupMotion(root: HTMLElement, snapRef: { current: SnapController | nul
           route.L = 0
         }
       }
-
-      /* § 04처럼 한 번만 재생하는 장면: 시작 상태로 두었다가 섹션이 처음 현재 섹션이 될 때 재생한다. */
-      intros.forEach((l) => {
-        if (introsPlayed.has(l.el)) {
-          l.rest()
-          return
-        }
-        l.prime?.()
-        ScrollTrigger.create({
-          trigger: sections.find((s) => s.el.contains(l.el))?.el ?? l.el,
-          start: 'top 40%',
-          end: 'bottom 40%',
-          onToggle: (st) => {
-            if (!st.isActive || introsPlayed.has(l.el)) return
-            introsPlayed.add(l.el)
-            l.tl.play()
-            st.kill()
-          },
-        })
-      })
 
       live.drift = true
 
@@ -674,7 +572,7 @@ export function Landing() {
   }, [])
 
   // 상단바 가장자리의 정거장 이름은 섹션 제목을 그대로 쓴다.
-  const stationLabels = [t.hero.title, t.problem.title, t.steps.title, t.features.title, t.metrics.title, t.faq.title]
+  const stationLabels = [t.hero.title, t.problem.title, t.steps.title, t.features.title, t.videos.title, t.faq.title]
   const go = (i: number) => {
     const target = landingStops(rootRef.current)[i]
     if (target === undefined) return
@@ -796,34 +694,23 @@ export function Landing() {
           />
         </section>
 
-        <section className="smc-sec smc-metrics" data-station data-region="metrics" aria-labelledby="smc-metrics-title">
-          <div className="smc-sec__head smc-sec__head--row" data-sign="h">
-            <div>
-              <p className="smc-num">§ 04</p>
-              <h2 className="smc-h2" id="smc-metrics-title">
-                <span className="smc-strip">
-                  <Mixed text={t.metrics.title} />
-                </span>
-              </h2>
-            </div>
-            {metricsStatus === 'collecting' && <span className="smc-collecting">{t.metrics.collecting}</span>}
-          </div>
-          <ConfusionSigns axes={t.metrics.axes} locale={locale} />
-          <ul className="smc-signs smc-signs--metrics">
-            {metrics.map((m) => (
-              <li key={m.key} className="smc-sign smc-sign--metric" data-sign={`m-${m.key}`}>
-                <p className="smc-sign__text">
-                  <span className="smc-strip">{m.label[locale]}</span>
-                </p>
-                <p className={m.value === null ? 'smc-sign__num is-empty' : 'smc-sign__num'}>
-                  <span className="smc-strip">{formatMetricValue(m, locale)}</span>
-                </p>
-              </li>
-            ))}
-          </ul>
-          <Region name="metrics">
-            <MetricsScenes />
-          </Region>
+        <section className="smc-sec smc-videos" data-station data-region="videos" aria-labelledby="smc-videos-title">
+          <VideoBlock
+            locale={locale}
+            copy={t.videos}
+            closeLabel={t.dialog.close}
+            heading={
+              <div className="smc-sec__head" data-sign="h">
+                <p className="smc-num">§ 04</p>
+                <h2 className="smc-h2" id="smc-videos-title">
+                  <span className="smc-strip">
+                    <Mixed text={t.videos.title} />
+                  </span>
+                </h2>
+              </div>
+            }
+            headingId="smc-videos-title"
+          />
         </section>
       </div>
 

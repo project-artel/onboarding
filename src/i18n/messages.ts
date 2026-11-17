@@ -62,13 +62,17 @@ type Copy = {
     title: string
     items: Feature[]
   }
-  /** 랜딩 § 04. 지표 이름과 값은 `src/pages/landing/metrics.ts`에 있다. `collecting`은 `metricsStatus`가
-   *  `'collecting'`일 때 제목 옆에 붙는 표시다.
-   *  `axes`는 혼동 행렬의 축 이름이다. 행은 실제, 열은 ARTEL 판정이다. */
-  metrics: {
+  /** 랜딩 § 04 영상. 영상 목록과 제목, 요약, 분류는 `src/pages/landing/videos.ts`에 있다.
+   *  `preparing`은 아직 올리지 않은 영상의 표시이고, `preparingMessage`는 그 영상을 열었을 때의 안내다.
+   *  `show`는 필름 띠 칸, `play`는 큰 화면 버튼의 이름이다. `{title}`은 영상 제목으로 바뀐다. */
+  videos: {
     title: string
-    collecting: string
-    axes: { actual: string; actualDefect: string; actualClean: string; verdict: string; verdictDefect: string; verdictPass: string }
+    previous: string
+    next: string
+    show: string
+    play: string
+    preparing: string
+    preparingMessage: string
   }
   faq: { title: string; items: { q: string; a: string }[] }
   /** `contact`는 푸터의 문의 주소 앞 이름표다. owner가 정한 표기라 두 언어에서 같다. */
@@ -240,10 +244,14 @@ const ko: Copy = {
       { key: 'github', title: 'GitHub 이슈 연동', body: '찾은 이슈를 GitHub 이슈로 내보내기', details: [] },
     ],
   },
-  metrics: {
-    title: '평가 지표',
-    collecting: '수집 중',
-    axes: { actual: '실제', actualDefect: '결함 있음', actualClean: '결함 없음', verdict: 'ARTEL 판정', verdictDefect: '결함', verdictPass: '정상' },
+  videos: {
+    title: '영상',
+    previous: '이전 영상',
+    next: '다음 영상',
+    show: '{title} 보기',
+    play: '{title} 재생',
+    preparing: '준비 중',
+    preparingMessage: '준비 중인 영상이에요.',
   },
   faq: {
     title: '자주 묻는 질문',
@@ -777,10 +785,14 @@ const en: Copy = {
       { key: 'github', title: 'GitHub issues', body: 'Found issues exported to GitHub issues', details: [] },
     ],
   },
-  metrics: {
-    title: 'Evaluation metrics',
-    collecting: 'Collecting',
-    axes: { actual: 'Actual', actualDefect: 'Defect', actualClean: 'No defect', verdict: 'ARTEL verdict', verdictDefect: 'Defect', verdictPass: 'Pass' },
+  videos: {
+    title: 'Videos',
+    previous: 'Previous video',
+    next: 'Next video',
+    show: 'Show {title}',
+    play: 'Play {title}',
+    preparing: 'Coming soon',
+    preparingMessage: 'This video is coming soon.',
   },
   faq: {
     title: 'Questions',

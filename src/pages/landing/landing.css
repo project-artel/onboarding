@@ -383,19 +383,6 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
   border-bottom: 2px solid var(--flare);
 }
 .smc-arch:hover { color: var(--flare); }
-/* 값을 모으는 중이라는 표시. `metrics.ts`의 `metricsStatus`가 `'live'`가 되면 그리지 않는다. */
-.smc-collecting {
-  flex: none;
-  margin-bottom: 10px;
-  padding: 3px 8px 2px;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--flare);
-  background: var(--paper);
-  border: 1.5px solid var(--flare);
-}
 
 /* 무대 배치에서는 섹션 제목도 표지판처럼 영역의 왼쪽 위 기준점에 서서 카메라와 함께 움직인다. */
 .is-staged .smc-sec__head { position: absolute; left: 0; top: 0; z-index: 2; margin: 0; }
@@ -458,8 +445,6 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
 .smc-sign--feature { width: 240px; margin-left: -120px; margin-top: 6px; cursor: pointer; }
 .smc-sign--feature .smc-sign__title { font-size: 16px; }
 .smc-sign--feature .smc-sign__body { font-size: 14.5px; }
-.smc-sign--metric { width: 220px; margin-left: -110px; }
-.smc-sign--metric .smc-sign__num { font-variant-numeric: tabular-nums; }
 .smc-sign--feature.is-hot .smc-sign__title .smc-strip { box-shadow: inset 0 -2px 0 var(--flare); }
 .smc-sign__trigger {
   padding: 0;
@@ -728,128 +713,268 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
 .f-glyph--system rect { fill: var(--ink-2); }
 .f-glyph--failure path { fill: var(--flare); }
 
-/* ── § 04 평가 지표 ─────────────────────────────────────── */
+/* ── § 04 영상 ──────────────────────────────────────────── */
 
-/* 판에서 솟는 직육면체(막대와 행렬 칸). 높이는 `--h`, 점선 뚜껑은 가장 높은 값 `--max`의 자리다.
-   정적 띠에서는 판이 훨씬 작게 그려지므로 JS가 `--zk`로 솟는 높이도 같은 비율로 줄인다. 면은 지도
-   화면처럼 옅게 칠하고 모서리를 선으로 긋는다. 양옆 면을 다 세워 판 가운데 어느 쪽에 서도 속이 비어
-   보이지 않게 한다. */
-.mt-prism {
-  --z: calc(var(--h) * var(--zk, 1));
-  position: absolute;
-  transform-style: preserve-3d;
+/* 큰 화면의 폭. 표지판이라 카메라 배율을 받지 않으므로 화면 크기로 정한다. 화면 가운데가 화면 폭의
+   가운데에 서므로, 오른쪽 글 칸(`--vr-side`)까지 화면 안에 들어오도록 폭을 묶는다. `sceneGeometry.ts`의
+   `V4`는 이 폭에서 필름 띠와 상단바에 닿지 않게 고른 값이다. */
+.smc-videos {
+  --vr-side: 280px;
+  --vr-w: clamp(240px, min(34vw, 60vh, 100vw - 2 * var(--vr-side) - 104px), 620px);
+  --vr-auto: 6s;
 }
-.mt-prism__foot { position: absolute; inset: 0; background: color-mix(in srgb, var(--ink) 12%, transparent); }
-.mt-prism__cap {
-  position: absolute;
-  inset: 0;
-  box-sizing: border-box;
-  border: 2px dashed var(--ink-3);
-  transform: translateZ(calc(var(--max) * var(--zk, 1)));
+
+.smc-sign--video { width: auto; margin: 0; }
+/* 영상 표지판의 상자는 투영 전 자리에 남아 아래 필름 띠를 덮을 수 있다. 상자는 포인터를 통과시키고
+   버튼만 받는다. */
+.is-staged .smc-sign--video { pointer-events: none; }
+.is-staged .smc-sign--video :is(button, a) { pointer-events: auto; }
+.smc-sign--video::before { display: none; }
+/* 무대에서는 큰 화면의 아래 변 가운데가 판의 기준점에 닿는다. */
+.vr-stage { position: relative; }
+.is-staged .vr-stage { transform: translate(calc(var(--vr-w) / -2), -100%); }
+.vr-slide { display: flex; align-items: flex-end; gap: 28px; }
+
+/* 큰 화면: 지도 화면과 같은 틀을 크게 세운 것. 위 막대, 잉크 테두리, 번지지 않는 오프셋 판. */
+.vr-screen {
+  flex: none;
+  width: var(--vr-w);
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--plate-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
-.mt-prism__front,
-.mt-prism__side {
-  position: absolute;
-  box-sizing: border-box;
-  border: 2px solid var(--ink-3);
+/* 화면 전체가 재생 버튼이다. 올리거나 포커스하면 판이 들리고 테두리가 코랄이 된다. */
+.vr-screen:has(> .vr-screen__face:is(:hover, :focus-visible)) {
+  border-color: var(--flare);
+  box-shadow: 9px 9px 0 var(--plate-shadow);
+  transform: translate(-3px, -3px);
 }
-.mt-prism__front {
+.vr-screen__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 28px;
+  padding: 0 10px;
+  background: var(--paper-2);
+  border-bottom: 1.5px solid var(--ink);
+}
+.vr-screen__rec { width: 8px; height: 8px; background: var(--flare); }
+/* 막대 위 칸 표시. 영상 수만큼 칸이 있고 지금 칸이 잉크로 찬다. */
+.vr-screen__track { display: flex; gap: 4px; margin-left: auto; }
+.vr-screen__track i { width: 14px; height: 6px; border: 1.5px solid var(--ink-3); }
+.vr-screen__track i.is-current { background: var(--ink); border-color: var(--ink); }
+/* 저절로 넘어갈 때까지 남은 시간. 다 차면 다음 영상으로 넘어간다. */
+.vr-progress {
+  position: absolute;
   left: 0;
-  top: calc(100% - var(--z));
+  bottom: -1.5px;
   width: 100%;
-  height: var(--z);
-  background: color-mix(in srgb, var(--ink) 8%, var(--paper));
-  transform-origin: 50% 100%;
-  transform: rotateX(-90deg);
-}
-.mt-prism__side {
-  top: 0;
-  width: var(--z);
-  height: 100%;
-  background: color-mix(in srgb, var(--ink) 14%, var(--paper));
+  height: 3px;
+  background: var(--flare);
   transform-origin: 0 50%;
-  transform: rotateY(-90deg);
+  animation: vr-progress var(--vr-auto) linear forwards;
 }
-.mt-prism__side--l { left: 0; }
-.mt-prism__side--r { left: 100%; }
-.mt-prism__top {
+@keyframes vr-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.vr-screen__face {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  background: var(--paper-2);
+  border: 0;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+.smc .vr .vr-screen__face:focus-visible { outline: 3px solid var(--flare); outline-offset: -3px; }
+.vr-screen__face > .va,
+.vr-screen__face > .vr-poster { position: absolute; inset: 0; width: 100%; height: 100%; }
+.vr-poster { display: block; object-fit: cover; }
+/* 채널 바뀜: 주사선 띠가 위에서 아래로 한 번 지나간다. */
+.vr-wipe {
   position: absolute;
   inset: 0;
-  box-sizing: border-box;
-  transform: translateZ(var(--z));
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, transparent calc(100% - 3px), var(--flare) calc(100% - 3px)),
+    repeating-linear-gradient(to bottom, color-mix(in srgb, var(--ink) 26%, transparent) 0 2px, transparent 2px 5px);
+  animation: vr-wipe 0.32s ease-out forwards;
 }
+@keyframes vr-wipe {
+  0% { clip-path: inset(0 0 100% 0); }
+  50% { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(100% 0 0 0); }
+}
+.vr-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  margin: -38px 0 0 -38px;
+  padding: 0;
+  background: var(--flare);
+  border: 0;
+  box-shadow: 5px 5px 0 var(--plate-shadow);
+  color: var(--on-flare);
+  cursor: pointer;
+}
+.vr-play svg { width: 34px; height: 34px; fill: currentColor; }
+.vr-screen__face:is(:hover, :focus-visible) .vr-play { background: var(--ink); color: var(--paper); }
+/* 준비 중인 영상은 재생 표시 대신 mono 표시. 화면을 누르면 대화상자에서 안내를 보여 준다. */
+.vr-soon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 6px 12px 5px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+}
+.vr-screen__face:is(:hover, :focus-visible) .vr-soon { border-color: var(--flare); color: var(--flare); }
 
-/* 막대: 윗면만 채운다. 강조한 지표는 코랄. */
-.mt-bar .mt-prism__top { background: var(--ink); border: 2px solid var(--ink); }
-.mt-bar.is-hot :is(.mt-prism__front, .mt-prism__side) { border-color: var(--flare); }
-.mt-bar.is-hot .mt-prism__front { background: color-mix(in srgb, var(--flare) 10%, var(--paper)); }
-.mt-bar.is-hot .mt-prism__side { background: color-mix(in srgb, var(--flare) 18%, var(--paper)); }
-.mt-bar.is-hot .mt-prism__top { background: var(--flare); border-color: var(--flare); }
-
-/* 혼동 행렬 칸. 바닥의 점선 칸이 빈 자리이고, 윗면이 차오르며 뜬다. 오탐과 미탐은 코랄. */
-.mt-matrix { position: absolute; transform-style: preserve-3d; }
-.mt-cell .mt-prism__foot { box-sizing: border-box; background: none; border: 2px dashed var(--ink-3); }
-.mt-cell .mt-prism__top { background: color-mix(in srgb, var(--ink) 6%, var(--paper)); border: 2.5px solid var(--ink-3); }
-.mt-cell.is-error :is(.mt-prism__front, .mt-prism__side) { border-color: var(--flare); }
-.mt-cell.is-error .mt-prism__front { background: color-mix(in srgb, var(--flare) 12%, var(--paper)); }
-.mt-cell.is-error .mt-prism__side { background: color-mix(in srgb, var(--flare) 20%, var(--paper)); }
-.mt-cell.is-error .mt-prism__top { background: color-mix(in srgb, var(--flare) 16%, var(--paper)); border-color: var(--flare); }
-
-/* 값을 모으는 중인 칸과 막대. 솟지 않고 판 위의 빈 자리만 그린다. 막대는 바닥의 점선 칸과 가장 높은
-   값의 점선 뚜껑만 남아 채워질 높이가 보인다. 행렬 칸은 옆면 없이 판에 붙고 테두리가 점선이 된다.
-   행렬 칸은 윗면이 바닥과 같은 면에 놓이므로 겹치지 않게 바닥을 그리지 않는다. */
-.mt-prism.is-empty :is(.mt-prism__front, .mt-prism__side) { display: none; }
-.mt-bar.is-empty .mt-prism__top { display: none; }
-.mt-bar.is-empty .mt-prism__foot { box-sizing: border-box; background: none; border: 2px dashed var(--ink-3); }
-.mt-bar.is-empty.is-hot .mt-prism__foot { border-color: var(--flare); }
-.mt-cell.is-empty .mt-prism__foot { display: none; }
-.mt-cell.is-empty .mt-prism__top { border-style: dashed; }
-
-.mt-wire { fill: none; stroke: var(--flare); stroke-width: 4; stroke-dasharray: 1; stroke-dashoffset: 0; }
-.mt-base { stroke: var(--ink-3); stroke-width: 2.5; }
-
-/* 행렬 표지판. 축 이름은 기준점 위(열)나 왼쪽(행)에, 칸 글자는 칸 가운데에, 비율은 행렬 오른쪽에 선다.
-   li의 위치는 JS가 옮기므로 안쪽 상자로 정렬한다. */
-.smc-sign:is(.smc-axis, .smc-cell, .smc-rate) { width: max-content; margin: 0; }
-.smc-sign:is(.smc-axis, .smc-cell, .smc-rate)::before { display: none; }
-.smc-axis__text {
-  display: block;
+.vr-meta {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  width: var(--vr-side);
+  padding-bottom: 64px;
+}
+.vr-meta p, .vr-meta h3 { margin: 0; }
+.vr-meta__row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.vr-tag {
+  padding: 3px 8px 2px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+}
+.vr-count {
+  padding: 3px 6px 2px;
   font-family: var(--font-mono);
   font-size: 12.5px;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--ink-2);
-  white-space: nowrap;
-}
-.smc-axis--title .smc-axis__text { color: var(--ink); font-weight: 600; }
-.smc-axis--top .smc-axis__text { transform: translate(-50%, -100%); }
-.smc-axis--left .smc-axis__text { transform: translate(-100%, -50%); }
-.smc-axis--corner .smc-axis__text { transform: translate(-100%, -100%); }
-.smc-cell__box {
-  display: grid;
-  justify-items: center;
-  gap: 2px;
-  width: 150px;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-.smc-cell__name { font-size: 14px; font-weight: 600; line-height: 1.5; color: var(--ink); }
-.smc-cell__code { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
-.smc-cell.is-error .smc-cell__code { color: var(--flare); }
-.smc-cell__count {
-  font-family: var(--font-display);
-  font-size: 26px;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+  background: var(--paper);
 }
-.smc-cell__count .smc-strip { padding: 0 0.16em; }
-/* 값이 없을 때의 `—`. 읽어야 할 값이 아니라 빈 자리 표시라 옅게 둔다. */
-:is(.smc-cell__count, .smc-sign__num).is-empty { color: var(--ink-3); }
-.smc-rate__box { display: grid; gap: 2px; transform: translateY(-50%); }
-.smc-rate .smc-sign__text { font-size: 16px; line-height: 1.5; }
-.smc-rate .smc-sign__num { font-size: 28px; font-variant-numeric: tabular-nums; }
+.vr-title {
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: -0.03em;
+}
+.vr-title .smc-strip { padding: 0.04em 0.2em 0.08em 0.12em; box-shadow: inset 0 3px 0 var(--flare); }
+.vr-summary { font-size: 15px; font-weight: 500; line-height: 1.68; color: var(--ink-2); }
+.vr-duration { font-family: var(--font-mono); font-size: 12.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.vr-controls {
+  position: absolute;
+  left: calc(var(--vr-w) + 28px);
+  bottom: 0;
+  display: flex;
+  gap: 8px;
+}
+.vr-nav {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  cursor: pointer;
+}
+.vr-nav svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: square; }
+.vr-nav:hover { color: var(--paper); background: var(--ink); }
+.smc .vr :is(button):focus-visible { outline: 2px solid var(--flare); outline-offset: 3px; }
+
+/* 판 위: 큰 화면이 선 자리와 필름 띠. */
+.vr-foot { fill: color-mix(in srgb, var(--ink) 18%, transparent); }
+.vr-wire { fill: none; stroke: var(--flare); stroke-width: 4; }
+.smc-region--videos { overflow: clip; }
+.vr-strip { position: absolute; width: 0; height: 0; transform-style: preserve-3d; }
+/* 칸은 판 위의 진짜 버튼이다. 올리거나 포커스하면 조금 뜨고 코랄 테두리가 된다. 지금 칸은 더 높이 뜬다.
+   `overflow: clip`이라 포커스가 영역 층을 스크롤하지 않는다. */
+.vr-thumb {
+  position: absolute;
+  display: block;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  transform-style: preserve-3d;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.smc .vr-thumb:focus-visible { outline: none; }
+.vr-thumb .m-screen__face > .va,
+.vr-thumb .m-screen__face > .vr-poster { position: absolute; left: 0; top: 22px; width: 100%; height: calc(100% - 22px); }
+.vr-thumb:is(:hover, :focus-visible) .m-screen__face { transform: translateZ(34px); border-color: var(--flare); }
+.vr-thumb:focus-visible .m-screen__face { outline: 3px solid var(--flare); outline-offset: 5px; }
+.vr-thumb.is-current .m-screen__face { transform: translateZ(56px); border-color: var(--flare); }
+.vr-dot { z-index: 1; }
+
+/* 장면 그림(`videoArt.tsx`). 지도와 같은 면과 선만 쓴다. */
+.va { display: block; overflow: hidden; }
+.va-bg { fill: var(--paper); }
+.va-ui { fill: color-mix(in srgb, var(--ink) 12%, var(--paper)); }
+.va-ui--2 { fill: color-mix(in srgb, var(--ink) 30%, var(--paper)); }
+.va-ui--line { fill: color-mix(in srgb, var(--ink) 20%, var(--paper)); }
+.va-ink { fill: var(--ink); }
+.va-flare { fill: var(--flare); }
+.va-frame { fill: var(--paper); stroke: color-mix(in srgb, var(--ink) 55%, var(--paper)); stroke-width: 2; }
+.va-panel { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
+.va-panel--hot { stroke: var(--flare); stroke-width: 2.5; }
+.va-room { fill: color-mix(in srgb, var(--ink) 6%, var(--paper)); stroke: color-mix(in srgb, var(--ink) 45%, var(--paper)); stroke-width: 1.5; }
+.va-route { fill: none; stroke: var(--ink-3); stroke-width: 2; stroke-dasharray: 4 5; }
+.va-trail { fill: none; stroke: var(--flare); stroke-width: 3; }
+.va-ring { fill: none; stroke: var(--flare); stroke-width: 2; }
+.va-dot-ring { fill: var(--flare); stroke: color-mix(in srgb, var(--flare) 35%, transparent); stroke-width: 10; paint-order: stroke; }
+.va-step { fill: var(--paper); stroke: var(--ink); stroke-width: 1.5; }
+.va-mono { font-family: var(--font-mono); font-size: 9px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
+.va-mono--lg { font-size: 14px; fill: var(--ink-2); }
+.va-fail-box { fill: none; stroke: var(--flare); stroke-width: 2; stroke-dasharray: 4 3; }
+.va-save { fill: none; stroke: var(--flare); stroke-width: 2; stroke-dasharray: 6 4; }
+.va-arrow { fill: none; stroke: var(--ink); stroke-width: 2; }
+.va-line { stroke: var(--ink-3); stroke-width: 2; }
+.va-commit { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
+.va-commit.is-head { fill: var(--flare); stroke: var(--flare); }
+.va-run { fill: color-mix(in srgb, var(--ev-success) 70%, var(--paper)); }
+.va-run.is-fail { fill: var(--flare); }
+
+/* 카드 목록은 무대가 없을 때만 보인다. */
+.vr-cards { display: none; }
+
+@media (max-width: 1100px) {
+  .smc-videos { --vr-side: 240px; }
+  .vr-title { font-size: 20px; }
+}
+@media (max-width: 1000px) {
+  .smc-videos { --vr-side: 200px; }
+  .vr-summary { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vr-wipe { display: none; }
+}
 
 /* ── § 05: 질문마다 작은 지도 위의 화면 하나 ────────────── */
 
@@ -1213,12 +1338,6 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
 @media (max-width: 1100px) {
   .smc-sign, .smc-sign--step { width: 220px; margin-left: -110px; }
   .smc-sign--feature { width: 220px; margin-left: -110px; }
-  .smc-sign--metric { width: 200px; margin-left: -100px; }
-  .smc-cell__box { width: 136px; }
-  .smc-cell__name { font-size: 13px; }
-  .smc-cell__count { font-size: 22px; }
-  .smc-rate .smc-sign__text { font-size: 15px; }
-  .smc-rate .smc-sign__num { font-size: 24px; }
   .smc-sign__text { font-size: 17px; }
   .smc-sign__num { font-size: 28px; }
   .smc-sign__title { font-size: 17px; }
@@ -1268,29 +1387,172 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
   height: auto;
 }
 .smc:not(.is-staged) .smc-sign { position: static; width: auto; margin: 0; transform: none !important; }
-/* 무대가 없으면 행렬 표지판이 행렬 모양의 격자로 쌓인다. 행 이름, 결함 열, 정상 열 순서다. */
-.smc:not(.is-staged) .smc-signs--matrix {
-  grid-template-columns: max-content minmax(0, 1fr) minmax(0, 1fr);
-  grid-template-areas:
-    ". verdict verdict"
-    "actual c0 c1"
-    "r0 tp fn"
-    "r1 fp tn"
-    ". fpr fnr";
-  gap: 8px 12px;
-  align-items: center;
+/* 무대가 없으면 § 04는 판 띠 대신 큰 화면, 글, 버튼을 쌓고 그 아래에 가로로 넘기는 카드 목록을 둔다. */
+.smc:not(.is-staged) .smc-videos .smc-region { display: none; }
+.smc:not(.is-staged) .smc-signs--videos { display: block; margin-top: 20px; }
+.smc:not(.is-staged) .vr-slide { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+.smc:not(.is-staged) .vr-screen { width: min(100%, 720px); box-shadow: 4px 4px 0 var(--plate-shadow); }
+.smc:not(.is-staged) .vr-meta { width: auto; max-width: 640px; padding-bottom: 0; }
+.smc:not(.is-staged) .vr-controls { position: static; margin-top: 16px; }
+.smc:not(.is-staged) .vr-cards {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(72%, 280px);
+  gap: 14px;
+  margin: 24px calc(-1 * var(--edge)) 0;
+  padding: 4px var(--edge) 14px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--edge);
+  list-style: none;
 }
-.smc:not(.is-staged) .smc-signs--matrix > * > span { transform: none; }
-.smc:not(.is-staged) .smc-cell__box {
-  width: auto;
-  padding: 10px 8px;
-  background: color-mix(in srgb, var(--ink) 6%, var(--paper));
-  border: 1.5px solid var(--ink-3);
+.vr-cards li { scroll-snap-align: start; }
+.vr-card {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  color: var(--ink);
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
-.smc:not(.is-staged) .smc-cell.is-error .smc-cell__box { background: color-mix(in srgb, var(--flare) 12%, var(--paper)); border-color: var(--flare); }
-.smc:not(.is-staged) .smc-axis--top .smc-axis__text { text-align: center; }
-.smc:not(.is-staged) .smc-rate__box { padding-top: 8px; }
-.smc:not(.is-staged) .smc-signs--metrics { margin-top: 28px; }
+/* 카드 그림은 지도 화면 틀이다. 위 막대가 있고, 지금 카드는 코랄 테두리와 코랄 막대가 된다. */
+.vr-card__frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--paper);
+  border: 2px solid color-mix(in srgb, var(--ink) 55%, var(--paper));
+}
+.vr-card__frame::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 12px;
+  background: var(--paper-2);
+  border-bottom: 1px solid var(--rule);
+}
+.vr-card__frame > .va,
+.vr-card__frame > .vr-poster { position: absolute; left: 0; top: 12px; width: 100%; height: calc(100% - 12px); }
+.vr-card[aria-current='true'] .vr-card__frame { border-color: var(--flare); }
+.vr-card[aria-current='true'] .vr-card__frame::before { background: var(--flare); border-color: var(--flare); }
+.vr-card__soon {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 2px 6px 1px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--ink);
+}
+.vr-card__tag { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.vr-card__title { font-size: 15px; font-weight: 700; line-height: 1.5; }
+.vr-card:hover .vr-card__title { box-shadow: inset 0 -2px 0 var(--flare); width: fit-content; }
+
+/* ── 영상 재생 대화상자 ──────────────────────────────────── */
+
+/* `dialog`는 자리만 잡고 판은 안쪽 `.vd-sheet`가 그린다. 오프셋 판이 잘리지 않게 그 폭만큼 여백을 둔다. */
+.vd {
+  box-sizing: border-box;
+  width: min(900px, calc(100% - 48px));
+  max-width: none;
+  max-height: none;
+  padding: 0 6px 6px 0;
+  overflow: visible;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+}
+.vd::backdrop { background: rgb(0 0 0 / 55%); }
+.vd-sheet {
+  position: relative;
+  box-sizing: border-box;
+  max-height: calc(100dvh - 48px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 58px 26px 26px;
+  font-family: var(--font-body);
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--plate-shadow);
+}
+.vd-player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--ink);
+  border: 1.5px solid var(--ink);
+}
+.vd-player.is-soon { background: var(--paper-2); }
+.vd-player > :is(iframe, video, .va) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.vd-player > video { background: var(--ink); }
+.vd-soon {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  margin: 0;
+  padding: 8px 14px;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  transform: translateX(-50%);
+}
+.vd-meta { display: grid; gap: 8px; padding: 20px 4px 2px; }
+.vd-meta p, .vd-meta h2 { margin: 0; }
+.vd-meta__row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.vd-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.03em;
+}
+.vd-summary { font-size: 16px; font-weight: 500; line-height: 1.65; color: var(--ink-2); }
+.smc .vd :is(button):focus-visible { outline: 2px solid var(--flare); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .vd[open] .vd-sheet { animation: vd-in 0.18s cubic-bezier(0.2, 0.8, 0.2, 1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vd[open] .vd-sheet { animation: vd-fade 0.12s ease-out; }
+}
+@keyframes vd-in {
+  from { opacity: 0; transform: scale(0.97); }
+}
+@keyframes vd-up {
+  from { opacity: 0; transform: translateY(24px); }
+}
+@keyframes vd-fade {
+  from { opacity: 0; }
+}
+
+@media (max-width: 720px) {
+  .vd { width: 100%; margin: auto 0 0; padding: 0; }
+  .vd-sheet {
+    max-height: 92dvh;
+    padding: 54px 16px calc(24px + env(safe-area-inset-bottom));
+    border-width: 1.5px 0 0;
+    box-shadow: none;
+  }
+  .vd .fx-crop--bl, .vd .fx-crop--br { display: none; }
+  .vd-title { font-size: 21px; }
+  .vd-soon { white-space: normal; width: max-content; max-width: calc(100% - 32px); text-align: center; }
+}
+@media (max-width: 720px) and (prefers-reduced-motion: no-preference) {
+  .vd[open] .vd-sheet { animation-name: vd-up; }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   .smc-agent__ring { animation: none; }

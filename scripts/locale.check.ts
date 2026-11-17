@@ -3,19 +3,7 @@
 import assert from 'node:assert/strict'
 import { localeFromPath, localizedHref, locales, pathWithLocale } from '../src/i18n/locale.ts'
 import { messages } from '../src/i18n/messages.ts'
-import {
-  confusionCells,
-  confusionCounts,
-  confusionLayout,
-  confusionRate,
-  confusionRates,
-  formatCount,
-  formatMetricValue,
-  formatRate,
-  highlightedMetric,
-  metrics,
-  metricsStatus,
-} from '../src/pages/landing/metrics.ts'
+import { videoCategories, videos } from '../src/pages/landing/videos.ts'
 import { wishlistCopy } from '../src/wishlist/copy.ts'
 import {
   selfHostingHubPath,
@@ -77,48 +65,29 @@ assert.deepEqual(
   messages.en.features.items.map((item) => item.key),
 )
 
-// The landing metrics region: every label exists in both locales, bars have a positive scale, the matrix layout
-// uses each cell once, and the highlighted bar names a real metric.
-assert.equal(new Set(metrics.map((metric) => metric.key)).size, metrics.length)
-for (const metric of metrics) {
-  for (const locale of locales) assert.ok(metric.label[locale], `${metric.key}: missing ${locale} label`)
-  assert.ok(metric.max > 0, `${metric.key}: max must be positive`)
-  assert.ok(['prefix', 'suffix'].includes(metric.unitPosition), `${metric.key}: unitPosition`)
-}
-assert.ok(metrics.some((metric) => metric.key === highlightedMetric), `highlighted metric ${highlightedMetric} has no bar`)
-const cellKeys = ['tp', 'fp', 'fn', 'tn'] as const
-assert.deepEqual(confusionLayout.flat().sort(), [...cellKeys].sort())
-for (const key of cellKeys) {
-  for (const locale of locales) assert.ok(confusionCells[key].label[locale], `${key}: missing ${locale} label`)
-}
-for (const rate of confusionRates) {
-  for (const locale of locales) assert.ok(rate.label[locale], `${rate.key}: missing ${locale} label`)
+// The landing videos region: at least one video, unique keys, a title and a one-line summary in both locales, a known
+// category, a readable duration when one is given, and a usable source once a video is published.
+assert.ok(videos.length >= 1, 'videos: at least one item')
+assert.equal(new Set(videos.map((video) => video.key)).size, videos.length, 'videos: duplicate key')
+for (const video of videos) {
+  assert.ok(video.key, 'videos: empty key')
+  assert.ok(video.category in videoCategories, `${video.key}: unknown category ${video.category}`)
+  for (const locale of locales) {
+    assert.ok(video.title[locale]?.trim(), `${video.key}: missing ${locale} title`)
+    const summary = video.summary[locale]?.trim()
+    assert.ok(summary, `${video.key}: missing ${locale} summary`)
+    // Summaries are one-line noun phrases (user-copy.md), so no line breaks and no closing period.
+    assert.doesNotMatch(summary, /\n|[.。]$/, `${video.key}: ${locale} summary must be one noun phrase`)
+  }
+  if (video.duration !== undefined) assert.match(video.duration, /^\d{1,2}:\d{2}(:\d{2})?$/, `${video.key}: duration ${video.duration}`)
+  if (video.source?.kind === 'youtube') assert.match(video.source.id, /^[\w-]{6,}$/, `${video.key}: YouTube id`)
+  if (video.source?.kind === 'file') assert.ok(video.source.src.trim(), `${video.key}: file src`)
 }
 for (const locale of locales) {
-  for (const [key, text] of Object.entries(messages[locale].metrics.axes)) assert.ok(text, `${locale}: metrics.axes.${key}`)
-  assert.ok(messages[locale].metrics.collecting, `${locale}: metrics.collecting`)
-}
-
-// While collecting, the region shows no number at all: every value is null and every sign reads as the placeholder.
-// Once live, every count is a non-negative integer and every bar has a value, so the rates can be computed.
-if (metricsStatus === 'collecting') {
-  for (const key of cellKeys) assert.equal(confusionCounts[key], null, `${key}: collecting counts must be null`)
-  for (const metric of metrics) assert.equal(metric.value, null, `${metric.key}: collecting values must be null`)
-  for (const locale of locales) {
-    const shown = [
-      ...cellKeys.map((key) => formatCount(confusionCounts[key], locale)),
-      ...confusionRates.map((rate) => formatRate(confusionRate(rate, confusionCounts), locale)),
-      ...metrics.map((metric) => formatMetricValue(metric, locale)),
-    ]
-    for (const text of shown) assert.doesNotMatch(text, /\d/, `${locale}: collecting region shows a number (${text})`)
-  }
-} else {
-  for (const key of cellKeys) {
-    const count = confusionCounts[key]
-    assert.ok(count !== null && Number.isInteger(count) && count >= 0, `${key}: count must be a non-negative integer`)
-  }
-  for (const metric of metrics) assert.ok(metric.value !== null && metric.value >= 0, `${metric.key}: live value is missing`)
-  for (const rate of confusionRates) assert.notEqual(confusionRate(rate, confusionCounts), null, `${rate.key}: rate cannot be computed`)
+  for (const [key, label] of Object.entries(videoCategories)) assert.ok(label[locale], `${locale}: video category ${key}`)
+  for (const [key, text] of Object.entries(messages[locale].videos)) assert.ok(text, `${locale}: videos.${key}`)
+  // Frame and featured-screen button names put the video title into `{title}`.
+  for (const key of ['show', 'play'] as const) assert.ok(messages[locale].videos[key].includes('{title}'), `${locale}: videos.${key} needs {title}`)
 }
 
 // The wishlist dialog carries the same strings in both locales.

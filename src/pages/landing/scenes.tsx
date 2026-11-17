@@ -1,14 +1,11 @@
-// 랜딩 지도 위의 장면. § 01, § 02, § 03, § 04 영역이 히어로 지도와 같은 판의 다른 자리에 놓인다.
+// 랜딩 지도 위의 장면. § 01, § 02, § 03 영역이 히어로 지도와 같은 판의 다른 자리에 놓인다.
 // 상자 카드 없이 지도의 말투(화면 프레임, 경로, 커서, 에이전트 점, 기호)와 깊이(쌓인 층, 솟는 칸,
 // 세운 기둥)로 뜻을 보여 준다. 글자는 빌드 번호와 키 이름 같은 mono 데이터만 쓴다.
 // JS가 돌지 않아도 장면은 뜻이 다 드러난 마지막 상태로 그려진다. 움직임은 그 위에 도는 반복이다.
 import type { CSSProperties, ReactNode } from 'react'
 import { MARK_FRAME, MARK_SHARD } from '../../components/ArtelMark'
 import { toD } from './geom'
-import { confusionCells, confusionCounts, confusionLayout, highlightedMetric, metrics } from './metrics'
 import {
-  M4,
-  metricX,
   P1_POLY,
   P1_ROUTE,
   P3,
@@ -79,10 +76,11 @@ function TriGlyph({ className = '' }: { className?: string }) {
 }
 
 /** 영역 하나. 데스크톱에서는 화면 전체를 덮는 고정 층으로 히어로 지도와 같은 카메라를 쓰고,
- *  좁은 화면과 움직임 줄이기에서는 섹션 안의 정적인 지도 띠가 된다. */
-export function Region({ name, children }: { name: RegionName; children: ReactNode }) {
+ *  좁은 화면과 움직임 줄이기에서는 섹션 안의 정적인 지도 띠가 된다. 보통은 꾸밈이라 보조 기술에 숨긴다.
+ *  판 위에 누를 수 있는 버튼을 두는 영역(§ 04 필름 띠)은 `interactive`로 열고, 꾸밈 요소를 따로 숨긴다. */
+export function Region({ name, interactive = false, children }: { name: RegionName; interactive?: boolean; children: ReactNode }) {
   return (
-    <div className={`smc-region smc-region--${name}`} aria-hidden="true">
+    <div className={`smc-region smc-region--${name}`} aria-hidden={interactive ? undefined : true}>
       <div className="smc-region__camera">
         <div className="smc-rig smc-rig--region">
           <div className="smc-tile" style={{ top: TILE_Y[name], width: TILE_W, height: TILE_H }}>
@@ -384,118 +382,6 @@ export function FlowScenes() {
         <span className="smc-agent__core" />
         <span className="smc-agent__stem" />
       </div>
-    </>
-  )
-}
-
-/* ── § 04 ─────────────────────────────────────────────── */
-
-/** 판에서 솟는 직육면체. 높이는 `--h`로 정하고 첫 등장 애니메이션은 이 값만 바꾼다. 면은 옅게, 모서리는
- *  선으로 그린다. `cap`이 있으면 점선 뚜껑으로 가장 높은 값의 자리를 보인다. 값이 없으면(`h`가 `null`)
- *  솟지 않고 판 위의 빈 자리(`is-empty`)로 그린다. */
-function Prism({ b, h, cap, className, children }: { b: Box; h: number | null; cap?: number; className: string; children?: ReactNode }) {
-  const lift = h ?? 0
-  const style = { ...box(b), '--h': `${lift}px`, ...(cap ? { '--max': `${cap}px` } : {}) } as CSSProperties
-  return (
-    <div className={`mt-prism ${className}${h === null ? ' is-empty' : ''}`} data-h={lift} style={style}>
-      <span className="mt-prism__foot" />
-      {cap ? <span className="mt-prism__cap" /> : null}
-      <span className="mt-prism__side mt-prism__side--l" />
-      <span className="mt-prism__side mt-prism__side--r" />
-      <span className="mt-prism__front" />
-      <span className="mt-prism__top">{children}</span>
-    </div>
-  )
-}
-
-// 혼동 행렬. 칸은 건수에 비례해 조금 뜨고, 건수가 없으면 판에 붙은 빈 칸이다. 칸의 글자는 섹션의
-// 표지판이 맡고, 여기에는 기준점만 둔다.
-function ConfusionMatrix() {
-  const { left, top, cellW, cellD, inset, liftMax } = M4.matrix
-  const most = Math.max(1, ...Object.values(confusionCounts).map((count) => count ?? 0))
-  const lift = (count: number | null) => (count === null ? null : Math.max(4, Math.round((count / most) * liftMax)))
-  return (
-    <div className="mt-matrix" style={{ left, top, width: cellW * 2, height: cellD * 2 }}>
-      {confusionLayout.flatMap((row, r) =>
-        row.map((key, c) => (
-          <Prism
-            key={key}
-            b={{ left: c * cellW + inset, top: r * cellD + inset, width: cellW - inset * 2, height: cellD - inset * 2 }}
-            h={lift(confusionCounts[key])}
-            className={confusionCells[key].error ? 'mt-cell is-error' : 'mt-cell'}
-          >
-            <Anchor id={`cell-${key}`} x={cellW / 2 - inset} y={cellD / 2 - inset} />
-          </Prism>
-        )),
-      )}
-    </div>
-  )
-}
-
-/** 행렬 축 이름의 기준점. 열 이름은 행렬 위, 행 이름은 행렬 왼쪽에 선다. */
-function MatrixAxisAnchors() {
-  const { left, top, cellW, cellD } = M4.matrix
-  return (
-    <>
-      <Anchor id="ax-verdict" x={left + cellW} y={top - 90} />
-      <Anchor id="ax-c0" x={left + cellW / 2} y={top - 24} />
-      <Anchor id="ax-c1" x={left + cellW * 1.5} y={top - 24} />
-      <Anchor id="ax-actual" x={left - 24} y={top - 24} />
-      <Anchor id="ax-r0" x={left - 24} y={top + cellD / 2} />
-      <Anchor id="ax-r1" x={left - 24} y={top + cellD * 1.5} />
-      <Anchor id="rate-fpr" x={left + cellW * 2 + 80} y={top + cellD / 2} />
-      <Anchor id="rate-fnr" x={left + cellW * 2 + 80} y={top + cellD * 1.5} />
-    </>
-  )
-}
-
-export function MetricsScenes() {
-  const n = metrics.length
-  const xs = metrics.map((_, i) => metricX(i, n))
-  const hot = metrics.findIndex((m) => m.key === highlightedMetric)
-  const { left, top, cellW, cellD } = M4.matrix
-  const matrixX = left + cellW
-  const matrixBottom = top + cellD * 2
-  const back = M4.barY - M4.barW / 2
-  const front = M4.barY + M4.barW / 2
-  const wires = [
-    `M${Math.min(xs[0], matrixX)} ${M4.busY}H${Math.max(xs[n - 1], matrixX)}`,
-    `M${matrixX} ${matrixBottom}V${M4.busY}`,
-    ...xs.map((x) => `M${x} ${M4.busY}V${back}`),
-  ]
-  // 행렬에서 강조한 지표의 막대까지 코랄 선으로 잇는다.
-  const hotWire =
-    hot < 0
-      ? ''
-      : toD([
-          { x: matrixX, y: matrixBottom },
-          { x: matrixX, y: M4.busY },
-          { x: xs[hot], y: M4.busY },
-          { x: xs[hot], y: back },
-        ])
-  return (
-    <>
-      <Anchor id="h" x={60} y={190} />
-      <svg className="m-flat" style={{ left: 0, top: 0 }} width={TILE_W} height={TILE_H} viewBox={`0 0 ${TILE_W} ${TILE_H}`}>
-        <path className="m-link" d={wires.join(' ')} />
-        {hotWire && <path className="mt-wire" d={hotWire} pathLength={1} />}
-        {/* 막대가 함께 서는 기준선 */}
-        <line className="mt-base" x1={xs[0] - 150} y1={front} x2={xs[n - 1] + 150} y2={front} />
-      </svg>
-      <ConfusionMatrix />
-      <MatrixAxisAnchors />
-      {metrics.map((m, i) => (
-        <Prism
-          key={m.key}
-          b={{ left: xs[i] - M4.barW / 2, top: back, width: M4.barW, height: M4.barW }}
-          h={m.value === null ? null : Math.max(12, Math.round((Math.min(m.value, m.max) / (m.max || 1)) * M4.barMaxH))}
-          cap={M4.barMaxH}
-          className={i === hot ? 'mt-bar is-hot' : 'mt-bar'}
-        />
-      ))}
-      {metrics.map((m, i) => (
-        <Anchor key={m.key} id={`m-${m.key}`} x={xs[i]} y={front + 28} />
-      ))}
     </>
   )
 }

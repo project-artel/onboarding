@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { useCopy } from '../i18n/useCopy'
 import { contactEmail } from '../lib/contact'
+import { useModalDialog } from '../lib/useModalDialog'
 import { wishlistCopy } from './copy'
 import { WishlistMap } from './WishlistMap'
 import { joinWishlist } from './wishlistApi'
@@ -9,7 +10,6 @@ type RequestState = 'idle' | 'busy' | 'joined' | 'rate_limited' | 'unavailable'
 
 // 서버(`POST /wishlist`)와 같은 규칙. 도메인에 점이 있고 마지막 부분이 영문 2글자 이상이어야 한다.
 const emailPattern = /^[^@\s]+@[^@\s.]+(\.[^@\s.]+)*\.[A-Za-z]{2,}$/
-const navKeys = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '])
 
 /** 문구 안의 `{token}` 자리에 `node`를 끼운다. */
 function fill(text: string, token: string, node: ReactNode) {
@@ -43,52 +43,8 @@ export function WishlistDialog({ onClose }: { onClose: () => void }) {
   const consentErrorId = useId()
   const consentDetailsId = useId()
 
-  useEffect(() => {
-    const element = dialog.current!
-    const sheet = sheetRef.current!
-    const previousFocus = document.activeElement
-
-    // 대화상자를 열고 닫을 때 브라우저가 포커스를 옮기며 뒤 페이지를 스크롤할 수 있다. 랜딩에서는 그
-    // 스크롤이 카메라와 스냅 정지점을 함께 옮기므로, 열려 있는 동안 연 순간의 위치를 지킨다.
-    // `html`의 overflow를 바꾸면 랜딩의 ScrollTrigger가 다시 계산되므로 쓰지 않는다.
-    const x = window.scrollX
-    const y = window.scrollY
-    const hold = () => {
-      if (window.scrollX !== x || window.scrollY !== y) window.scrollTo({ left: x, top: y, behavior: 'instant' })
-    }
-
-    element.showModal()
-    emailRef.current?.focus(preventScroll)
-    hold()
-    window.addEventListener('scroll', hold)
-
-    // 랜딩의 스냅은 window에서 휠과 이동 키를 듣는다. 대화상자 안의 입력이 뒤 페이지를 옮기지 않도록
-    // 여기서 전파를 끊는다. 입력란 안의 커서 이동과 버튼·체크박스·접기의 Space는 그대로 둔다.
-    const onKey = (event: KeyboardEvent) => {
-      if (!navKeys.has(event.key)) return
-      event.stopPropagation()
-      const target = event.target as HTMLElement | null
-      if (target?.closest('input')) return
-      if (event.key === ' ' && target?.closest('button, a, summary')) return
-      event.preventDefault()
-    }
-    const onWheel = (event: WheelEvent) => {
-      event.stopPropagation()
-      if (sheet.scrollHeight <= sheet.clientHeight) event.preventDefault()
-    }
-    element.addEventListener('keydown', onKey)
-    element.addEventListener('wheel', onWheel, { passive: false })
-    return () => {
-      window.removeEventListener('scroll', hold)
-      element.removeEventListener('keydown', onKey)
-      element.removeEventListener('wheel', onWheel)
-      element.close()
-      if (previousFocus instanceof HTMLElement) previousFocus.focus(preventScroll)
-      hold()
-      // 닫은 뒤 브라우저가 다음 프레임에 포커스를 다시 맞추며 스크롤하는 경우도 되돌린다.
-      window.requestAnimationFrame(hold)
-    }
-  }, [])
+  // 열고 닫을 때 스크롤 위치를 지키고, 휠과 이동 키가 랜딩 스냅에 닿지 않게 한다.
+  useModalDialog(dialog, { initialFocus: emailRef, scroller: sheetRef })
 
   // 신청하면 폼이 사라지므로 포커스를 닫기 버튼으로 옮긴다. 버튼은 다시 그린 뒤에 생긴다.
   useEffect(() => {
