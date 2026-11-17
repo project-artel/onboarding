@@ -131,30 +131,63 @@ preference as a side effect of adding a page.
 - Regions are rendered up front and drawn in their final state. Scene loops and
   the hero route run only while their region is near the viewport and pause
   off-screen.
-- § 04 평가 지표 is a region below the features region on the same plane. A
-  confusion matrix lies at the back as its main element: four tiles (rows are
-  the actual state, columns the ARTEL verdict) that lift slightly by count, with
-  FP and FN tinted `--flare`. Its axis names, cell code/label/count, and the
-  derived false positive and false negative rates are upright signs anchored to
-  the plane. Four slim columns stand on a shared baseline in front and rise in
-  Z by `value / max`: outlined edges, light tinted faces, only the top cap
-  filled (`--ink`, or `--flare` for the highlighted metric), and a dashed lid at
-  the maximum. A `--flare` wire joins the matrix to the highlighted column. The
-  scene plays once, the first time the section becomes current after load, and
-  then rests; it never loops or replays. The camera's `scale()` does not shrink
-  Z, so keep the tallest column short of the matrix (`M4` in
-  `sceneGeometry.ts`). Without the stage, the matrix signs stack as a grid,
-  then the column signs. All data lives in `src/pages/landing/metrics.ts`.
+- § 04 영상 / Videos is a region below the features region on the same plane,
+  with one snap stop. All data lives in `src/pages/landing/videos.ts`: each video
+  has a key, title, one-line noun-phrase summary, category (시작하기, QA 실행,
+  자동화), optional mono duration, scene art kind, and a source. A source is a
+  YouTube id (played through `youtube-nocookie.com` only after Play is pressed),
+  a file with an optional poster (played in `<video controls>`), or `null` while
+  the video is being prepared. No YouTube script, iframe, or thumbnail loads
+  before Play.
+  - The featured screen is a large upright sign anchored to the plane (`V4` in
+    `sceneGeometry.ts`, `--vr-w` in `landing.css`): a 16:9 map screen frame with
+    a title bar, an ink border, and a solid offset plate. It shows the poster,
+    or a generated replay composition in map language (`videoArt.tsx`) that
+    differs per video. The whole screen face is one button named
+    `{title} 재생` / `Play {title}` that opens the dialog; a square coral play
+    mark sits on it, or a mono `준비 중` / `Coming soon` tag for a video without
+    a source. On hover or focus the screen lifts with a `--flare` border.
+    Beside it, signs carry the category tag, the title (display font), the
+    summary, the duration when known, a mono `02 / 05` counter, and square
+    previous/next buttons.
+  - The filmstrip lies on the plane in front: one map frame per video on an
+    orthogonal route. Each frame is a real button on the plane named
+    `{title} 보기` / `Show {title}` (the current one `{title} 재생` /
+    `Play {title}`); hover or focus lifts it slightly with a `--flare` border.
+    The current frame is lifted higher with a `--flare` border and the coral
+    agent dot sits on it. This region is the only one not hidden from
+    assistive technology (`Region interactive`); its decoration is hidden
+    piece by piece, and it uses `overflow: clip` so focus never scrolls it.
+    A `--flare` wire joins the screen's footprint to the current frame.
+  - Changing slides: previous/next buttons, clicking or pressing a frame
+    (the current frame plays), ←/→ while focus is in the slider or on a frame
+    (stopped there; ↑/↓/PageUp/PageDown still snap), and touch swipe on the
+    screen. The agent
+    dot travels the route and the strip pans so the current frame stays
+    centred (0.6s, `expo.out`); the screen runs a scanline wipe (0.32s).
+  - Auto-advance every 6s, shown as a thin coral bar on the screen's title bar,
+    runs only while the section covers most of the viewport and nothing in the
+    slider is hovered or focused and no dialog is open. Never under reduced
+    motion.
+  - Accessibility: the slider is `role="region"` with
+    `aria-roledescription="carousel"` labelled by the heading; the featured
+    slide is a group labelled `n / total`. A polite live region announces the
+    new title on manual changes only. The plane strip's decoration is
+    `aria-hidden`; the frames are reachable with Tab.
+  - Play opens a native modal dialog like the feature dialog: a paper sheet with
+    crop marks and an offset plate, a 16:9 player, the title, and the summary.
+    For a video without a source it shows the scene art and a calm
+    `준비 중인 영상이에요.` / `This video is coming soon.` message. Esc, the
+    close button, and the backdrop close it. Closing unmounts the player, which
+    stops playback. It shares `src/lib/useModalDialog.ts` with the Wishlist
+    dialog: focus returns to the trigger with `preventScroll`, the scroll
+    position it opened at is held, and wheel and snap keys are blocked. At
+    720px and below it is a bottom sheet.
+  - Without the stage (720px and below, or reduced motion) the plane strip is
+    hidden. The featured screen, its signs, and the buttons stack, followed by a
+    horizontally scroll-snapping list of thumbnail cards drawn as map frames
+    (the current card has a `--flare` frame).
   FAQ is § 05 and stays the paper surface after the map.
-- While `metricsStatus` is `'collecting'`, the region shows no number: every
-  count, rate, and column value is `null` and its sign reads `—` in `--ink-3`,
-  and the heading carries a mono `수집 중` / `Collecting` tag. Matrix tiles lie
-  flat on the plane with a dashed border and keep their FP/FN tint. Each column
-  is only a dashed footprint (`--flare` for the highlighted metric) and the
-  dashed lid at the maximum, with no faces or cap. The coral wire stays. The
-  one-time intro fades in the tile outlines, draws the wire, and then shows each
-  footprint and lid; nothing rises. `npm run check` fails if a value is set
-  while collecting, or missing once `'live'`.
 - Feature details open in a dialog. Hover opens it after a short delay and it
   closes when the pointer leaves both the feature and the dialog. Click or
   keyboard opens it as a modal with focus on the close button; Esc closes it and
