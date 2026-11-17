@@ -3,7 +3,8 @@ import { gsap } from 'gsap'
 import { easeInOut, pointAt } from './geom'
 import { P1_POLY, P3_A, P3_B, S2_CLICKS, S2_PATH, S2_POLY, tileXY } from './sceneGeometry'
 
-export type SceneLoop = { tl: gsap.core.Timeline; rest: () => void; el: Element }
+/** `prime`이 있으면 반복하지 않고 한 번만 재생하는 등장 애니메이션이다. `prime`은 시작 상태를 깐다. */
+export type SceneLoop = { tl: gsap.core.Timeline; rest: () => void; el: Element; prime?: () => void }
 
 function loopRegression(el: Element) {
   const layers = Array.from(el.querySelectorAll<HTMLElement>('.p1-layer'))
@@ -168,6 +169,48 @@ function loopRecord(el: Element) {
   }
 }
 
+// § 04는 반복하지 않는다. 섹션이 처음 현재 섹션이 될 때 한 번만 행렬 칸이 차고, 코랄 선이 그려지고,
+// 막대가 솟은 뒤 마지막 상태로 남는다. 값을 모으는 중인 막대(`is-empty`)는 솟지 않으므로 바닥의 점선
+// 칸과 점선 뚜껑이 차례로 나타나는 것으로 대신한다. 빈 칸은 `--h`가 0이라 윤곽만 나타난다.
+// `prime`이 시작 상태를 깔고, 만든 쪽이 한 번만 재생한다.
+function introMetrics(el: Element) {
+  const cells = Array.from(el.querySelectorAll<HTMLElement>('.mt-cell'))
+  const bars = Array.from(el.querySelectorAll<HTMLElement>('.mt-bar'))
+  const cellTops = cells.map((c) => c.querySelector<HTMLElement>('.mt-prism__top')!)
+  const barOutlines = bars.map((b) =>
+    b.classList.contains('is-empty') ? Array.from(b.querySelectorAll<HTMLElement>('.mt-prism__foot, .mt-prism__cap')) : [],
+  )
+  const outlines = barOutlines.flat()
+  const wire = el.querySelector<SVGPathElement>('.mt-wire')
+  const lift = [...cells, ...bars].map((p) => ({ p, k: 1 }))
+  const apply = ({ p, k }: { p: HTMLElement; k: number }) => p.style.setProperty('--h', `${(Number(p.dataset.h) * k).toFixed(1)}px`)
+  const settle = (k: number) => {
+    lift.forEach((l) => {
+      l.k = k
+      apply(l)
+    })
+    gsap.set(cellTops, { opacity: k })
+    if (outlines.length) gsap.set(outlines, { opacity: k })
+    if (wire) gsap.set(wire, { strokeDashoffset: 1 - k })
+  }
+  const tl = gsap.timeline({ paused: true })
+  cells.forEach((_, i) => {
+    tl.to(cellTops[i], { opacity: 1, duration: 0.3, ease: 'power1.out' }, i * 0.14)
+    tl.to(lift[i], { k: 1, duration: 0.6, ease: 'power3.out', onUpdate: () => apply(lift[i]) }, i * 0.14)
+  })
+  if (wire) tl.to(wire, { strokeDashoffset: 0, duration: 0.7, ease: 'power2.inOut' }, 0.6)
+  bars.forEach((_, j) => {
+    const at = 1 + j * 0.16
+    if (barOutlines[j].length) {
+      tl.to(barOutlines[j], { opacity: 1, duration: 0.4, ease: 'power1.out', stagger: 0.2 }, at)
+      return
+    }
+    const l = lift[cells.length + j]
+    tl.to(l, { k: 1, duration: 1.1, ease: 'power3.out', onUpdate: () => apply(l) }, at)
+  })
+  return { tl, rest: () => settle(1), prime: () => settle(0) }
+}
+
 const LOOPS: [string, (el: Element) => Omit<SceneLoop, 'el'>][] = [
   ['.p1', loopRegression],
   ['.p2', loopRepro],
@@ -175,6 +218,7 @@ const LOOPS: [string, (el: Element) => Omit<SceneLoop, 'el'>][] = [
   ['.s1-cube', loopConnect],
   ['.s2-game', loopPlay],
   ['.s3-frozen', loopRecord],
+  ['.mt-matrix', introMetrics],
 ]
 
 /** 영역마다 장면 반복 timeline을 만든다. 만든 쪽에서 재생과 정지를 맡는다. */
@@ -182,7 +226,7 @@ export function sceneLoops(scope: Element): SceneLoop[] {
   return LOOPS.flatMap(([sel, make]) => {
     const target = scope.querySelector(sel)
     if (!target) return []
-    // § 02 장면은 여러 형제 요소로 이루어져 있어 영역 판 전체를 넘긴다.
+    // § 02와 § 04 장면은 여러 형제 요소로 이루어져 있어 영역 판 전체를 넘긴다.
     const el = sel.startsWith('.p') ? target : (target.closest('.smc-tile') as Element)
     return [{ ...make(el), el }]
   })

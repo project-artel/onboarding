@@ -340,7 +340,7 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
 .smc-cta--ghost { background: var(--paper); color: var(--ink); }
 .smc-cta--ghost:hover { color: var(--ink); background: var(--paper-2); }
 
-/* ── 무대: 히어로 지도가 § 03까지 뒤에 남는다 ─────────────── */
+/* ── 무대: 히어로 지도가 § 04까지 뒤에 남는다 ─────────────── */
 
 .smc-map.is-far { visibility: hidden; }
 
@@ -383,6 +383,19 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
   border-bottom: 2px solid var(--flare);
 }
 .smc-arch:hover { color: var(--flare); }
+/* 값을 모으는 중이라는 표시. `metrics.ts`의 `metricsStatus`가 `'live'`가 되면 그리지 않는다. */
+.smc-collecting {
+  flex: none;
+  margin-bottom: 10px;
+  padding: 3px 8px 2px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--flare);
+  background: var(--paper);
+  border: 1.5px solid var(--flare);
+}
 
 /* 무대 배치에서는 섹션 제목도 표지판처럼 영역의 왼쪽 위 기준점에 서서 카메라와 함께 움직인다. */
 .is-staged .smc-sec__head { position: absolute; left: 0; top: 0; z-index: 2; margin: 0; }
@@ -445,6 +458,8 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
 .smc-sign--feature { width: 240px; margin-left: -120px; margin-top: 6px; cursor: pointer; }
 .smc-sign--feature .smc-sign__title { font-size: 16px; }
 .smc-sign--feature .smc-sign__body { font-size: 14.5px; }
+.smc-sign--metric { width: 220px; margin-left: -110px; }
+.smc-sign--metric .smc-sign__num { font-variant-numeric: tabular-nums; }
 .smc-sign--feature.is-hot .smc-sign__title .smc-strip { box-shadow: inset 0 -2px 0 var(--flare); }
 .smc-sign__trigger {
   padding: 0;
@@ -713,7 +728,130 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
 .f-glyph--system rect { fill: var(--ink-2); }
 .f-glyph--failure path { fill: var(--flare); }
 
-/* ── § 04: 질문마다 작은 지도 위의 화면 하나 ────────────── */
+/* ── § 04 평가 지표 ─────────────────────────────────────── */
+
+/* 판에서 솟는 직육면체(막대와 행렬 칸). 높이는 `--h`, 점선 뚜껑은 가장 높은 값 `--max`의 자리다.
+   정적 띠에서는 판이 훨씬 작게 그려지므로 JS가 `--zk`로 솟는 높이도 같은 비율로 줄인다. 면은 지도
+   화면처럼 옅게 칠하고 모서리를 선으로 긋는다. 양옆 면을 다 세워 판 가운데 어느 쪽에 서도 속이 비어
+   보이지 않게 한다. */
+.mt-prism {
+  --z: calc(var(--h) * var(--zk, 1));
+  position: absolute;
+  transform-style: preserve-3d;
+}
+.mt-prism__foot { position: absolute; inset: 0; background: color-mix(in srgb, var(--ink) 12%, transparent); }
+.mt-prism__cap {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 2px dashed var(--ink-3);
+  transform: translateZ(calc(var(--max) * var(--zk, 1)));
+}
+.mt-prism__front,
+.mt-prism__side {
+  position: absolute;
+  box-sizing: border-box;
+  border: 2px solid var(--ink-3);
+}
+.mt-prism__front {
+  left: 0;
+  top: calc(100% - var(--z));
+  width: 100%;
+  height: var(--z);
+  background: color-mix(in srgb, var(--ink) 8%, var(--paper));
+  transform-origin: 50% 100%;
+  transform: rotateX(-90deg);
+}
+.mt-prism__side {
+  top: 0;
+  width: var(--z);
+  height: 100%;
+  background: color-mix(in srgb, var(--ink) 14%, var(--paper));
+  transform-origin: 0 50%;
+  transform: rotateY(-90deg);
+}
+.mt-prism__side--l { left: 0; }
+.mt-prism__side--r { left: 100%; }
+.mt-prism__top {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  transform: translateZ(var(--z));
+}
+
+/* 막대: 윗면만 채운다. 강조한 지표는 코랄. */
+.mt-bar .mt-prism__top { background: var(--ink); border: 2px solid var(--ink); }
+.mt-bar.is-hot :is(.mt-prism__front, .mt-prism__side) { border-color: var(--flare); }
+.mt-bar.is-hot .mt-prism__front { background: color-mix(in srgb, var(--flare) 10%, var(--paper)); }
+.mt-bar.is-hot .mt-prism__side { background: color-mix(in srgb, var(--flare) 18%, var(--paper)); }
+.mt-bar.is-hot .mt-prism__top { background: var(--flare); border-color: var(--flare); }
+
+/* 혼동 행렬 칸. 바닥의 점선 칸이 빈 자리이고, 윗면이 차오르며 뜬다. 오탐과 미탐은 코랄. */
+.mt-matrix { position: absolute; transform-style: preserve-3d; }
+.mt-cell .mt-prism__foot { box-sizing: border-box; background: none; border: 2px dashed var(--ink-3); }
+.mt-cell .mt-prism__top { background: color-mix(in srgb, var(--ink) 6%, var(--paper)); border: 2.5px solid var(--ink-3); }
+.mt-cell.is-error :is(.mt-prism__front, .mt-prism__side) { border-color: var(--flare); }
+.mt-cell.is-error .mt-prism__front { background: color-mix(in srgb, var(--flare) 12%, var(--paper)); }
+.mt-cell.is-error .mt-prism__side { background: color-mix(in srgb, var(--flare) 20%, var(--paper)); }
+.mt-cell.is-error .mt-prism__top { background: color-mix(in srgb, var(--flare) 16%, var(--paper)); border-color: var(--flare); }
+
+/* 값을 모으는 중인 칸과 막대. 솟지 않고 판 위의 빈 자리만 그린다. 막대는 바닥의 점선 칸과 가장 높은
+   값의 점선 뚜껑만 남아 채워질 높이가 보인다. 행렬 칸은 옆면 없이 판에 붙고 테두리가 점선이 된다.
+   행렬 칸은 윗면이 바닥과 같은 면에 놓이므로 겹치지 않게 바닥을 그리지 않는다. */
+.mt-prism.is-empty :is(.mt-prism__front, .mt-prism__side) { display: none; }
+.mt-bar.is-empty .mt-prism__top { display: none; }
+.mt-bar.is-empty .mt-prism__foot { box-sizing: border-box; background: none; border: 2px dashed var(--ink-3); }
+.mt-bar.is-empty.is-hot .mt-prism__foot { border-color: var(--flare); }
+.mt-cell.is-empty .mt-prism__foot { display: none; }
+.mt-cell.is-empty .mt-prism__top { border-style: dashed; }
+
+.mt-wire { fill: none; stroke: var(--flare); stroke-width: 4; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.mt-base { stroke: var(--ink-3); stroke-width: 2.5; }
+
+/* 행렬 표지판. 축 이름은 기준점 위(열)나 왼쪽(행)에, 칸 글자는 칸 가운데에, 비율은 행렬 오른쪽에 선다.
+   li의 위치는 JS가 옮기므로 안쪽 상자로 정렬한다. */
+.smc-sign:is(.smc-axis, .smc-cell, .smc-rate) { width: max-content; margin: 0; }
+.smc-sign:is(.smc-axis, .smc-cell, .smc-rate)::before { display: none; }
+.smc-axis__text {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+.smc-axis--title .smc-axis__text { color: var(--ink); font-weight: 600; }
+.smc-axis--top .smc-axis__text { transform: translate(-50%, -100%); }
+.smc-axis--left .smc-axis__text { transform: translate(-100%, -50%); }
+.smc-axis--corner .smc-axis__text { transform: translate(-100%, -100%); }
+.smc-cell__box {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  width: 150px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.smc-cell__name { font-size: 14px; font-weight: 600; line-height: 1.5; color: var(--ink); }
+.smc-cell__code { font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.smc-cell.is-error .smc-cell__code { color: var(--flare); }
+.smc-cell__count {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.smc-cell__count .smc-strip { padding: 0 0.16em; }
+/* 값이 없을 때의 `—`. 읽어야 할 값이 아니라 빈 자리 표시라 옅게 둔다. */
+:is(.smc-cell__count, .smc-sign__num).is-empty { color: var(--ink-3); }
+.smc-rate__box { display: grid; gap: 2px; transform: translateY(-50%); }
+.smc-rate .smc-sign__text { font-size: 16px; line-height: 1.5; }
+.smc-rate .smc-sign__num { font-size: 28px; font-variant-numeric: tabular-nums; }
+
+/* ── § 05: 질문마다 작은 지도 위의 화면 하나 ────────────── */
 
 /* 지도 여정이 끝나면 차분한 종이 면이 지도 위로 올라온다. */
 .smc-faq {
@@ -1075,6 +1213,12 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
 @media (max-width: 1100px) {
   .smc-sign, .smc-sign--step { width: 220px; margin-left: -110px; }
   .smc-sign--feature { width: 220px; margin-left: -110px; }
+  .smc-sign--metric { width: 200px; margin-left: -100px; }
+  .smc-cell__box { width: 136px; }
+  .smc-cell__name { font-size: 13px; }
+  .smc-cell__count { font-size: 22px; }
+  .smc-rate .smc-sign__text { font-size: 15px; }
+  .smc-rate .smc-sign__num { font-size: 24px; }
   .smc-sign__text { font-size: 17px; }
   .smc-sign__num { font-size: 28px; }
   .smc-sign__title { font-size: 17px; }
@@ -1124,6 +1268,29 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
   height: auto;
 }
 .smc:not(.is-staged) .smc-sign { position: static; width: auto; margin: 0; transform: none !important; }
+/* 무대가 없으면 행렬 표지판이 행렬 모양의 격자로 쌓인다. 행 이름, 결함 열, 정상 열 순서다. */
+.smc:not(.is-staged) .smc-signs--matrix {
+  grid-template-columns: max-content minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    ". verdict verdict"
+    "actual c0 c1"
+    "r0 tp fn"
+    "r1 fp tn"
+    ". fpr fnr";
+  gap: 8px 12px;
+  align-items: center;
+}
+.smc:not(.is-staged) .smc-signs--matrix > * > span { transform: none; }
+.smc:not(.is-staged) .smc-cell__box {
+  width: auto;
+  padding: 10px 8px;
+  background: color-mix(in srgb, var(--ink) 6%, var(--paper));
+  border: 1.5px solid var(--ink-3);
+}
+.smc:not(.is-staged) .smc-cell.is-error .smc-cell__box { background: color-mix(in srgb, var(--flare) 12%, var(--paper)); border-color: var(--flare); }
+.smc:not(.is-staged) .smc-axis--top .smc-axis__text { text-align: center; }
+.smc:not(.is-staged) .smc-rate__box { padding-top: 8px; }
+.smc:not(.is-staged) .smc-signs--metrics { margin-top: 28px; }
 
 @media (prefers-reduced-motion: reduce) {
   .smc-agent__ring { animation: none; }

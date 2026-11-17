@@ -118,14 +118,16 @@
   border-color: var(--rule);
 }
 
-.site-header .auth-controls { min-height: 0; font-family: var(--font-mono); font-size: 12px; }
-.site-header .auth-controls .btn {
+/* 계정 버튼이 있던 자리. 지금은 Wishlist 버튼 하나만 선다. */
+.site-header .header-actions { display: flex; align-items: center; }
+.site-header .header-actions .btn {
   min-height: 32px;
   padding: 0 12px;
   border-radius: 0;
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 /* 포커스는 사각 고리 대신 바 안의 밑줄과 옅은 바탕으로 보인다. 상단바 안에서
@@ -159,6 +161,18 @@
   .site-header .brand { padding: 0 12px 0 10px; }
   .site-header .locale { padding-left: 10px; }
   .site-header .site-nav { padding: 0 10px; }
+}
+
+/* 아주 좁은 화면에서는 심볼, 언어, 테마, Wishlist가 첫 줄에 다 들어가지 않는다. 폭에 따라 버튼 하나만
+   어중간하게 꺾이지 않도록 내비 위에 한 줄을 따로 둔다. */
+@media (max-width: 480px) {
+  .site-header .header-actions {
+    order: 4;
+    flex: 1 0 100%;
+    min-height: 44px;
+    padding: 6px 10px;
+    border-top: 1px solid var(--rule);
+  }
 }
 
 
@@ -196,6 +210,15 @@
 .site-footer a:not(.brand) { box-shadow: inset 0 -1px 0 var(--rule); }
 .site-footer a:not(.brand):hover { box-shadow: inset 0 -2px 0 var(--flare); }
 .site-footer__copy { font-variant-numeric: tabular-nums; }
+/* 문의 주소는 링크가 아닌 글자다. 눌러서 한 번에 고를 수 있게 주소 전체를 한 덩어리로 둔다. */
+.site-footer__contact { display: inline-flex; align-items: baseline; gap: 8px; margin: 0; }
+.site-footer__label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+}
+.site-footer__address { color: var(--ink); user-select: all; }
 
 /* ── 상단바 가장자리 경로 (route.tsx) ─────────────────────
    바의 아래 테두리 위에 정거장 칸과 에이전트 점이 놓인다. 지난 칸은 코랄로 차고,

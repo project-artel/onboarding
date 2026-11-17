@@ -27,7 +27,6 @@
   .hero__title { line-height: 1.2; }
   .crop { width: 12px; height: 12px; }
   .section__split { grid-template-columns: minmax(0, 1fr); }
-  .site-header .auth-controls { flex-wrap: wrap; margin-left: 0; }
   .site-footer__inner { flex-wrap: wrap; gap: 16px; }
   .hero__actions { flex-wrap: wrap; }
   .install > li { grid-template-columns: minmax(0, 1fr); }
@@ -41,5 +40,4 @@
   .macro-docs__code-label, .macro-docs__pager { flex-wrap: wrap; }
   .macro-docs__heading { overflow-wrap: anywhere; }
   .macro-docs .macro-docs__section { scroll-margin-top: 16px; }
-  .auth-dialog input { min-width: 0; }
 }

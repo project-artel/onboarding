@@ -1,10 +1,9 @@
 // 랜딩 § 03 기능. 지도 위 일곱 화면과 표지판, 그리고 기능 하나를 크게 보여 주는 상세 대화상자.
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { gsap } from 'gsap'
-import { authCopy } from '../../auth/copy'
 import { MARK_FRAME, MARK_SHARD } from '../../components/ArtelMark'
 import type { Locale } from '../../i18n/locale'
-import type { Feature, FeatureKey } from '../../i18n/messages'
+import { messages, type Feature, type FeatureKey } from '../../i18n/messages'
 import { elbow, toD, type Pt } from './geom'
 import { TILE_H, TILE_W } from './sceneGeometry'
 import { Region } from './scenes'
@@ -444,7 +443,7 @@ export function FeatureBlock({ features, locale, heading }: { features: Feature[
         <FeatureDialog
           feature={current}
           open={open}
-          closeLabel={authCopy[locale].close}
+          closeLabel={messages[locale].dialog.close}
           onClose={close}
           onEnter={keepOpen}
           onLeave={() => {
