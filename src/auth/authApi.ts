@@ -1,4 +1,5 @@
-const apiOrigin = (import.meta.env.VITE_ORCHESTRATION_URL ?? 'http://localhost:8080').replace(/\/$/, '')
+import { orchestrationOrigin as apiOrigin } from '../lib/orchestration'
+
 export const consoleUrl = import.meta.env.VITE_CONSOLE_URL ?? '/console'
 
 export type Providers = { password: boolean; github: boolean; signupOpen: boolean }

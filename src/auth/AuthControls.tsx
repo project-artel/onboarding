@@ -4,6 +4,10 @@ import { AuthDialog } from './AuthDialog'
 import { consoleUrl, getProviders, hasSession, type Providers } from './authApi'
 import { authCopy } from './copy'
 
+// 지금은 `SiteLayout`이 이 컴포넌트를 붙이지 않는다. 다시 붙일 때 로그인한 사람에게 `Console로 이동`
+// 링크를 보이려면 true로 바꾼다. `consoleUrl`과 링크 마크업은 그대로 둔다.
+const showConsoleLink = false
+
 export function AuthControls() {
   const { locale } = useCopy()
   const copy = authCopy[locale]
@@ -58,7 +62,7 @@ export function AuthControls() {
 
   return <div className="auth-controls">
     {status === 'loading' && <span role="status">{copy.checking}</span>}
-    {status === 'authenticated' && <a className="btn btn--sm btn--primary" href={consoleUrl}>{copy.console}</a>}
+    {status === 'authenticated' && showConsoleLink && <a className="btn btn--sm btn--primary" href={consoleUrl}>{copy.console}</a>}
     {(status === 'anonymous' || status === 'error') && <>
       <button type="button" className="btn btn--sm btn--ghost" onClick={openLogin}>{copy.login}</button>
       {providers?.signupOpen && <button type="button" className="btn btn--sm btn--primary" onClick={() => setMode('signup')}>{copy.signup}</button>}

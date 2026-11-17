@@ -5,7 +5,9 @@ import { locales, pathWithLocale } from '../i18n/locale'
 import { InstallMenu, InstallTabs } from './InstallNav'
 import { PageChrome } from './PageChrome'
 import { applyTheme, currentTheme } from '../theme'
-import { AuthControls } from '../auth/AuthControls'
+import { contactEmail } from '../lib/contact'
+import { WishlistDialog } from '../wishlist/WishlistDialog'
+import { wishlistCopy } from '../wishlist/copy'
 import { documentation } from '../docs/content'
 
 const siteOrigin = 'https://artel.kr'
@@ -14,6 +16,7 @@ export function SiteLayout() {
   const { locale, t, href, swapTo } = useCopy()
   const { pathname, search, hash } = useLocation()
   const [theme, setTheme] = useState(currentTheme)
+  const [wishlistOpen, setWishlistOpen] = useState(false)
 
   // 랜딩은 진행 표시와 상단바 높이를 스스로 다룬다. 나머지 페이지에만 공용 장식을 붙인다.
   const landing = (pathname.replace(/^\/en(?=\/|$)/, '') || '/') === '/'
@@ -100,9 +103,15 @@ export function SiteLayout() {
           >
             <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
           </button>
-          <AuthControls />
+          <div className="header-actions">
+            <button type="button" className="btn btn--sm btn--primary" aria-haspopup="dialog" onClick={() => setWishlistOpen(true)}>
+              {wishlistCopy[locale].open}
+            </button>
+          </div>
         </div>
       </header>
+      {/* 상단바 밖에 둬서 상단바의 mono 글꼴과 `pointer-events: none`을 물려받지 않는다. */}
+      {wishlistOpen && <WishlistDialog onClose={() => setWishlistOpen(false)} />}
       <InstallTabs />
 
       <main id="main">
@@ -117,6 +126,10 @@ export function SiteLayout() {
           <a href="https://github.com/project-artel" rel="noreferrer noopener" target="_blank">
             {t.footer.repository}
           </a>
+          <p className="site-footer__contact">
+            <span className="site-footer__label">{t.footer.contact}</span>
+            <span className="site-footer__address">{contactEmail}</span>
+          </p>
           <span className="site-footer__copy">© 2026 ARTEL</span>
         </div>
       </footer>

@@ -46,6 +46,8 @@ type Copy = {
     home: string
   }
   theme: { toLight: string; toDark: string }
+  /** 대화상자의 닫기 버튼 이름. 기능 상세와 Wishlist 대화상자가 함께 쓴다. */
+  dialog: { close: string }
   hero: {
     title: string
     appCta: string
@@ -60,8 +62,17 @@ type Copy = {
     title: string
     items: Feature[]
   }
+  /** 랜딩 § 04. 지표 이름과 값은 `src/pages/landing/metrics.ts`에 있다. `collecting`은 `metricsStatus`가
+   *  `'collecting'`일 때 제목 옆에 붙는 표시다.
+   *  `axes`는 혼동 행렬의 축 이름이다. 행은 실제, 열은 ARTEL 판정이다. */
+  metrics: {
+    title: string
+    collecting: string
+    axes: { actual: string; actualDefect: string; actualClean: string; verdict: string; verdictDefect: string; verdictPass: string }
+  }
   faq: { title: string; items: { q: string; a: string }[] }
-  footer: { repository: string; language: string }
+  /** `contact`는 푸터의 문의 주소 앞 이름표다. owner가 정한 표기라 두 언어에서 같다. */
+  footer: { repository: string; language: string; contact: string }
   sdk: {
     title: string
     steps: { title: string; body: string; code?: string; shotAlts: string[] }[]
@@ -158,6 +169,7 @@ const ko: Copy = {
     home: '홈',
   },
   theme: { toLight: '라이트 모드로 전환', toDark: '다크 모드로 전환' },
+  dialog: { close: '닫기' },
   hero: {
     title: 'Unity 게임 QA Agent',
     appCta: '데스크톱 앱 다운로드',
@@ -228,6 +240,11 @@ const ko: Copy = {
       { key: 'github', title: 'GitHub 이슈 연동', body: '찾은 이슈를 GitHub 이슈로 내보내기', details: [] },
     ],
   },
+  metrics: {
+    title: '평가 지표',
+    collecting: '수집 중',
+    axes: { actual: '실제', actualDefect: '결함 있음', actualClean: '결함 없음', verdict: 'ARTEL 판정', verdictDefect: '결함', verdictPass: '정상' },
+  },
   faq: {
     title: '자주 묻는 질문',
     items: [
@@ -257,7 +274,7 @@ const ko: Copy = {
       },
     ],
   },
-  footer: { repository: '저장소', language: '언어' },
+  footer: { repository: '저장소', language: '언어', contact: 'Contact Us' },
   sdk: {
     title: 'Unity SDK 설치',
     steps: [
@@ -685,6 +702,7 @@ const en: Copy = {
     home: 'Home',
   },
   theme: { toLight: 'Switch to light mode', toDark: 'Switch to dark mode' },
+  dialog: { close: 'Close' },
   hero: {
     title: 'QA agent for Unity games',
     appCta: 'Download the desktop app',
@@ -759,6 +777,11 @@ const en: Copy = {
       { key: 'github', title: 'GitHub issues', body: 'Found issues exported to GitHub issues', details: [] },
     ],
   },
+  metrics: {
+    title: 'Evaluation metrics',
+    collecting: 'Collecting',
+    axes: { actual: 'Actual', actualDefect: 'Defect', actualClean: 'No defect', verdict: 'ARTEL verdict', verdictDefect: 'Defect', verdictPass: 'Pass' },
+  },
   faq: {
     title: 'Questions',
     items: [
@@ -788,7 +811,7 @@ const en: Copy = {
       },
     ],
   },
-  footer: { repository: 'Repository', language: 'Language' },
+  footer: { repository: 'Repository', language: 'Language', contact: 'Contact Us' },
   sdk: {
     title: 'Install the Unity SDK',
     steps: [
