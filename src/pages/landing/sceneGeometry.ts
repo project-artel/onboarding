@@ -7,7 +7,7 @@ export const TILE_H = 2040
 // 히어로 지도는 판의 y 0..1900에 있다. 다음 영역은 보는 사람 쪽(y가 커지는 쪽)으로 이어져서,
 // 스크롤을 내리면 지도가 위로 밀리고 다음 영역이 화면 아래에서 들어온다. 영역 사이는 정지점마다
 // 그 영역만 화면에 들어올 만큼 띄운다. 40px 격자에 맞춘다.
-export const TILE_Y = { problem: 2040, flow: 4080, features: 6120, metrics: 8160 } as const
+export const TILE_Y = { problem: 2040, flow: 4080, features: 6120, videos: 8160 } as const
 export type RegionName = keyof typeof TILE_Y
 
 // § 01 첫 장면에서 사람이 빌드마다 다시 그리는 경로.
@@ -51,18 +51,19 @@ export const S2_PATH: Pt[] = [
 export const S2_POLY = poly(S2_PATH)
 export const S2_CLICKS = [2, 4, 6]
 
-// § 04 평가 지표. 혼동 행렬이 뒤에 눕고, 가는 막대 네 개가 앞줄 기준선 위에 선다.
-// 카메라의 scale()은 판의 x, y만 줄이고 translateZ 높이는 줄이지 않는다. 그래서 가장 높은 막대
-// (`barMaxH`)가 행렬의 아래 변까지 솟지 않도록 막대 줄을 충분히 앞에 둔다. 행렬 왼쪽의 축 이름은
-// 섹션 제목에 닿지 않게 행렬을 판 가운데보다 오른쪽에 둔다. 1100–1920px 폭에서 겹치지 않는 것을
-// 카메라 식으로 확인한 값이다.
-export const M4 = {
-  barY: 1140,
-  barW: 66,
-  barMaxH: 180,
-  gap: 430,
-  busY: 950,
-  matrix: { left: 980, top: 330, cellW: 380, cellD: 230, inset: 8, liftMax: 24 },
+// § 04 영상. 큰 화면은 표지판처럼 똑바로 서서 `screenY`에 아래 변을 대고, 필름 띠는 그 앞 `stripY`에
+// 눕는다. 띠의 칸은 `gap`마다 놓이고 위아래로 `zig`씩 엇갈려 직각 경로로 이어진다. 지금 칸은 `lift`만큼
+// 뜨고, 띠가 옆으로 밀려 지금 칸이 늘 판 가운데(`centerX`)에 온다. 카메라의 scale()은 translateZ를
+// 줄이지 않으므로, 1024–1920px 폭에서 뜬 칸이 큰 화면 아래 변에 닿지 않는 것을 카메라 식으로 확인했다.
+export const V4 = {
+  centerX: 1300,
+  screenY: 820,
+  stripY: 1180,
+  thumbW: 300,
+  thumbH: 169,
+  gap: 400,
+  zig: 30,
+  lift: 56,
 }
-/** 막대 `i`의 가운데 x. 지표 수가 바뀌어도 판 가운데(1300)를 기준으로 고르게 둔다. */
-export const metricX = (i: number, count: number) => 1300 + (i - (count - 1) / 2) * M4.gap
+/** 띠 안에서 칸 `i`의 가운데. 띠의 원점은 첫 칸의 가운데 x, `stripY`다. */
+export const thumbCenter = (i: number): Pt => ({ x: i * V4.gap, y: i % 2 ? V4.zig : -V4.zig })
