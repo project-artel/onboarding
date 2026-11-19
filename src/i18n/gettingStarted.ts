@@ -14,12 +14,12 @@ const qa: Record<Locale, GuideStep> = {
   ko: {
     id: 'run', title: 'QA 실행하기',
     items: ['SDK가 연결된 게임을 실행한 상태로 유지', '콘솔에서 프로젝트를 선택하고 왼쪽 QA 실행 열기', '페이지 상단의 테스트 런 선택 메뉴에서 실행할 런 선택'],
-    links: [{ label: '모델과 API 키 설정', to: '/docs/models#personal-key' }, { label: '콘솔 열기', to: 'https://artel.kr/console/projects' }],
+    links: [{ label: '모델과 API 키 설정', to: '/docs/models#personal-key' }, { label: '콘솔 열기', to: 'console' }],
   },
   en: {
     id: 'run', title: 'Run QA',
     items: ['Keep the game running with the SDK connected.', 'Choose the project in the console, then open Run QA in the left navigation.', 'Select the test run from the menu at the top of the page.'],
-    links: [{ label: 'Configure models and API keys', to: '/docs/models#personal-key' }, { label: 'Open the console', to: 'https://artel.kr/console/projects' }],
+    links: [{ label: 'Configure models and API keys', to: '/docs/models#personal-key' }, { label: 'Open the console', to: 'console' }],
   },
 }
 const review: Record<Locale, GuideStep> = {
@@ -44,7 +44,7 @@ export const gettingStartedCopy: Record<Locale, GettingStartedCopy> = {
       manual: {
         title: '직접 진행하기', description: '콘솔에서 Test Case와 시나리오를 직접 작성',
         steps: [
-          { id: 'sdk', title: 'SDK 설치하기', items: ['콘솔에 로그인해 프로젝트 생성 또는 참여', 'Unity Package Manager에서 ARTEL SDK 추가', 'Play Mode 또는 Development Build로 게임 실행, 로그인 후 프로젝트 연결'], links: [{ label: 'SDK 설치 안내', to: '/sdk' }, { label: '콘솔 열기', to: 'https://artel.kr/console/projects' }] },
+          { id: 'sdk', title: 'SDK 설치하기', items: ['콘솔에 로그인해 프로젝트 생성 또는 참여', 'Unity Package Manager에서 ARTEL SDK 추가', 'Play Mode 또는 Development Build로 게임 실행, 로그인 후 프로젝트 연결'], links: [{ label: 'SDK 설치 안내', to: '/sdk' }, { label: '콘솔 열기', to: 'console' }] },
           { id: 'test-cases', title: 'Test Case 만들기', items: ['콘솔에서 프로젝트를 선택하고 왼쪽 Test Cases 열기', '왼쪽 버전 목록에서 테스트할 게임 버전 선택', '새 Test Case를 선택해 작성 화면 열기'], after: '필수 항목 입력 후 작성 화면 아래의 Test Case 추가를 선택해 저장.' },
           { id: 'scenarios', title: '시나리오 만들기', items: ['프로젝트의 왼쪽 메뉴에서 테스트 런 열기', '대상 빌드 버전을 고르고 새로운 테스트런 선택', '런을 만든 뒤 해당 런을 열고 시나리오 추가 선택'], after: '시나리오에서 Test Case 추가로 검증할 항목을 연결. 단계 기반은 각 스텝의 행동과 실행 순서도 작성한 뒤 승인.' },
           qa.ko, review.ko, issues.ko,
@@ -67,7 +67,7 @@ export const gettingStartedCopy: Record<Locale, GettingStartedCopy> = {
       manual: {
         title: 'Set up in the console', description: 'Write Test Cases and scenarios yourself in the console.',
         steps: [
-          { id: 'sdk', title: 'Install the SDK', items: ['Sign in to the console and create or join a project.', 'Add the ARTEL SDK through Unity Package Manager.', 'Run the game in Play Mode or as a Development Build, sign in and connect the project.'], links: [{ label: 'SDK installation guide', to: '/sdk' }, { label: 'Open the console', to: 'https://artel.kr/console/projects' }] },
+          { id: 'sdk', title: 'Install the SDK', items: ['Sign in to the console and create or join a project.', 'Add the ARTEL SDK through Unity Package Manager.', 'Run the game in Play Mode or as a Development Build, sign in and connect the project.'], links: [{ label: 'SDK installation guide', to: '/sdk' }, { label: 'Open the console', to: 'console' }] },
           { id: 'test-cases', title: 'Create Test Cases', items: ['Choose the project in the console and open Test Cases in the left navigation.', 'Choose the target game version from the version list.', 'Select New Test Case to open the editor.'], after: 'After completing the required fields, select Add Test Case at the bottom of the editor to save.' },
           { id: 'scenarios', title: 'Create scenarios', items: ['Open Test runs in the project’s left navigation.', 'Choose the target build version and select New test run.', 'Create and open the test run, then select Add scenario.'], after: 'Use Add Test Case in the scenario to link the cases to verify. For step-based scenarios, also write the actions and their order, then approve the scenario.' },
           qa.en, review.en, issues.en,

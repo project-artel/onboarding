@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { CodeBlock } from '../components/CodeBlock'
+import { consoleUrl } from '../auth/authApi'
 import { AnnotatedScreenshot, type GuideScreenshot } from '../components/AnnotatedScreenshot'
 import { walkthroughScreenshots as shots } from '../docs/gettingStartedScreenshots'
 import { gettingStartedCopy, type GettingStartedTrack } from '../i18n/gettingStarted'
@@ -52,7 +53,9 @@ export function GettingStartedPage() {
                 <ol className="getting-started__entry">{step.items.map(item => <li key={item}>{item}</li>)}</ol>
                 {step.prompt && <CodeBlock code={step.prompt} wrap />}
                 {step.links && <div className="getting-started__links">
-                  {step.links.map(link => link.to.startsWith('/')
+                  {step.links.map(link => link.to === 'console'
+                    ? <a className="btn btn--ghost btn--sm" key={link.to} href={consoleUrl} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>
+                    : link.to.startsWith('/')
                     ? <Link className="btn btn--ghost btn--sm" key={link.to} to={href(link.to)}>{link.label} →</Link>
                     : <a className="btn btn--ghost btn--sm" key={link.to} href={link.to} target="_blank" rel="noopener noreferrer">{link.label} ↗</a>)}
                 </div>}

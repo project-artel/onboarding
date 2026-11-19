@@ -40,3 +40,5 @@ origin/main 기반 별도 worktree로 기존 미커밋 변경을 보존한다. �
 - pair-review PASS. 각 화면 진입 안내 누락과 박스 위치에 맞지 않던 저장 설명 수정
 - MCP 승인 요청 modal은 사용자가 제공한 캡처 기준. live에 승인 대기 항목이 없어 재현하지 않음
 - 실제 게임 SDK 설치·QA 실행은 검증 범위에서 제외
+
+- 콘솔 열기는 공용 consoleUrl 설정을 사용. 두 runtime URL placeholder 보존을 컨테이너 환경값으로 build해 확인, 영어 경로에서도 /console이 유지됨을 확인.
