@@ -9,6 +9,7 @@ import { contactEmail } from '../lib/contact'
 import { WishlistDialog } from '../wishlist/WishlistDialog'
 import { wishlistCopy } from '../wishlist/copy'
 import { documentation } from '../docs/content'
+import { gettingStartedCopy } from '../i18n/gettingStarted'
 
 const siteOrigin = 'https://artel.kr'
 
@@ -22,8 +23,9 @@ export function SiteLayout() {
   const landing = (pathname.replace(/^\/en(?=\/|$)/, '') || '/') === '/'
 
   const doc = documentation(locale).find(page => page.path === pathWithLocale(pathname, 'ko').replace(/\/$/, ''))
-  const title = doc ? `${doc.title} · ARTEL Developer Docs` : t.meta.title
-  const description = doc?.description ?? t.meta.description
+  const gettingStarted = pathWithLocale(pathname, 'ko').replace(/\/$/, '') === '/getting-started'
+  const title = gettingStarted ? `${gettingStartedCopy[locale].title} · ARTEL` : doc ? `${doc.title} · ARTEL Developer Docs` : t.meta.title
+  const description = gettingStarted ? gettingStartedCopy[locale].description : doc?.description ?? t.meta.description
 
   // 정적 `index.html`은 한국어를 실어 내보낸다. 로케일이 정해지면 스크린리더와
   // 검색엔진이 보는 값도 같이 맞춘다.
@@ -70,6 +72,7 @@ export function SiteLayout() {
             <span className="brand__word">ARTEL</span>
           </Link>
           <nav className="site-nav" aria-label={t.nav.home}>
+            <Link to={href('/getting-started')} aria-current={gettingStarted ? 'page' : undefined}>{gettingStartedCopy[locale].title}</Link>
             <InstallMenu />
             <Link to={href('/docs')} aria-current={doc ? 'page' : undefined}>{locale === 'ko' ? '개발자 문서' : 'Developer docs'}</Link>
           </nav>

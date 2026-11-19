@@ -6,6 +6,8 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 Test 
 
 ## Pages
 
+- [Getting started](https://artel.kr/en/getting-started): video guides for SDK setup, QA runs and automation
+
 - [Implement cheats](https://artel.kr/en/docs/cheats): C# registration, preconditions, parameters, invocation and troubleshooting
 - [Implement behaviors](https://artel.kr/en/docs/behaviors): ongoing game actions, lifecycle, progress and cleanup
 
@@ -36,6 +38,8 @@ Unity 게임에 SDK를 연결하면 에이전트가 직접 플레이하며 Test 
 - [GitHub contribution](https://artel.kr/en/docs/contributing): ARTEL developer guide
 
 ## 한국어
+
+- [시작하기](https://artel.kr/getting-started): SDK 연결, QA 실행과 자동화 영상 안내
 
 - [Cheat 구현](https://artel.kr/docs/cheats): C# 등록, 사전 조건, parameter, 호출과 오류 확인
 - [Behavior 구현](https://artel.kr/docs/behaviors): 반복 동작, lifecycle, 진행 보고와 정리
