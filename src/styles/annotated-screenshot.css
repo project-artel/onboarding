@@ -1,0 +1,20 @@
+.annotated-shot { margin: 24px 0 0; min-width: 0; }
+.annotated-shot__board { position: relative; background: var(--paper); border: 1px solid var(--rule); }
+.annotated-shot__board > img { display: block; width: 100%; height: auto; }
+.annotated-shot__marks { position: absolute; inset: 0; pointer-events: none; }
+/* 빨간색은 스크린샷 안의 안내 표시에만 쓰며 테마와 관계없이 같은 위치를 표시한다. */
+.annotated-shot { --annotation-red: #e00020; --annotation-white: #fff; }
+.annotated-shot__box { position: absolute; border: 2px solid var(--annotation-red); }
+.annotated-shot__box b { position: absolute; top: -12px; left: -12px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--annotation-red); color: var(--annotation-white); font: 700 14px var(--font-body); box-shadow: 0 0 0 1px var(--annotation-white); }
+.annotated-shot figcaption { padding-top: 14px; font-size: 14px; }
+.annotated-shot__caption { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.annotated-shot button { min-height: 36px; padding: 6px 12px; border: 1px solid var(--rule); border-radius: var(--r-sm); color: var(--ink); background: var(--paper); }
+.annotated-shot button:hover { border-color: var(--ink); }
+.annotated-shot figcaption ol { display: grid; gap: 8px; margin: 12px 0 0; padding-left: 24px; color: var(--ink-2); }
+.annotated-shot figcaption li::marker { font-weight: 700; color: var(--ink); }
+.annotated-shot__dialog { width: min(96vw, 1700px); max-width: 96vw; max-height: 92dvh; padding: 20px; border: 1px solid var(--ink); background: var(--paper); color: var(--ink); }
+.annotated-shot__dialog::backdrop { background: color-mix(in srgb, var(--ink) 55%, transparent); }
+.annotated-shot__dialog header { display: flex; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 16px; }
+.annotated-shot__dialog h2 { margin: 0; font-size: 18px; }
+.annotated-shot__zoom { max-height: 75dvh; overflow: auto; overscroll-behavior: contain; }
+.annotated-shot__zoom > div { max-width: none; }

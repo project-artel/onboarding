@@ -2,7 +2,8 @@ import { Fragment, useEffect, useState } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
 import { useCopy } from '../i18n/useCopy'
 import { locales, pathWithLocale } from '../i18n/locale'
-import { InstallMenu, InstallTabs } from './InstallNav'
+import { InstallTabs } from './InstallNav'
+import { isGettingStartedPath } from '../i18n/gettingStartedRoutes'
 import { PageChrome } from './PageChrome'
 import { applyTheme, currentTheme } from '../theme'
 import { contactEmail } from '../lib/contact'
@@ -72,8 +73,7 @@ export function SiteLayout() {
             <span className="brand__word">ARTEL</span>
           </Link>
           <nav className="site-nav" aria-label={t.nav.home}>
-            <Link to={href('/getting-started')} aria-current={gettingStarted ? 'page' : undefined}>{gettingStartedCopy[locale].title}</Link>
-            <InstallMenu />
+            <Link to={href('/getting-started')} aria-current={isGettingStartedPath(pathname) ? 'page' : undefined}>{gettingStartedCopy[locale].title}</Link>
             <Link to={href('/docs')} aria-current={doc ? 'page' : undefined}>{locale === 'ko' ? '개발자 문서' : 'Developer docs'}</Link>
           </nav>
           <div className="locale" role="group" aria-label={t.footer.language}>
