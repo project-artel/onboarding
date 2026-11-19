@@ -2,7 +2,7 @@
 
 - Date: 2026-11-19
 - GitHub Issue: #49
-- Status: In Progress
+- Status: Draft PR 검토 대기
 
 ## Goal
 기존 설치 진입점을 시작하기로 통합하고 직접 진행·coding agent 두 트랙으로 첫 QA와 결과 검토까지 안내한다.
@@ -17,7 +17,7 @@ origin/main 기반 별도 worktree로 기존 미커밋 변경을 보존한다. �
 - [x] **Step 0: Recon** — 설치 메뉴, 설치 문서, 콘솔의 Test Case·시나리오·QA·판정 검토 문구와 경로 확인
 - [x] **Step 1: Implementation** — 단일 시작하기 진입점과 상세 설치 탭. 직접 진행·coding agent 모두 이슈 관리까지 6단계. 각 화면의 진입 경로와 후속 행동 안내. 요청문 복사와 단계 anchor, locale·track 유지
 - [x] **Step 2: Tests** — lint, locale, docs/SEO 검사, typecheck, build. 양쪽 트랙·테마·locale·반응형 화면과 링크·복사·키보드 확인. pair-review
-- [ ] **Step 3: Rollout / Rollback** — 기존 draft PR #50 설명·화면을 최종 구현에 맞게 갱신하고 최신 head CI 확인
+- [x] **Step 3: Rollout / Rollback** — 기존 draft PR #50 설명·화면을 최종 구현에 맞게 갱신하고 최신 head CI 확인
 
 ## Validation
 - **Commands to run:** npm run lint, npm run check, npm run check:docs, npm run typecheck, npm run build
@@ -42,3 +42,5 @@ origin/main 기반 별도 worktree로 기존 미커밋 변경을 보존한다. �
 - 실제 게임 SDK 설치·QA 실행은 검증 범위에서 제외
 
 - 콘솔 열기는 공용 consoleUrl 설정을 사용. 두 runtime URL placeholder 보존을 컨테이너 환경값으로 build해 확인, 영어 경로에서도 /console이 유지됨을 확인.
+
+- 환경 설정 수정 후 commit f9bd043의 컨테이너 build·smoke test 및 Vercel 검사 통과 (GitHub Actions run 44459426737).
