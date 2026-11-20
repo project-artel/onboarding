@@ -3,6 +3,7 @@ import { SiteLayout } from './components/SiteLayout'
 import { CliPage } from './pages/CliPage'
 import { useCopy } from './i18n/useCopy'
 import { LandingPage } from './pages/LandingPage'
+import { GettingStartedPage } from './pages/GettingStartedPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { SdkPage } from './pages/SdkPage'
 import { SkillsPage } from './pages/SkillsPage'
@@ -25,6 +26,7 @@ function localeRoutes() {
   return (
     <>
       <Route index element={<LandingPage />} />
+      <Route path="getting-started" element={<GettingStartedPage />} />
       <Route path="sdk" element={<SdkPage />} />
       <Route path="cli" element={<CliPage />} />
       <Route path="skills" element={<SkillsPage />} />

@@ -8,7 +8,17 @@ try {
   const { selfHostingPaths } = await server.ssrLoadModule('/src/i18n/selfHostingRoutes.ts')
   const ko = documentation('ko'), en = documentation('en')
   assert.deepEqual(ko.map(p => p.path), en.map(p => p.path))
-  const routes = ['/', '/sdk', '/cli', '/skills', ...selfHostingPaths, ...ko.map(p => p.path)]
+  const routes = ['/', '/getting-started', '/sdk', '/cli', '/skills', ...selfHostingPaths, ...ko.map(p => p.path)]
+  const { gettingStartedCopy } = await server.ssrLoadModule('/src/i18n/gettingStarted.ts')
+  for (const locale of ['ko', 'en']) for (const track of Object.values(gettingStartedCopy[locale].tracks)) {
+    assert.equal(new Set(track.steps.map(step => step.id)).size, track.steps.length, 'unique guide anchors')
+    for (const step of track.steps) for (const link of step.links ?? []) {
+      if (!link.to.startsWith('/')) continue
+      const [path, hash] = link.to.split('#')
+      assert.ok(routes.includes(path), 'unknown guide link: ' + link.to)
+      if (hash) assert.ok(documentation(locale).find(page => page.path === path)?.sections.some(section => section.id === hash), 'unknown guide anchor: ' + link.to)
+    }
+  }
   const { redirects } = JSON.parse(readFileSync('vercel.json', 'utf8'))
   for (const prefix of ['', '/en']) {
     assert.ok(redirects.some(r => r.source === prefix + '/how-it-works' && r.destination === prefix + '/docs/architecture' && r.permanent))
