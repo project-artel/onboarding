@@ -312,12 +312,13 @@ html[data-page='landing']::-webkit-scrollbar { display: none; }
 }
 .smc-title .smc-tl-mask:first-child { box-shadow: inset 0 3px 0 var(--flare); }
 
+/* 히어로의 행동 버튼은 Wishlist 하나다. 넓게 세워 첫 화면에서 눈에 띄게 한다. */
 .smc-hero__actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
   margin-top: 36px;
 }
+.smc-hero__actions > .smc-cta { justify-content: center; width: min(580px, 100%); }
+button.smc-cta { cursor: pointer; }
 
 .smc-cta {
   display: inline-flex;

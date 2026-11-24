@@ -14,6 +14,9 @@ import { gettingStartedCopy } from '../i18n/gettingStarted'
 
 const siteOrigin = 'https://artel.kr'
 
+/** 페이지가 `useOutletContext`로 받는 값. 랜딩 히어로가 상단바와 같은 Wishlist 대화상자를 연다. */
+export type SiteOutletContext = { openWishlist: () => void }
+
 export function SiteLayout() {
   const { locale, t, href, swapTo } = useCopy()
   const { pathname, search, hash } = useLocation()
@@ -118,7 +121,7 @@ export function SiteLayout() {
       <InstallTabs />
 
       <main id="main">
-        <Outlet />
+        <Outlet context={{ openWishlist: () => setWishlistOpen(true) } satisfies SiteOutletContext} />
       </main>
 
       <footer className="site-footer">

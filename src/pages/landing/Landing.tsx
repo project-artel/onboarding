@@ -2,11 +2,13 @@
 // 카메라가 같은 판의 다른 영역으로 날아간다. 섹션마다 정지점 하나, 섹션 안의 내용은 한 번에 함께
 // 나타난다.
 import { Fragment, useEffect, useLayoutEffect, useRef, type MouseEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useOutletContext } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import { HeaderRoute } from '../../components/HeaderRoute'
+import type { SiteOutletContext } from '../../components/SiteLayout'
+import { wishlistCopy } from '../../wishlist/copy'
 import { useCopy } from '../../i18n/useCopy'
 import { enableSnap, type SnapController } from '../../lib/snap'
 import { FeatureBlock } from './features'
@@ -445,7 +447,13 @@ function setupMotion(root: HTMLElement, snapRef: { current: SnapController | nul
             )
             .from(self.chars, { yPercent: 120, duration: 0.9, ease: 'power4.out', stagger: 0.024 }, 0.35),
       })
-      gsap.from(actions, { y: 26, opacity: 0, duration: 0.7, ease: 'power3.out', stagger: 0.09, delay: 1.05 })
+      // 끝값을 적어 둔다. `.smc-cta`의 CSS `transition: transform`이 걸린 버튼은 `from`이 읽는 현재값이
+      // 시작값(26px)으로 잡혀 제자리로 돌아오지 않았다. 끝나면 인라인 transform을 지워 hover 효과를 CSS에 돌려준다.
+      gsap.fromTo(
+        actions,
+        { y: 26, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', stagger: 0.09, delay: 1.05, clearProps: 'transform' },
+      )
 
       /* 에이전트 경로. 화면마다 잠시 머물며 읽고, 끝나면 지도를 비우고 다시 돈다. */
       const tl = gsap.timeline({ repeat: -1, delay: 1.1 })
@@ -562,6 +570,7 @@ function setupMotion(root: HTMLElement, snapRef: { current: SnapController | nul
 
 export function Landing() {
   const { t, href, locale } = useCopy()
+  const { openWishlist } = useOutletContext<SiteOutletContext>()
   const rootRef = useRef<HTMLDivElement>(null)
   const snapRef = useRef<SnapController | null>(null)
 
@@ -605,12 +614,9 @@ export function Landing() {
               <Mixed text={t.hero.title.replace(/QA (agent)/i, 'QA $1')} />
             </h1>
             <div className="smc-hero__actions">
-              <Link className="smc-cta smc-cta--primary" to={href('/self-hosting/desktop-app')}>
-                {t.hero.appCta}
-              </Link>
-              <Link className="smc-cta smc-cta--ghost" to={href('/sdk')}>
-                {t.hero.sdkCta}
-              </Link>
+              <button type="button" className="smc-cta smc-cta--primary" aria-haspopup="dialog" onClick={openWishlist}>
+                {wishlistCopy[locale].open}
+              </button>
             </div>
           </div>
         </section>
