@@ -50,8 +50,6 @@ type Copy = {
   dialog: { close: string }
   hero: {
     title: string
-    appCta: string
-    sdkCta: string
   }
   problem: { title: string; items: string[] }
   steps: {
@@ -176,8 +174,6 @@ const ko: Copy = {
   dialog: { close: '닫기' },
   hero: {
     title: 'Unity 게임 QA Agent',
-    appCta: '데스크톱 앱 다운로드',
-    sdkCta: 'Unity SDK 설치',
   },
   problem: {
     title: '지금의 게임 QA',
@@ -713,8 +709,6 @@ const en: Copy = {
   dialog: { close: 'Close' },
   hero: {
     title: 'QA agent for Unity games',
-    appCta: 'Download the desktop app',
-    sdkCta: 'Install the Unity SDK',
   },
   problem: {
     title: 'Game QA today',

@@ -400,13 +400,11 @@ main > .section:last-child { border-bottom: none; }
 .not-found__cta { margin-top: 28px; }
 
 /* ── Responsive header ────────────────────────────────────
-   레퍼런스는 데스크톱 기준이다. 좁은 폭에서는 헤더 CTA를 버리고
-   내비는 남긴다. CTA는 히어로와 CTA 섹션에 그대로 있으므로
-   여기서 지워도 도달 경로가 끊기지 않는다. */
+   레퍼런스는 데스크톱 기준이다. 상단바 버튼은 Wishlist 하나이고 랜딩 밖 페이지에는
+   다른 진입점이 없으므로 좁은 폭에서도 남긴다. 480px 이하의 자리는 site-chrome.css가 정한다. */
 @media (max-width: 720px) {
   .site-header__inner { gap: 16px; }
   .site-nav { gap: 16px; }
-  .site-header .btn { display: none; }
 }
 
 /* 320px에서 헤더 워드마크까지 남기면 내비가 밀린다. 심볼과 링크
