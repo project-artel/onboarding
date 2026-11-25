@@ -46,6 +46,32 @@ export function WishlistDialog({ onClose }: { onClose: () => void }) {
   // 열고 닫을 때 스크롤 위치를 지키고, 휠과 이동 키가 랜딩 스냅에 닿지 않게 한다.
   useModalDialog(dialog, { initialFocus: emailRef, scroller: sheetRef })
 
+  useEffect(() => {
+    const viewport = window.visualViewport
+    const element = dialog.current
+    const sheet = sheetRef.current
+    if (!viewport || !element || !sheet) return
+
+    const syncViewport = () => {
+      element.style.setProperty('--wishlist-visible-height', viewport.height + 'px')
+      element.style.setProperty('--wishlist-visible-bottom', viewport.offsetTop + viewport.height + 'px')
+      const focused = document.activeElement
+      if (!(focused instanceof HTMLElement) || !sheet.contains(focused)) return
+      const bounds = sheet.getBoundingClientRect()
+      const field = focused.getBoundingClientRect()
+      if (field.bottom > bounds.bottom) sheet.scrollTop += field.bottom - bounds.bottom + 8
+      else if (field.top < bounds.top) sheet.scrollTop -= bounds.top - field.top + 8
+    }
+
+    syncViewport()
+    viewport.addEventListener('resize', syncViewport)
+    viewport.addEventListener('scroll', syncViewport)
+    return () => {
+      viewport.removeEventListener('resize', syncViewport)
+      viewport.removeEventListener('scroll', syncViewport)
+    }
+  }, [])
+
   // 신청하면 폼이 사라지므로 포커스를 닫기 버튼으로 옮긴다. 버튼은 다시 그린 뒤에 생긴다.
   useEffect(() => {
     if (request === 'joined') doneRef.current?.focus(preventScroll)

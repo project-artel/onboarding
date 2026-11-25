@@ -235,14 +235,16 @@
 
 /* ── 720px 이하: 아래 시트 ─────────────────────────────── */
 
-@media (max-width: 720px) {
+@media (max-width: 720px), (pointer: coarse) and (max-height: 540px) {
   .wishlist-dialog {
     width: 100%;
-    margin: auto 0 0;
+    inset: var(--wishlist-visible-bottom, 100dvh) 0 auto;
+    margin: 0;
+    transform: translateY(-100%);
     padding: 0;
   }
   .wishlist-sheet {
-    max-height: 88dvh;
+    max-height: min(88dvh, var(--wishlist-visible-height, 100dvh));
     border-width: 1.5px 0 0;
     box-shadow: none;
   }

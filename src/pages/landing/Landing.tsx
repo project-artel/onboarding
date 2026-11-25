@@ -405,7 +405,7 @@ function setupMotion(root: HTMLElement, snapRef: { current: SnapController | nul
         onRefresh: (st) => setActive(st.isActive),
       })
 
-      const loops = sceneLoops(root)
+      const loops = narrow ? [] : sceneLoops(root)
       const loopsOf = (el: Element) => loops.filter((l) => el.contains(l.el)).map((l) => l.tl)
 
       if (!desktop) {
@@ -471,30 +471,6 @@ function setupMotion(root: HTMLElement, snapRef: { current: SnapController | nul
       routeTl = tl
       if (!live.active) tl.pause()
 
-      /* § 02 경로 위의 에이전트 점 */
-      const flowDot = gsap.fromTo(
-        flowAgent,
-        { x: 140, y: 1010, z: 20 },
-        { x: 2460, duration: 9, ease: 'sine.inOut', repeat: -1, yoyo: true, paused: true },
-      )
-
-      /* 영역마다: 카메라가 반쯤 다가왔을 때부터 그리고, 반복을 돌리고, 표지판을 세운다.
-         영역 사이는 멀어서 이 경계에서는 영역이 아직 화면 밖이다. 나타나는 순간이 보이지 않는다. */
-      sections.forEach((s) => {
-        const anims = [...loopsOf(s.region), ...(s.name === 'flow' ? [flowDot] : [])]
-        ScrollTrigger.create({
-          trigger: s.el,
-          start: 'top 55%',
-          end: 'bottom 45%',
-          onToggle: (st) => {
-            s.near = st.isActive
-            s.el.classList.toggle('is-near', st.isActive)
-            anims.forEach((a) => (st.isActive ? a.play() : a.pause()))
-            if (!st.isActive) s.signs.forEach(({ sign }) => (sign.style.visibility = 'hidden'))
-          },
-        })
-      })
-
       const cleanups: (() => void)[] = [
         () => {
           live.drift = false
@@ -511,6 +487,30 @@ function setupMotion(root: HTMLElement, snapRef: { current: SnapController | nul
       ]
 
       if (desktop) {
+        /* § 02 경로 위의 에이전트 점 */
+        const flowDot = gsap.fromTo(
+          flowAgent,
+          { x: 140, y: 1010, z: 20 },
+          { x: 2460, duration: 9, ease: 'sine.inOut', repeat: -1, yoyo: true, paused: true },
+        )
+
+        /* 영역마다: 카메라가 반쯤 다가왔을 때부터 그리고, 반복을 돌리고, 표지판을 세운다.
+           영역 사이는 멀어서 이 경계에서는 영역이 아직 화면 밖이다. 나타나는 순간이 보이지 않는다. */
+        sections.forEach((s) => {
+          const anims = [...loopsOf(s.region), ...(s.name === 'flow' ? [flowDot] : [])]
+          ScrollTrigger.create({
+            trigger: s.el,
+            start: 'top 55%',
+            end: 'bottom 45%',
+            onToggle: (st) => {
+              s.near = st.isActive
+              s.el.classList.toggle('is-near', st.isActive)
+              anims.forEach((a) => (st.isActive ? a.play() : a.pause()))
+              if (!st.isActive) s.signs.forEach(({ sign }) => (sign.style.visibility = 'hidden'))
+            },
+          })
+        })
+
         /* 카메라: 섹션 사이를 스크롤과 함께 날아가 각 정지점에 정확히 내려앉는다. */
         const order: Cam[] = [CAM.hero, ...REGIONS.map((name) => CAM[name])]
         sections.forEach((s, i) =>
