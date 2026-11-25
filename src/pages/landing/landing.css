@@ -1571,9 +1571,10 @@ button.smc-cta { cursor: pointer; }
   .smc-crop--tr, .smc-crop--br { right: 16px; }
   .smc-crop--bl, .smc-crop--br { bottom: 16px; }
 
-  .smc-sec { padding-block: 64px 56px; }
+  .smc:not(.is-staged) .smc-sec { padding-block: 40px; gap: 24px; }
+  .smc:not(.is-staged) .smc-region { display: none; }
   .smc-sec__head--row { flex-direction: column; align-items: flex-start; gap: 14px; }
-  .smc-signs { grid-template-columns: minmax(0, 1fr); }
+  .smc:not(.is-staged) .smc-signs { grid-template-columns: minmax(0, 1fr); }
 
   .smc-faq__inner { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .smc-faq__head { position: static; }
